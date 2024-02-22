@@ -61,7 +61,7 @@ export function Empresas() {
         </div>
 
         {empresas.map((empresa, index) => (
-          <div key={index} className="h-14 w-11/12 bg-white rounded-xl my-2 grid items-center px-3"
+          <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5 mb-3"
             style={{ gridTemplateColumns: '2fr 0.7fr 1fr 1fr 0.7fr 0.5fr' }}>
             <h1 className="text-vgraydark font-semibold">{empresa.razonsocial}</h1>
             <h1 className="text-vgraydark font-semibold text-center">{empresa.tipodocumento}</h1>

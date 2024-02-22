@@ -6,6 +6,9 @@ import { Empresas } from './pages/Empresas'
 import { useEffect } from 'react'
 import { Dasboard } from './pages/Dashboard'
 import { Calculo_fic } from './pages/Calculo_fic'
+import { Intereses } from './pages/Intereses'
+import { Usuarios } from './pages/Usuarios'
+import { PagosUsuario } from './pages/PagosUsuario'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,18 @@ const router = createBrowserRouter([
   {
     path: '/calculo-fic',
     element: <MainContentWithSidebar> <Calculo_fic/> </MainContentWithSidebar>
+  },
+  {
+    path: '/intereses',
+    element: <MainContentWithSidebar> <Intereses/> </MainContentWithSidebar>
+  },
+  {
+    path: '/usuarios',
+    element: <MainContentWithSidebar> <Usuarios/> </MainContentWithSidebar>
+  },
+  {
+    path: '/pagos-usuario/:id',
+    element: <MainContentWithSidebar> <PagosUsuario/> </MainContentWithSidebar>
   }
 ])
 

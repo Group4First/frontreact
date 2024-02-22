@@ -1,12 +1,12 @@
 import Cookies from "js-cookie";
 
 
-export async function getEmpresas(currentpage,searchTerm) {
+export async function getIntereses(currentpage,searchTerm) {
   console.log(currentpage);
   const token = Cookies.get('session') ? JSON.parse(Cookies.get('session')).token : '';
 
   try {
-    const url = new URL('http://localhost:8080/api/bussiness/getall');
+    const url = new URL('http://localhost:8080/api/interest/getall');
 
     // Agrega los parámetros a la URL
     url.searchParams.append('searchTerm', searchTerm);

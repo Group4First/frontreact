@@ -3,10 +3,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 
-export function Paginationbuttons({ totalPages, setCurrentPage}) {
-    
+export function Paginationbuttons({ totalPages, setCurrentPage }) {
+
     const handlePageClick = ({ selected }) => {
-   
+
         setCurrentPage(selected)
 
     }
@@ -17,7 +17,7 @@ export function Paginationbuttons({ totalPages, setCurrentPage}) {
                     <span className="mr-4">...</span>
                 }
                 nextLabel={
-                    <span className="w-10 h-10 flex items-center justify-center bg-white rounded-md">
+                    <span className="w-10 h-10 flex items-center justify-center bg-white rounded-md ">
                         <ChevronRight />
                     </span>
                 }
@@ -28,8 +28,8 @@ export function Paginationbuttons({ totalPages, setCurrentPage}) {
                     <ChevronLeft />
                 </span>}
                 containerClassName="flex items-center justify-center mt-8 mb-4"
-                pageClassName="block border- border-solid border-lightGray bg-white hover:bg-vgreen hover:text-white text-black w-10 h-10 flex items-center justify-center rounded-md mr-4"
-                activeClassName="bg-[#00AF00] text-white"
+                pageClassName="block border-solid border-lightGray hover:bg-green-600 hover:text-white text-black bg-white w-10 h-10 flex items-center justify-center rounded-md mr-4"
+                activeClassName="bg-green-600 text-white"
             />
         </div>
     )
