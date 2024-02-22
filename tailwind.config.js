@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        vgreen: '#00AF00',
+        vgreen: '#39A900',
         vbg: '#F4F4F4',
 				vgray: '#C6C2C2',
 				vgray2: '#969696',
