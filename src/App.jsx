@@ -9,6 +9,7 @@ import { Calculo_fic } from './pages/Calculo_fic'
 import { Intereses } from './pages/Intereses'
 import { Usuarios } from './pages/Usuarios'
 import { PagosUsuario } from './pages/PagosUsuario'
+import { RegistroEmpresa } from './pages/RegistroEmpresa'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,13 @@ const router = createBrowserRouter([
     path: '/empresas',
     element: <MainContentWithSidebar> <Empresas/> </MainContentWithSidebar>
   },
+
+  {
+    path: '/empresas/registroempresas',
+    element: <MainContentWithSidebar> <RegistroEmpresa/> </MainContentWithSidebar>
+  },
+
+  
   {
     path: '/calculo-fic',
     element: <MainContentWithSidebar> <Calculo_fic/> </MainContentWithSidebar>
@@ -39,6 +47,7 @@ const router = createBrowserRouter([
     path: '/pagos-usuario/:id',
     element: <MainContentWithSidebar> <PagosUsuario/> </MainContentWithSidebar>
   }
+  
 ])
 
 export function App() {
