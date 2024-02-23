@@ -15,6 +15,7 @@ export function PaginationButtons({ totalPages, setCurrentPage }) {
   });
 
   const next = () => {
+    
     if (active === totalPages) return;
 
     setActive(active + 1);
