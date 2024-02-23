@@ -1,8 +1,8 @@
 import { Eye, Plus, Search, SquarePen } from "lucide-react";
 import { getEmpresas } from "../requests/getEmpresas";
 import { useState, useEffect } from "react";
-import { Paginationbuttons } from "../components/paginationButtons";
 import { Link } from 'react-router-dom';
+import { PaginationButtons } from "../components/PaginationButtons";
 
 
 
@@ -79,7 +79,9 @@ export function Empresas() {
           </div>
         ))}
       </section>
-      <Paginationbuttons totalPages={lempresas.totalpaginas} setCurrentPage={setCurrentPage} />
+      <div className="w-full flex justify-center mt-5">
+        <PaginationButtons totalPages={lempresas.totalpaginas} setCurrentPage={setCurrentPage} />
+      </div>
 
     </div>
 

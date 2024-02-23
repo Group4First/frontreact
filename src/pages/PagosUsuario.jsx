@@ -1,8 +1,8 @@
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Paginationbuttons } from "../components/paginationButtons";
 import { useParams } from "react-router-dom";
 import { getPagosUsuario } from "../requests/getPagosUsuario";
+import { PaginationButtons } from "../components/PaginationButtons";
 
 
 export function PagosUsuario() {
@@ -78,7 +78,9 @@ export function PagosUsuario() {
                             </div>
                         ))}
                     </section>
-                    <Paginationbuttons totalPages={lpagos.totalpaginas} setCurrentPage={setCurrentPage} />
+                    <div className="w-full flex justify-center mt-5">
+                        <PaginationButtons totalPages={lpagos.totalpaginas} setCurrentPage={setCurrentPage} />
+                    </div>
                 </>
             )}
 

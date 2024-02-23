@@ -1,7 +1,7 @@
 import { Eye, Plus, Search, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { getUsuarios } from "../requests/getUsuarios";
-import { Paginationbuttons } from "../components/paginationButtons";
+import { PaginationButtons } from "../components/PaginationButtons";
 import { useNavigate } from "react-router-dom";
 
 
@@ -74,10 +74,10 @@ export function Usuarios() {
                             <span className={`${usuario.isactive ? "bg-green-600" : "bg-red-500"} rounded-full h-6 w-6`}></span>
                         </div>
                         <div className="flex gap-5 justify-center">
-                            <button className={`${usuario.ispay ? "text-[#204ADF]" : "text-vgraylight"}`}onClick={()=>{
+                            <button className={`${usuario.ispay ? "text-[#204ADF]" : "text-vgraylight"}`} onClick={() => {
                                 navigate(`/usuarios/pagos/${usuario.idusuario}`)
                             }}>
-                                <Eye/>
+                                <Eye />
                             </button>
                             <button>
                                 <SquarePen color="#00AF00" />
@@ -86,7 +86,10 @@ export function Usuarios() {
                     </div>
                 ))}
             </section>
-            <Paginationbuttons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} />
+            <div className="w-full flex justify-center mt-5">
+                <PaginationButtons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} />
+            </div>
+
         </div>
 
     )
