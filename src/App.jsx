@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     element: <MainContentWithSidebar> <Usuarios/> </MainContentWithSidebar>
   },
   {
-    path: '/pagos-usuario/:id',
+    path: '/usuarios/pagos/:id',
     element: <MainContentWithSidebar> <PagosUsuario/> </MainContentWithSidebar>
   }
 ])

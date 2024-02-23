@@ -36,7 +36,7 @@ export function Usuarios() {
     }, [searchTerm]);
     return (
 
-        <div className="w-full max-w-fu h-svh">
+        <div className="w-full max-w-fu h-svh overflow-y-auto">
             <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de usuarios</h1>
 
             <section className=" flex justify-center">
@@ -64,7 +64,7 @@ export function Usuarios() {
                 </div>
 
                 {usuarios.map((usuario, index) => (
-                    <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5 mb-3"
+                    <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5"
                         style={{ gridTemplateColumns: '1fr 1fr 1.5fr 1fr 0.7fr 0.5fr' }}>
                         <h1 className="text-vgraydark font-semibold">{usuario.nombre_completo}</h1>
                         <h1 className="text-vgraydark font-semibold text-center">{usuario.documento}</h1>
@@ -75,7 +75,7 @@ export function Usuarios() {
                         </div>
                         <div className="flex gap-5 justify-center">
                             <button className={`${usuario.ispay ? "text-[#204ADF]" : "text-vgraylight"}`}onClick={()=>{
-                                navigate(`/pagos-usuario/${usuario.idusuario}`)
+                                navigate(`/usuarios/pagos/${usuario.idusuario}`)
                             }}>
                                 <Eye/>
                             </button>

@@ -70,7 +70,7 @@ export function Calculo_fic() {
                                 <span>Mensual</span>
                             </div>
                             <div className="h-12 w-52 rounded-r-xl border-2 border-vgray flex items-center text-vgray2 px-3">
-                                <h1 className="font-semibold text-vgray2 outline-none text-black font-semibold w-full text-right">{resultado} COP</h1>
+                                <h1 className="text-vgray2 outline-none font-semibold w-full text-right">{resultado} COP</h1>
                             </div>
                         </div>
                         <div className="flex items-center flex-grow">
@@ -78,7 +78,7 @@ export function Calculo_fic() {
                                 <span>Empleado</span>
                             </div>
                             <div className="h-12 w-52 rounded-r-xl border-2 border-vgray flex items-center text-vgray2 px-3 ">
-                                <h1 className="font-semibold text-vgray2 outline-none text-black font-semibold w-full text-right">{resultadoxemp} COP</h1>
+                                <h1 className="text-vgray2 outline-none font-semibold w-full text-right">{resultadoxemp} COP</h1>
                             </div>
                         </div>
                     </div>

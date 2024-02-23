@@ -30,7 +30,8 @@ export function Intereses() {
             setCurrentPage(0);
         }
     }, [searchTerm]);
-    return (<div className="w-full max-w-fu h-svh">
+    return (
+    <div className="w-full max-w-fu h-svh overflow-y-auto">
         <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de intereses</h1>
 
         <section className=" flex justify-center">
@@ -58,7 +59,7 @@ export function Intereses() {
             </div>
 
             {intereses.map((interes, index) => (
-                <div className="h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-5 bg grid-cols-6">
+                <div className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5 bg grid-cols-6">
                     <h1 className="text-vgraydark font-semibold">{interes.mes}</h1>
                     <h1 className="text-vgraydark font-semibold text-center">{interes.fechainicio}</h1>
                     <h1 className="text-vgraydark font-semibold text-center">{interes.fechafin}</h1>

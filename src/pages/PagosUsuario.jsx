@@ -38,7 +38,7 @@ export function PagosUsuario() {
     }, [searchTerm]);
     return (
 
-        <div className="w-full max-w-fu h-svh ">
+        <div className="w-full max-w-fu h-svh overflow-y-auto">
             <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de pagos </h1>
             {error ? (
                 <h1 className="text-red-500 font-semibold px-16 mt-4 text-3xl text-center ">{error}</h1>
@@ -68,7 +68,7 @@ export function PagosUsuario() {
                         </div>
 
                         {pagos.map((pago, index) => (
-                            <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-3 mb-3"
+                            <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5"
                                 style={{ gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr' }}>
                                 <h1 className="text-vgraydark font-semibold">{pago.nombreEmpresa}</h1>
                                 <h1 className="text-vgraydark font-semibold text-center">{pago.nombreObra}</h1>
