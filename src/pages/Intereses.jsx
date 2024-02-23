@@ -2,7 +2,7 @@ import { Plus, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { getIntereses } from "../requests/getIntereses";
-import { PaginationButtons } from "../components/PaginationButtons";
+import { PaginationButtons } from "../components/paginationButtons";
 
 
 export function Intereses() {

@@ -1,7 +1,7 @@
 import { Eye, Plus, Search, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { getUsuarios } from "../requests/getUsuarios";
-import { PaginationButtons } from "../components/PaginationButtons";
+import { PaginationButtons } from "../components/paginationButtons";
 import { useNavigate } from "react-router-dom";
 
 

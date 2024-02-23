@@ -2,7 +2,7 @@ import { ChevronLeft, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPagosUsuario } from "../requests/getPagosUsuario";
-import { PaginationButtons } from "../components/PaginationButtons";
+import { PaginationButtons } from "../components/paginationButtons";
 
 export function PagosUsuario() {
   const { id } = useParams();
