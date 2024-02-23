@@ -2,6 +2,8 @@ import { Eye, Plus, Search, SquarePen } from "lucide-react";
 import { getEmpresas } from "../requests/getEmpresas";
 import { useState, useEffect } from "react";
 import { Paginationbuttons } from "../components/paginationButtons";
+import { Link } from 'react-router-dom';
+
 
 
 export function Empresas() {
@@ -15,7 +17,7 @@ export function Empresas() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const empresasData = await getEmpresas(currentPage,searchTerm);
+        const empresasData = await getEmpresas(currentPage, searchTerm);
         setEmpresas(empresasData.listaempresas);
         setLempresas(empresasData);
       } catch (error) {
@@ -24,13 +26,13 @@ export function Empresas() {
     }
 
     fetchData();
-  }, [currentPage,searchTerm]);
+  }, [currentPage, searchTerm]);
 
   useEffect(() => {
     if (searchTerm !== '') {
       setCurrentPage(0);
     }
-  }, [searchTerm]); 
+  }, [searchTerm]);
   return (
 
     <div className="w-full max-w-fu h-svh overflow-y-auto">
@@ -42,10 +44,12 @@ export function Empresas() {
             <Search size={20} color="#7D7D7D" />
             <input onChange={(event) => { setSearchTerm(event.target.value); }} type="text" placeholder="Buscar" className=" bg-[#E6E5E5] placeholder:font-medium placeholder:text-[#7D7D7D] outline-none text-black font-semibold ml-3 w-44" />
           </div>
-          <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" >
-            <Plus size={20} color="#FFFFFF" />
-            Añadir
-          </button>
+          <Link to="/empresas/registroempresas">
+            <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" >
+              <Plus size={20} color="#FFFFFF" />
+              Añadir
+            </button>
+          </Link>
         </div>
       </section>
 
