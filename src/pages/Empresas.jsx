@@ -1,7 +1,7 @@
 import { Eye, Plus, Search, SquarePen } from "lucide-react";
 import { getEmpresas } from "../requests/getEmpresas";
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PaginationButtons } from "../components/PaginationButtons";
 
 
@@ -12,7 +12,7 @@ export function Empresas() {
   const [lempresas, setLempresas] = useState([]);
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(0)
-
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchData() {
@@ -73,8 +73,15 @@ export function Empresas() {
             <h1 className="text-vgraydark font-semibold text-center">{empresa.telefono}</h1>
             <h1 className="text-vgraydark font-semibold text-center">{empresa.numobras}</h1>
             <div className="flex gap-5 justify-center">
-              <Eye color="#204ADF" />
-              <SquarePen color="#00AF00" />
+              <button onClick={()=>{
+                navigate(`/empresas/obras`)
+              }}>
+                <Eye color="#204ADF" />
+              </button>
+              <button>
+                <SquarePen color="#00AF00" />
+              </button>
+
             </div>
           </div>
         ))}

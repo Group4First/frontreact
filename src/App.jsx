@@ -10,6 +10,7 @@ import { Intereses } from './pages/Intereses'
 import { Usuarios } from './pages/Usuarios'
 import { PagosUsuario } from './pages/PagosUsuario'
 import { RegistroEmpresa } from './pages/RegistroEmpresa'
+import { Obras } from './pages/Obras'
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
     element: <MainContentWithSidebar> <RegistroEmpresa/> </MainContentWithSidebar>
   },
 
-  
+  {
+    path: '/empresas/obras/:id',
+    element: <MainContentWithSidebar> <Obras/> </MainContentWithSidebar>
+  },
+
   {
     path: '/calculo-fic',
     element: <MainContentWithSidebar> <Calculo_fic/> </MainContentWithSidebar>
