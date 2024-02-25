@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
@@ -15,12 +15,12 @@ export function PaginationButtons({ totalPages, setCurrentPage }) {
   });
 
   const next = () => {
-    
     if (active === totalPages) return;
 
     setActive(active + 1);
     setCurrentPage(active);
   };
+
   const prev = () => {
     if (active === 1) return;
 
@@ -57,29 +57,35 @@ export function PaginationButtons({ totalPages, setCurrentPage }) {
 
   return (
     <div className="flex items-center gap-4 mb-10">
-      <Button
+      <IconButton
         variant="text"
         className="flex items-center gap-2"
         onClick={prev}
         disabled={active === 1}
         sx={{
-          color: "#4CAF50", // Cambia el color del texto según tus necesidades
+          backgroundColor: active !== 1 ? "#fff" : "gray",
+          color: "#4CAF50",
+          borderRadius: "4px", // Cuadrado
+          width: "32px", // Ajusta el ancho según tus necesidades
+          height: "32px", // Ajusta la altura según tus necesidades
         }}
       >
-        <ChevronLeft strokeWidth={2} className="h-4 w-4" /> Anterior
-      </Button>
+        <ChevronLeft strokeWidth={2} className="h-4 w-4" />
+      </IconButton>
       <div className="flex items-center gap-2">{renderPageButtons()}</div>
-      <Button
-        variant="text"
-        className="flex items-center gap-2"
+      <IconButton
         onClick={next}
         disabled={active === totalPages}
         sx={{
-          color: "#4CAF50", // Cambia el color del texto según tus necesidades
+          backgroundColor: active !== totalPages ? "#fff" : "gray",
+          color: "#4CAF50",
+          borderRadius: "4px", // Cuadrado
+          width: "32px", // Ajusta el ancho según tus necesidades
+          height: "32px", // Ajusta la altura según tus necesidades
         }}
       >
-        Siguiente <ChevronRight strokeWidth={2} className="h-4 w-4" />
-      </Button>
+        <ChevronRight strokeWidth={2} className="h-4 w-4" />
+      </IconButton>
     </div>
   );
 }
