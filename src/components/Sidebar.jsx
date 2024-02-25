@@ -19,7 +19,7 @@ export function Sidebar() {
   }, [])
 
   return (
-    <section className="h-svh px-5 bg-[#F4F4F4] border-r-2 border-mygray flex flex-col items-center relative">
+    <section className="h-svh px-5 bg-[#F4F4F4] border-r-2 border-mygray flex flex-col items-center max-lg:-translate-x-[300px] transition-all duration-300 absolute left-0">
       <img className="w-28 mt-5 mb-14" src="/logoSena.svg" alt=""></img>
 
       <NavButton Icon={LayoutDashboard} text="Dashboard" url="/dashboard" />

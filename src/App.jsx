@@ -65,7 +65,7 @@ export function App() {
 
 function MainContentWithSidebar({children}) {
   return (
-    <section className='w-full max-h-svh flex overflow-hidden'>
+    <section className='w-full max-h-svh flex overflow-hidden lg:pl-[260px] transition-all duration-300'>
       <Sidebar/>
       <section className='w-full max-h-svh relative overflow-hidden'>
         {children}

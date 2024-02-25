@@ -55,7 +55,7 @@ export function Empresas() {
 
 
       <section className="flex flex-col items-center relative overflow-x-auto">
-        <div className="h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg"
+        <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg"
           style={{ gridTemplateColumns: '2fr 0.7fr 1fr 1fr 0.7fr 0.5fr' }}>
           <h1 className=" text-vgraylight font-medium">Nombre</h1>
           <h1 className=" text-vgraylight font-medium text-center">Tipo</h1>
@@ -64,28 +64,30 @@ export function Empresas() {
           <h1 className=" text-vgraylight font-medium text-center">Obras</h1>
         </div>
 
-        {empresas.map((empresa, index) => (
-          <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5"
-            style={{ gridTemplateColumns: '2fr 0.7fr 1fr 1fr 0.7fr 0.5fr' }}>
-            <h1 className="text-vgraydark font-semibold">{empresa.razonsocial}</h1>
-            <h1 className="text-vgraydark font-semibold text-center">{empresa.tipodocumento}</h1>
-            <h1 className="text-vgraydark font-semibold text-center">{empresa.numidentificacion}</h1>
-            <h1 className="text-vgraydark font-semibold text-center">{empresa.telefono}</h1>
-            <h1 className="text-vgraydark font-semibold text-center">{empresa.numobras}</h1>
-            <div className="flex gap-5 justify-center">
-              <button onClick={()=>{
-                navigate(`/empresas/obras`)
-              }}>
-                <Eye color="#204ADF" />
-              </button>
-              <button>
-                <SquarePen color="#00AF00" />
-              </button>
+        <div className="w-full flex xl:items-center xl:flex-col max-xl:justify-center max-xl:flex-row max-xl:flex-wrap max-xl:-translate-y-16">
+          {empresas.map((empresa, index) => (
+            <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[2fr_0.7fr_1fr_1fr_0.7fr_0.5fr] xl:h-14 xl:w-11/12`}>
+              <h1 className="text-left"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Nombre: </span> {empresa.razonsocial}</h1>
+              <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tipo: </span> {empresa.tipodocumento}</h1>
+              <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Documento: </span> {empresa.numidentificacion}</h1>
+              <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tel: </span> {empresa.telefono}</h1>
+              <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Obras: </span> {empresa.numobras}</h1>
+              <div className="flex gap-5 justify-end xl:justify-center">
+                <button onClick={()=>{
+                  navigate(`/empresas/obras`)
+                }}>
+                  <Eye color="#204ADF" />
+                </button>
+                <button>
+                  <SquarePen color="#00AF00" />
+                </button>
 
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
+
       <div className="w-full flex justify-center mt-5">
         <PaginationButtons totalPages={lempresas.totalpaginas} setCurrentPage={setCurrentPage} />
       </div>
