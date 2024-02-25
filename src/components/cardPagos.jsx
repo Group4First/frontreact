@@ -16,7 +16,7 @@ export function CardPagos({ color, type, text }) {
     };
   
     return (
-      <div className="w-44 rounded-lg py-2" style={cardStyle}>
+      <div className="w-36 rounded-lg py-2" style={cardStyle}>
         <h3 style={typeStyle}>{type}</h3>
         <h3 style={textStyle} className="mt-1">{text}</h3>
       </div>
