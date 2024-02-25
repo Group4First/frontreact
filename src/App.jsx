@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 
   {
     path: '/empresas/registroempresas',
-    element:  <RegistroEmpresa/> 
+    element: <MainContentWithSidebar> <RegistroEmpresa/> </MainContentWithSidebar> 
   },
 
   {
