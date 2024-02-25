@@ -44,12 +44,13 @@ export function Empresas() {
             <Search size={20} color="#7D7D7D" />
             <input onChange={(event) => { setSearchTerm(event.target.value); }} type="text" placeholder="Buscar" className=" bg-[#E6E5E5] placeholder:font-medium placeholder:text-[#7D7D7D] outline-none text-black font-semibold ml-3 w-44" />
           </div>
-          <Link to="/empresas/registroempresas">
-            <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" >
-              <Plus size={20} color="#FFFFFF" />
-              Añadir
-            </button>
-          </Link>
+          <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => {
+            navigate('/empresas/registroempresas')
+          }}>
+            <Plus size={20} color="#FFFFFF" />
+            Añadir
+          </button>
+
         </div>
       </section>
 
@@ -73,8 +74,8 @@ export function Empresas() {
               <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tel: </span> {empresa.telefono}</h1>
               <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Obras: </span> {empresa.numobras}</h1>
               <div className="flex gap-5 justify-end xl:justify-center">
-                <button onClick={()=>{
-                  navigate(`/empresas/obras`)
+                <button onClick={() => {
+                  navigate(`/empresas/obras/${empresa.numidentificacion}`)
                 }}>
                   <Eye color="#204ADF" />
                 </button>

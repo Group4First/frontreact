@@ -2,18 +2,17 @@
 import Cookies from "js-cookie";
 
 
-export async function getObrasEmpresa(id, currentpage, searchTerm) {
-    console.log(currentpage);
+export async function getObrasEmpresa(id, searchTerm) {
+
     const token = Cookies.get('session') ? JSON.parse(Cookies.get('session')).token : '';
 
     try {
-        const url = new URL('http://localhost:8080/api/user/getuserxpay');
+        const url = new URL('http://localhost:8080/api/works/getbybussines');
 
         // Agrega los parámetros a la URL
-        url.searchParams.append('Iduser', id);
+        url.searchParams.append('bussinesid', id);
         url.searchParams.append('searchTerm', searchTerm);
-        url.searchParams.append('page', currentpage);
-        url.searchParams.append('size', '');
+
         console.log(url);
         const result = await fetch(url, {
             method: 'GET',
