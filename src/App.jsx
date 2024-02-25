@@ -3,7 +3,7 @@ import Login from './pages/login'
 import { ContextProvider } from './context/context'
 import { Sidebar } from './components/Sidebar'
 import { Empresas } from './pages/Empresas'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Dasboard } from './pages/Dashboard'
 import { Calculo_fic } from './pages/Calculo_fic'
 import { Intereses } from './pages/Intereses'
@@ -64,10 +64,14 @@ export function App() {
 }
 
 function MainContentWithSidebar({children}) {
+
+  const [isActive, setIsActive] = useState(false)
+
   return (
     <section className='w-full max-h-svh flex overflow-hidden lg:pl-[260px] transition-all duration-300'>
-      <Sidebar/>
-      <section className='w-full max-h-svh relative overflow-hidden'>
+      <Sidebar isActive={isActive} setIsActive={setIsActive}/>
+
+      <section onClick={() => {setIsActive(false)}} className='w-full max-h-svh relative overflow-hidden'>
         {children}
       </section>
     </section>

@@ -28,12 +28,12 @@ function Login() {
 
 	}
 
-	useEffect(() => {
-		const data = Cookies.get('session')
-		if (data) {
-			navigate('/dashboard')
-		}
-	}, [])
+	// useEffect(() => {
+	// 	const data = Cookies.get('session')
+	// 	if (data) {
+	// 		navigate('/dashboard')
+	// 	}
+	// }, [])
 
 	return (
 		<div className="w-full h-svh flex justify-center items-center">

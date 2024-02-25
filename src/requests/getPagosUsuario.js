@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 export async function getPagosUsuario(id, currentpage, searchTerm) {
     console.log(currentpage);
-    const token = Cookies.get('session') ? JSON.parse(Cookies.get('session')).token : '';
+    const token = Cookies.get('session') != undefined ? JSON.parse(Cookies.get('session')).token : '';
 
     try {
         const url = new URL('http://localhost:8080/api/user/getuserxpay');
@@ -29,9 +29,13 @@ export async function getPagosUsuario(id, currentpage, searchTerm) {
             return data;
         } else {
             const errorResponse = await result.json();
-            throw new Error(errorResponse.motive || 'Error al obtener los datos');
+            const error = new Error(errorResponse.motive || 'error');
+            error.status = result.status
+            throw error
         }
     } catch (error) {
-        throw new Error(error.message);
+        const err = new Error(error);
+        err.status = error.status
+        throw err
     }
 }

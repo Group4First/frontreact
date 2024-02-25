@@ -21,8 +21,9 @@ export function PagosUsuario() {
         setLPagos(pagosData);
         setError(null);
       } catch (error) {
-        setPagos([]);
-        setError(error.message);
+        setPagos([])
+        // if (error.status == 401) navigate('/')
+        setError(error.message)
       }
     }
 
