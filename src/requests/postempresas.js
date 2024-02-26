@@ -23,9 +23,9 @@ export async function postbussiness(numidentificacion,razonsocial,tipodocumento,
     ciudad: ciudad,
     fecha: fecha
   }
-  
 
-  const url = new URL('http://localhost:8080/api/user/create');
+
+  const url = new URL('http://localhost:8080/api/bussiness/add');
 
   return await newRequest({url, body, method: 'POST'})
 }

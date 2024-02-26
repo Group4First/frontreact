@@ -1,46 +1,56 @@
 import { Check, X, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
+import { useGlobalContext } from "../context/context"
+import { postbussiness } from "../requests/postempresas";
 
 export function RegistroEmpresa() {
 
     const navigate = useNavigate();
+    const { activeAlert } = useGlobalContext()
     const [selectedDocumentType, setSelectedDocumentType] = useState('NIT');
 
     const handleDocumentClick = (documentType) => {
         setSelectedDocumentType(documentType);
     };
 
-    const [Razonsocial, setRazonsocial] = useState('')
-    const [NumIdentificacion, setNumIdentificacion] = useState('')
-    const [Tipodocumento, setTipodocumento] = useState('')
-    const [DV, setDV] = useState('')
-    const [CIIU, setCIIU] = useState('')
-    const [Actividadeconomica, setActividadeconomica] = useState('')
-    const [Direccion, setDireccion] = useState('')
-    const [Municipio, setMunicipio] = useState('')
-    const [Telefono, setTelefono] = useState('')
-    const [Fax, setFax] = useState('')
-    const [Correo, setCorreo] = useState('')
-    const [Representantelegal, setRepresentantelegal] = useState('')
-    const [CCrepresentantelegal, setCCrepresentantelegal] = useState('')
-    const [Cajadecompensacion, setCajadecompensacion] = useState('')
-    const [Escrituraconstitucion, setEscrituraconstitucion] = useState('')
-    const [Notaria, setNotaria] = useState('')
-    const [Ciudad, setCiudad] = useState('')
-    const [Fecha, setFecha] = useState('')
+    const [Razonsocial, setRazonsocial] = useState('');
+    const [NumIdentificacion, setNumIdentificacion] = useState('');
+    const [DV, setDV] = useState('');
+    const [CIIU, setCIIU] = useState('');
+    const [Actividadeconomica, setActividadeconomica] = useState('');
+    const [Direccion, setDireccion] = useState('');
+    const [Municipio, setMunicipio] = useState('');
+    const [Telefono, setTelefono] = useState('');
+    const [Fax, setFax] = useState('');
+    const [Correo, setCorreo] = useState('');
+    const [Representantelegal, setRepresentantelegal] = useState('');
+    const [CCrepresentantelegal, setCCrepresentantelegal] = useState('');
+    const [Cajadecompensacion, setCajadecompensacion] = useState('');
+    const [Escrituraconstitucion, setEscrituraconstitucion] = useState('');
+    const [Notaria, setNotaria] = useState('');
+    const [Ciudad, setCiudad] = useState('');
+    const [Fecha, setFecha] = useState('');
 
 
 
     async function registrarempresa() {
-        try {
-            const data = await metodoporhacer()
-            Cookies.set('session', JSON.stringify(data))
-            alert("Empresa registrada con exito")
-        } catch (error) {
 
+        if (!Razonsocial.trim() || !NumIdentificacion.trim() || !selectedDocumentType || !DV.trim()
+            || !CIIU.trim() || !Actividadeconomica.trim()  || !Direccion.trim()  || !Municipio.trim()  || !Telefono.trim()
+            || !Fax.trim() || !Correo.trim() || !Representantelegal.trim() || !CCrepresentantelegal.trim() || !Cajadecompensacion.trim() || !Escrituraconstitucion.trim() 
+            || !Notaria.trim() || !Ciudad.trim() || !Fecha.trim()
+        ) {
+            activeAlert('error', 'Todos los campos son requeridos', 2000);
+            return;
         }
-
+        try {
+            const res = await postbussiness(NumIdentificacion,Razonsocial,selectedDocumentType,DV,Direccion,Municipio,Telefono,
+                Fax,Actividadeconomica,CIIU,Correo,Representantelegal,CCrepresentantelegal,Cajadecompensacion,Escrituraconstitucion,Notaria,Ciudad,Fecha);
+            activeAlert('success', res, 2000);
+        } catch (error) {
+            activeAlert('error', error.message, 2000);
+        }
     }
 
 
@@ -56,7 +66,7 @@ export function RegistroEmpresa() {
                     <button className="px-4 py-2 bg-red-500 text-white font-medium text-sm rounded-lg flex items-center gap-2 mr-4" onClick={() => { navigate(`/empresas`); }}>
                         <X className="h-4 w-4" /> Cancelar
                     </button>
-                    <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2">
+                    <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={registrarempresa}>
                         <Check className="h-4 w-4" /> Guardar
                     </button>
 
@@ -76,7 +86,7 @@ export function RegistroEmpresa() {
                             <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 border-l-0 border-r-0 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex border-l-2 rounded-bl-xl border-2' : 'block md:flex rounded-1-xl border-t-2 border-b-2'}`} style={{ backgroundColor: selectedDocumentType === 'NIT' ? '#BAEDBD' : 'white' }} onClick={() => handleDocumentClick('NIT')}>
                                 <button className="font-semibold text-black p-2">NIT</button>
                             </div>
-                            <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex rounded-br-xl border-2' : 'block md:flex rounded-r-xl border-2'}`} style={{ backgroundColor: selectedDocumentType === 'Cedula' ? '#BAEDBD' : 'white' }} onClick={() => handleDocumentClick('Cedula')}>
+                            <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex rounded-br-xl border-2' : 'block md:flex rounded-r-xl border-2'}`} style={{ backgroundColor: selectedDocumentType === 'CC' ? '#BAEDBD' : 'white' }} onClick={() => handleDocumentClick('CC')}>
                                 <button className="font-semibold text-black">Cedula</button>
                             </div>
                         </div>
