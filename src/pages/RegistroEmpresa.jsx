@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
 export function RegistroEmpresa() {
+
     const navigate = useNavigate();
     const [selectedDocumentType, setSelectedDocumentType] = useState('NIT');
     const [selectedOption, setSelectedOption] = useState('No');
-
     const handleDocumentClick = (documentType) => {
         setSelectedDocumentType(documentType);
     };
@@ -14,6 +14,30 @@ export function RegistroEmpresa() {
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     };
+
+    const [Razonsocial, setRazonsocial] = useState('')
+    const [NumIdentificacion, setNumIdentificacion] = useState('')
+    const [DV, setDV] = useState('')
+    const [CIIU, setCIIU] = useState('')
+    const [Direccion, setDireccion] = useState('')
+    const [Municipio, setMunicipio] = useState('')
+    const [Telefono, setTelefono] = useState('')
+    const [Fax, setFax] = useState('')
+
+
+
+    async function registrarempresa() {
+        try {
+            const data = await metodoporhacer()
+            Cookies.set('session', JSON.stringify(data))
+            alert("Empresa registrada con exito")
+        } catch (error) {
+
+        }
+
+    }
+
+
 
     return (
         <section>
@@ -37,7 +61,7 @@ export function RegistroEmpresa() {
 
                     <div className=" flex flex-wrap centered">
                         <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-4">
-                            <input type="text" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                            <input type="text" required="true" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                         </div>
                         <div className="flex centered flex-wrap mr-4 mt-4">
                             <div className={`bg-white h-12 w-[284px] border-2 border-vgray flex items-center font-semibold text-vgray2 px-3 ${window.innerWidth <= 425 ? 'rounded-t-xl border-t-2 border-l-2 border-r-2 border-b-0' : 'rounded-l-xl border-2'}`}>
@@ -118,9 +142,7 @@ export function RegistroEmpresa() {
                         <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 mt-4">
                             <input type="text" placeholder="Caja de compensacion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                         </div>
-                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-4 mt-4">
-                            <input type="text" placeholder="Efectua los pagos en" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
-                        </div>
+
                     </div>
 
                     <div className=" flex flex-wrap mt-4 centered">
@@ -133,9 +155,11 @@ export function RegistroEmpresa() {
                         <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 mt-4 ">
                             <input type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                         </div>
-                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 mt-4 mb-10">
-                            <input type="date" placeholder="Fecha" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-4 mt-4 mb-20">
+                            <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow mt-[10px] ml-4">Fecha</label>
+                            <input type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                         </div>
+
                     </div>
 
                 </section>

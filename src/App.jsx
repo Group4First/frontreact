@@ -11,6 +11,8 @@ import { Usuarios } from './pages/Usuarios'
 import { PagosUsuario } from './pages/PagosUsuario'
 import { RegistroEmpresa } from './pages/RegistroEmpresa'
 import { Obras } from './pages/Obras'
+import { RegistroIntereses } from './pages/RegistroIntereses'
+import { RegistroUsuarios } from './pages/RegistroUsuarios'
 
 const router = createBrowserRouter([
   {
@@ -45,8 +47,16 @@ const router = createBrowserRouter([
     element: <MainContentWithSidebar> <Intereses/> </MainContentWithSidebar>
   },
   {
+    path: '/intereses/registrointereses',
+    element: <MainContentWithSidebar> <RegistroIntereses/> </MainContentWithSidebar>
+  },
+  {
     path: '/usuarios',
     element: <MainContentWithSidebar> <Usuarios/> </MainContentWithSidebar>
+  },
+  {
+    path: '/usuarios/RegistroUsuarios',
+    element: <MainContentWithSidebar> <RegistroUsuarios/> </MainContentWithSidebar>
   },
   {
     path: '/usuarios/pagos/:id',

@@ -1,11 +1,12 @@
 import { Plus, Search } from "lucide-react";
 import { useState, useEffect } from "react";
-
+import { useNavigate } from 'react-router-dom';
 import { getIntereses } from "../requests/getIntereses";
 import { PaginationButtons } from "../components/paginationButtons";
 
 
 export function Intereses() {
+    const navigate = useNavigate()
     const [intereses, setIntereses] = useState([]);
     const [lintereses, setLintereses] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
@@ -41,7 +42,9 @@ export function Intereses() {
                         <Search size={20} color="#7D7D7D" />
                         <input onChange={(event) => { setSearchTerm(event.target.value); }} type="text" placeholder="Buscar" className=" bg-[#E6E5E5] placeholder:font-medium placeholder:text-[#7D7D7D] outline-none text-black font-semibold ml-3 w-44" />
                     </div>
-                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" >
+                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => {
+                        navigate('/intereses/registrointereses')
+                    }}>
                         <Plus size={20} color="#FFFFFF" />
                         Añadir
                     </button>

@@ -45,7 +45,9 @@ export function Usuarios() {
                         <Search size={20} color="#7D7D7D" />
                         <input onChange={(event) => { setSearchTerm(event.target.value); }} type="text" placeholder="Buscar" className=" bg-[#E6E5E5] placeholder:font-medium placeholder:text-[#7D7D7D] outline-none text-black font-semibold ml-3 w-44" />
                     </div>
-                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" >
+                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => {
+                        navigate('/usuarios/RegistroUsuarios')
+                    }}>
                         <Plus size={20} color="#FFFFFF" />
                         Añadir
                     </button>

@@ -14,7 +14,7 @@ body {
 }
 
 input[type="number"] {
--moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -27,5 +27,23 @@ input[type="number"]::-webkit-outer-spin-button {
   @media(max-width: 700px) {
     justify-content: center;
     align-items: center;
+  }
+}
+
+
+.centered-full {
+  @media (min-width: 700px) {
+    margin-left: 70px;
+  }
+
+  @media (max-width: 700px) {
+    width: 284px;
+  }
+}
+
+
+.full-height {
+  @media (max-height: 450px) {
+    height: 100vh;
   }
 }
