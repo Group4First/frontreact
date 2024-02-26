@@ -18,8 +18,13 @@ export async function newRequest ({url, method, body}) {
     const result = await fetch(url, bodyRequest)
   
     if (result.status === 200) {
-      const data = await result.json();
-      return data;
+      try {
+        const data = await result.json();
+        return data;
+    } catch (error) {
+        const textData = await result.text();
+        return textData;
+    }
     } else {
         const errorResponse = await result.json();
         const error = new Error(errorResponse.motive || 'error');
