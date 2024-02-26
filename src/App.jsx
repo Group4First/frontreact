@@ -36,7 +36,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/empresas/obras/:id',
+    path: '/empresas/:id/obras',
     element: <MainContentWithSidebar> <Obras/> </MainContentWithSidebar>
   },
 
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
     element: <MainContentWithSidebar> <RegistroUsuarios/> </MainContentWithSidebar>
   },
   {
-    path: '/usuarios/pagos/:id',
+    path: '/usuarios/:id/pagos',
     element: <MainContentWithSidebar> <PagosUsuario/> </MainContentWithSidebar>
   }
   

@@ -56,7 +56,7 @@ export function Empresas() {
 
 
       <section className="flex flex-col items-center relative overflow-x-auto">
-        <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg"
+        <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 "
           style={{ gridTemplateColumns: '2fr 0.7fr 1fr 1fr 0.7fr 0.5fr' }}>
           <h1 className=" text-vgraylight font-medium">Nombre</h1>
           <h1 className=" text-vgraylight font-medium text-center">Tipo</h1>
@@ -75,7 +75,7 @@ export function Empresas() {
               <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Obras: </span> {empresa.numobras}</h1>
               <div className="flex gap-5 justify-end xl:justify-center">
                 <button onClick={() => {
-                  navigate(`/empresas/obras/${empresa.numidentificacion}`)
+                  navigate(`/empresas/${empresa.numidentificacion}/obras`)
                 }}>
                   <Eye color="#204ADF" />
                 </button>

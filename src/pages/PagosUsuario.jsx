@@ -65,7 +65,7 @@ export function PagosUsuario() {
           </section>
 
           <section className="flex flex-col items-center relative overflow-x-auto">
-            <div className="h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg" style={{ gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr' }}>
+            <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 " style={{ gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr' }}>
               <h1 className="text-vgraylight font-medium">Empresa</h1>
               <h1 className="text-vgraylight font-medium text-center">Obra</h1>
               <h1 className="text-vgraylight font-medium text-center" >Fecha de pago</h1>
@@ -73,11 +73,12 @@ export function PagosUsuario() {
             </div>
 
             {pagos.map((pago, index) => (
-              <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5" style={{ gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr' }}>
-                <h1 className="text-vgraydark font-semibold">{pago.nombreEmpresa}</h1>
-                <h1 className="text-vgraydark font-semibold text-center">{pago.nombreObra}</h1>
-                <h1 className="text-vgraydark font-semibold text-center">{pago.fechapago}</h1>
-                <h1 className="text-vgreen font-semibold text-center">{formatCurrency(pago.valorTotal)}</h1>
+              <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1.5fr_1.5fr_1fr_1fr] xl:h-14 xl:w-11/12`}>
+                <h1 className="text-left"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Empresa: </span> {pago.nombreEmpresa}</h1>
+                <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Fecha de pago: </span> {pago.nombreObra}</h1>
+                <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Total: </span> {pago.fechapago}</h1>
+                <h1 className="text-vgreen"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Obra: </span> {formatCurrency(pago.valorTotal)}</h1>
+
               </div>
             ))}
           </section>

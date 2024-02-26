@@ -53,7 +53,7 @@ export function Intereses() {
 
 
             <section className="flex flex-col items-center relative overflow-x-auto">
-                <div className="h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg grid-cols-6">
+                <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg grid-cols-6">
                     <h1 className=" text-vgraylight font-medium">Mes</h1>
                     <h1 className=" text-vgraylight font-medium text-center">Desde</h1>
                     <h1 className=" text-vgraylight font-medium text-center" >Hasta</h1>
@@ -61,17 +61,21 @@ export function Intereses() {
                     <h1 className=" text-vgraylight font-medium text-center">Tasa mensual</h1>
                     <h1 className=" text-vgraylight font-medium text-center">Tasa diaria</h1>
                 </div>
+                <div className="w-full flex xl:items-center xl:flex-col max-xl:justify-center max-xl:flex-row max-xl:flex-wrap max-xl:-translate-y-16">
+                    {intereses.map((interes, index) => (
+                        <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-6 xl:h-14 xl:w-11/12`}>
+                           
+                           <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Mes: </span>{interes.mes}</h1>
+                           <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Desde: </span>{interes.fechainicio}</h1>
+                           <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Hasta: </span>{interes.fechafin}</h1>
+                           <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa legal usura: </span>{interes.tasa}%</h1>
+                           <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa mensual: </span>{interes.mensual}%</h1>
+                           <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa diaria: </span>{interes.diario}%</h1>
+                        </div>
+                    ))}
 
-                {intereses.map((interes, index) => (
-                    <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5 bg grid-cols-6">
-                        <h1 className="text-vgraydark font-semibold">{interes.mes}</h1>
-                        <h1 className="text-vgraydark font-semibold text-center">{interes.fechainicio}</h1>
-                        <h1 className="text-vgraydark font-semibold text-center">{interes.fechafin}</h1>
-                        <h1 className="text-vgraydark font-semibold text-center">{interes.tasa}%</h1>
-                        <h1 className="text-vgraydark font-semibold text-center">{interes.mensual}%</h1>
-                        <h1 className="text-vgraydark font-semibold text-center">{interes.diario}%</h1>
-                    </div>
-                ))}
+                </div>
+
             </section>
             <div className="w-full flex justify-center mt-5">
                 <PaginationButtons totalPages={lintereses.totalpaginas} setCurrentPage={setCurrentPage} />
