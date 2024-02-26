@@ -1,12 +1,14 @@
-import { Check, X, ChevronLeft,Eye, EyeOff } from "lucide-react";
+import { Check, X, ChevronLeft, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { useGlobalContext } from "../context/context"
+
 import { postuser } from "../requests/postusuarios";
 
 
 export function RegistroUsuarios() {
     const navigate = useNavigate();
+    const { activeAlert } = useGlobalContext()
 
     const [type, setType] = useState('password')
     const [documento, setDocumento] = useState('');
@@ -15,26 +17,27 @@ export function RegistroUsuarios() {
     const [contraseña, setContraseña] = useState('');
     const [correo, setCorreo] = useState('');
     const [rol, setRol] = useState('');
-    const [respuesta, setRespuesta] = useState('');
 
     const Roles = [
         "Superadmin", "Usuario"
     ];
 
     function showHidePassword() {
-		type == 'password' ? setType('text') : setType('password')
-	}
+        type == 'password' ? setType('text') : setType('password')
+    }
 
     async function registrarusuario() {
-		try {
-           alert(documento + "-" +nombre+ "-" +apellido+ "-" +contraseña+ "-" +correo+ "-" +rol);
-           const res = await postuser(documento, nombre, apellido, contraseña, correo, rol);
-           alert(JSON.stringify(res));
-
-		} catch (error) {
-
-		}
-	}
+        if (!documento.trim() || !nombre.trim() || !apellido.trim() || !contraseña.trim() || !correo.trim() || !rol.trim()) {
+            activeAlert('error', 'Todos los campos son requeridos', 2000);
+            return;
+        }
+        try {
+            const res = await postuser(documento, nombre, apellido, contraseña, correo, rol);
+            activeAlert('success', res, 2000);
+        } catch (error) {
+            activeAlert('error', error.message, 2000);
+        }
+    }
 
     return (
         <section>
@@ -50,9 +53,6 @@ export function RegistroUsuarios() {
                     <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={registrarusuario}>
                         <Check className="h-4 w-4" /> Guardar
                     </button>
-
-
-
                 </div>
                 <section className="mt-5 ml-5 overflow-y-auto " style={{ maxHeight: "calc(100vh - 100px)" }}>
                     <div className=" flex flex-wrap mt-4 centered">
@@ -60,11 +60,11 @@ export function RegistroUsuarios() {
                             <input onChange={(event) => { setNombre(event.target.value); }} type="text" placeholder="Nombre" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                         </div>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                            <input onChange={(event) => { setApellido(event.target.value); }} type="text" placeholder="Apellido" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"  />
+                            <input onChange={(event) => { setApellido(event.target.value); }} type="text" placeholder="Apellido" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                         </div>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                             <select onChange={(event) => { setRol(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                <option value="" disabled selected hidden>Selecciona un rol</option>
+                                <option value="" defaultValue={"Selecciona un rol"}>Selecciona un rol</option>
                                 {Roles.map((rol, index) => (
                                     <option key={index} value={rol}>{rol}</option>
                                 ))}
@@ -76,7 +76,7 @@ export function RegistroUsuarios() {
                             <input onChange={(event) => { setDocumento(event.target.value); }} type="number" placeholder="Documento" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                         </div>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                            <input onChange={(event) => { setCorreo(event.target.value); }} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"  />
+                            <input onChange={(event) => { setCorreo(event.target.value); }} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                         </div>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                             <input onChange={(event) => { setContraseña(event.target.value) }} type={type} placeholder="Contraseña" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
@@ -85,8 +85,6 @@ export function RegistroUsuarios() {
                             </button>
                         </div>
                     </div>
-
-
                 </section>
             </div>
         </section>
