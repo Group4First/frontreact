@@ -63,7 +63,7 @@ export function Intereses() {
                 </div>
 
                 {intereses.map((interes, index) => (
-                    <div className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5 bg grid-cols-6">
+                    <div key={index} className="h-14 w-11/12 bg-white rounded-xl grid items-center px-3 mt-5 bg grid-cols-6">
                         <h1 className="text-vgraydark font-semibold">{interes.mes}</h1>
                         <h1 className="text-vgraydark font-semibold text-center">{interes.fechainicio}</h1>
                         <h1 className="text-vgraydark font-semibold text-center">{interes.fechafin}</h1>

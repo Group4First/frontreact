@@ -22,7 +22,6 @@ export function PagosUsuario() {
         setError(null);
       } catch (error) {
         setPagos([])
-        // if (error.status == 401) navigate('/')
         setError(error.message)
       }
     }

@@ -20,9 +20,8 @@ export function Usuarios() {
                 const usuariosData = await getUsuarios(currentPage, searchTerm);
                 setUsuarios(usuariosData.userinfo);
                 setLusuarios(usuariosData)
-                console.log(usuariosData);
             } catch (error) {
-                console.error('Error al obtener datos de empresas:', error);
+                console.error('Error al obtener datos de usuarios:', error);
             }
         }
 

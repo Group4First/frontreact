@@ -1,27 +1,13 @@
+import { newRequest } from "./newRequest"
 
-export async function postLogin(documento,contraseña){
+export async function postLogin(documento, contraseña){
 
   const body ={
     documentousuario: documento,
-    contraseñausuario:contraseña
+    contraseñausuario: contraseña
   }
 
- try {
-  const result = await fetch('http://localhost:8080/api/user/auth',{
-    method:'POST',
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body:JSON.stringify(body)
-  })
+  const url = "http://localhost:8080/api/user/auth"
 
-  if (result.status == 200) {
-    return await result.json()
-  } else {
-    throw new Error('error para pedir los datos')
-  }
-
- } catch (error) {
-    throw new Error('Error para pedir los datos')
- }
+  return await newRequest({url, body, method: 'POST'})
 }

@@ -13,6 +13,8 @@ import { RegistroEmpresa } from './pages/RegistroEmpresa'
 import { Obras } from './pages/Obras'
 import { RegistroIntereses } from './pages/RegistroIntereses'
 import { RegistroUsuarios } from './pages/RegistroUsuarios'
+import { Alert } from './components/Alert'
+import { ContainerAlerts } from './components/ContainerAlerts'
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,7 @@ export function App() {
   return (
     <ContextProvider>
       <RouterProvider router={router}/>
+      <ContainerAlerts/>
     </ContextProvider>
   )
 }
