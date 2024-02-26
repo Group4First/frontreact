@@ -53,7 +53,7 @@ export function Intereses() {
 
 
             <section className="flex flex-col items-center relative overflow-x-auto">
-                <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 bg grid-cols-6">
+                <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6 grid-cols-6">
                     <h1 className=" text-vgraylight font-medium">Mes</h1>
                     <h1 className=" text-vgraylight font-medium text-center">Desde</h1>
                     <h1 className=" text-vgraylight font-medium text-center" >Hasta</h1>

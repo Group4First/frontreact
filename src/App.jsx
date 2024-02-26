@@ -15,6 +15,8 @@ import { RegistroIntereses } from './pages/RegistroIntereses'
 import { RegistroUsuarios } from './pages/RegistroUsuarios'
 import { Alert } from './components/Alert'
 import { ContainerAlerts } from './components/ContainerAlerts'
+import { VistaPagos } from './pages/VistaPagos'
+import { RegistroPagos } from './pages/RegistroPagos'
 
 const router = createBrowserRouter([
   {
@@ -39,7 +41,16 @@ const router = createBrowserRouter([
     path: '/empresas/:id/obras',
     element: <MainContentWithSidebar> <Obras/> </MainContentWithSidebar>
   },
-
+  {
+   // path: '/empresas/:idempresa/obras/:idobra/registro',
+    path: '/empresas/:idempresa/obras/registro',
+    element: <MainContentWithSidebar> <RegistroPagos/> </MainContentWithSidebar>
+  },  
+  {
+  
+    path: '/empresas/:idempresa/obras/:idobra/pagos',
+    element: <MainContentWithSidebar> <VistaPagos/> </MainContentWithSidebar>
+  },
   {
     path: '/calculo-fic',
     element: <MainContentWithSidebar> <Calculo_fic/> </MainContentWithSidebar>
