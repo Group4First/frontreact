@@ -65,11 +65,11 @@ export function Usuarios() {
                 </div>
                 <div className="w-full flex xl:items-center xl:flex-col max-xl:justify-center max-xl:flex-row max-xl:flex-wrap max-xl:-translate-y-16">
                     {usuarios.map((usuario, index) => (
-                        <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1fr_1fr_1.5fr_1fr_0.7fr_0.5fr] xl:h-14 xl:w-11/12`}>
-                            <h1 className="text-left"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Nombre: </span> {usuario.nombre_completo}</h1>
-                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Documento: </span> {usuario.documento}</h1>
-                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black "> Correo: </span> {usuario.email}</h1>
-                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Rol: </span> {usuario.inforoles.nombrerol}</h1>
+                        <div key={index} className={`text-vgraydark font-semibold bg-whitex rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1fr_1fr_1.5fr_1fr_0.7fr_0.5fr] xl:h-14 xl:w-11/12`}>
+                            <h1 className="text-left max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Nombre: </span> {usuario.nombre_completo}</h1>
+                            <h1 className="max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Documento: </span> {usuario.documento}</h1>
+                            <h1 className="overflow-wrap-normal break-all max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black "> Correo: </span> {usuario.email}</h1>
+                            <h1 className="max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Rol: </span> {usuario.inforoles.nombrerol}</h1>
                             <div className="flex xl:items-center xl:justify-center mt-3">
                                 <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Activo: </span>
                                 <span className={`${usuario.isactive ? "bg-green-600" : "bg-red-500"} rounded-full h-6 w-6`}></span>
