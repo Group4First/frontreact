@@ -55,10 +55,10 @@ export function Obras() {
 
                                 const colorType = obra.tipo == 'Mensual' ? '#5A7FFF' : '#F97429'
                                 const colorState = obra.estado == 'En curso' ? '#39A900' : '#FF0000'
-                                console.log(`Index: ${index}, Text: ${obra.estado}, Color: ${colorState}`);
+
 
                                 return <div key={index} className="bg-white rounded-lg cursor-pointer"
-                                    onClick={() => { obra.estado == 'Finalizada' ? navigate(`/empresas/${id}/obras/${obra.id}/pagos`) : navigate(`/empresas/${id}/obras/registro`) }}>
+                                    onClick={() => { navigate(`/empresas/${id}/obras/${obra.id}/pagos`)}}>
                                     <div className="w-full flex-col ml-10 mt-7 mb-7">
                                         <h1 className="font-semibold text-vgraydark text-lg ">{obra.descripcion}</h1>
                                         <h2 className="font-medium text-vgraylight mt-10 text-nowrap">Ultimo pago: {obra.fechaultimopago == null ? 'No hay pagos' : obra.fechaultimopago}</h2>

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, useLocation} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, useLocation } from 'react-router-dom'
 import Login from './pages/login'
 import { ContextProvider } from './context/context'
 import { Sidebar } from './components/Sidebar'
@@ -13,59 +13,51 @@ import { RegistroEmpresa } from './pages/RegistroEmpresa'
 import { Obras } from './pages/Obras'
 import { RegistroIntereses } from './pages/RegistroIntereses'
 import { RegistroUsuarios } from './pages/RegistroUsuarios'
-import { Alert } from './components/Alert'
 import { ContainerAlerts } from './components/ContainerAlerts'
 import { VistaPagos } from './pages/VistaPagos'
-import { RegistroPagos } from './pages/RegistroPagos'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login/>
+    element: <Login />
   },
   {
     path: '/dashboard',
-    element: <MainContentWithSidebar> <Dasboard/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <Dasboard /> </MainContentWithSidebar>
   },
   {
     path: '/empresas',
-    element: <MainContentWithSidebar> <Empresas/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <Empresas /> </MainContentWithSidebar>
   },
 
   {
     path: '/empresas/registroempresas',
-    element: <MainContentWithSidebar> <RegistroEmpresa/> </MainContentWithSidebar> 
+    element: <MainContentWithSidebar> <RegistroEmpresa /> </MainContentWithSidebar>
   },
 
   {
     path: '/empresas/:id/obras',
-    element: <MainContentWithSidebar> <Obras/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <Obras /> </MainContentWithSidebar>
   },
   {
-   // path: '/empresas/:idempresa/obras/:idobra/registro',
-    path: '/empresas/:idempresa/obras/registro',
-    element: <MainContentWithSidebar> <RegistroPagos/> </MainContentWithSidebar>
-  },  
-  {
-  
     path: '/empresas/:idempresa/obras/:idobra/pagos',
-    element: <MainContentWithSidebar> <VistaPagos/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <VistaPagos /> </MainContentWithSidebar>
   },
   {
     path: '/calculo-fic',
-    element: <MainContentWithSidebar> <Calculo_fic/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <Calculo_fic /> </MainContentWithSidebar>
   },
   {
     path: '/intereses',
-    element: <MainContentWithSidebar> <Intereses/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <Intereses /> </MainContentWithSidebar>
   },
   {
     path: '/intereses/registrointereses',
-    element: <MainContentWithSidebar> <RegistroIntereses/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <RegistroIntereses /> </MainContentWithSidebar>
   },
   {
     path: '/usuarios',
-    element: <MainContentWithSidebar> <Usuarios/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <Usuarios /> </MainContentWithSidebar>
   },
   {
     path: '/usuarios/registrousuarios',
@@ -77,29 +69,29 @@ const router = createBrowserRouter([
   },
   {
     path: '/usuarios/:id/pagos',
-    element: <MainContentWithSidebar> <PagosUsuario/> </MainContentWithSidebar>
+    element: <MainContentWithSidebar> <PagosUsuario /> </MainContentWithSidebar>
   }
-  
+
 ])
 
 export function App() {
   return (
     <ContextProvider>
-      <RouterProvider router={router}/>
-      <ContainerAlerts/>
+      <RouterProvider router={router} />
+      <ContainerAlerts />
     </ContextProvider>
   )
 }
 
-function MainContentWithSidebar({children}) {
+function MainContentWithSidebar({ children }) {
 
   const [isActive, setIsActive] = useState(false)
 
   return (
     <section className='w-full max-h-svh flex overflow-hidden lg:pl-[260px] transition-all duration-300'>
-      <Sidebar isActive={isActive} setIsActive={setIsActive}/>
+      <Sidebar isActive={isActive} setIsActive={setIsActive} />
 
-      <section onClick={() => {setIsActive(false)}} className='w-full max-h-svh relative overflow-hidden'>
+      <section onClick={() => { setIsActive(false) }} className='w-full max-h-svh relative overflow-hidden'>
         {children}
       </section>
     </section>
