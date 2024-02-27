@@ -45,7 +45,7 @@ export function Usuarios() {
                         <input onChange={(event) => { setSearchTerm(event.target.value); }} type="text" placeholder="Buscar" className=" bg-[#E6E5E5] placeholder:font-medium placeholder:text-[#7D7D7D] outline-none text-black font-semibold ml-3 w-44" />
                     </div>
                     <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => {
-                        navigate('/usuarios/RegistroUsuarios')
+                        navigate('/usuarios/registrousuarios')
                     }}>
                         <Plus size={20} color="#FFFFFF" />
                         Añadir
@@ -65,7 +65,7 @@ export function Usuarios() {
                 </div>
                 <div className="w-full flex xl:items-center xl:flex-col max-xl:justify-center max-xl:flex-row max-xl:flex-wrap max-xl:-translate-y-16">
                     {usuarios.map((usuario, index) => (
-                        <div key={index} className={`text-vgraydark font-semibold bg-whitex rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1fr_1fr_1.5fr_1fr_0.7fr_0.5fr] xl:h-14 xl:w-11/12`}>
+                        <div key={index} className={`bg-white text-vgraydark font-semibold bg-whitex rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1fr_1fr_1.5fr_1fr_0.7fr_0.5fr] xl:h-14 xl:w-11/12`}>
                             <h1 className="text-left max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Nombre: </span> {usuario.nombre_completo}</h1>
                             <h1 className="max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Documento: </span> {usuario.documento}</h1>
                             <h1 className="overflow-wrap-normal break-all max-xl:mb-2"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black "> Correo: </span> {usuario.email}</h1>
@@ -81,7 +81,7 @@ export function Usuarios() {
                                 }}>
                                     <Eye />
                                 </button>
-                                <button>
+                                <button onClick={() => {navigate(`/usuarios/actualizarusuario/${usuario.documento}`)}} >
                                     <SquarePen color="#00AF00" />
                                 </button>
                             </div>
@@ -91,12 +91,12 @@ export function Usuarios() {
                 </div>
 
 
-            </section>
+            </section >
             <div className="w-full flex justify-center mt-5">
                 <PaginationButtons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} />
             </div>
 
-        </div>
+        </div >
 
     )
 }

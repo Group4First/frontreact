@@ -68,7 +68,11 @@ const router = createBrowserRouter([
     element: <MainContentWithSidebar> <Usuarios/> </MainContentWithSidebar>
   },
   {
-    path: '/usuarios/RegistroUsuarios',
+    path: '/usuarios/registrousuarios',
+    element: <MainContentWithSidebar> <RegistroUsuarios/> </MainContentWithSidebar>
+  },
+  {
+    path: '/usuarios/actualizarusuario/:docusuario',
     element: <MainContentWithSidebar> <RegistroUsuarios/> </MainContentWithSidebar>
   },
   {
