@@ -13,7 +13,7 @@ export function Calculo_fic() {
     useEffect(() => {
         async function fetchSalario() {
             try {
-                const data = await getsmlv();
+                const data = await getsmlv(new Date().getFullYear());
                 setResultSalario(parseFloat(data));
             } catch (error) {
                 console.error('Error al obtener el salario:', error);
