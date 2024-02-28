@@ -34,7 +34,10 @@ const router = createBrowserRouter([
     path: '/empresas/registroempresas',
     element: <MainContentWithSidebar> <RegistroEmpresa /> </MainContentWithSidebar>
   },
-
+  {
+    path: '/empresas/actualizarempresa/:idempresa',
+    element: <MainContentWithSidebar> <RegistroEmpresa/> </MainContentWithSidebar>
+  },
   {
     path: '/empresas/:id/obras',
     element: <MainContentWithSidebar> <Obras /> </MainContentWithSidebar>

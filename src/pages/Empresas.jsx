@@ -79,7 +79,7 @@ export function Empresas() {
                 }}>
                   <Eye color="#204ADF" />
                 </button>
-                <button>
+                <button onClick={() => {navigate(`/empresas/actualizarempresa/${empresa.numidentificacion}`)}}>
                   <SquarePen color="#00AF00" />
                 </button>
 
