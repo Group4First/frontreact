@@ -43,26 +43,30 @@ export function VistaPagos() {
             <button className="flex items-center text-vgreen font-semibold px-16 mt-5 text-xl gap-4" onClick={() => { navigate(`/empresas/${idempresa}/obras`); }}>
                 <ChevronLeft size={30} />Vista de pago
             </button>
-            <section className="w-full flex justify-around flex-wrap mt-8 mb-10 gap-10">
+            <section className="w-full flex max-xl:flex-col max-xl:items-center justify-around flex-wrap mt-8  max-lg:mb-1 xl:mb-10 gap-10">
                 <div className="max-w-[350px]">
                     <h1 className="text-vgraydark font-semibold text-xl">{lpagos.razonsocial}</h1>
                     <h2 className="text-vgraylight font-medium text-lg mt-4 ">{lpagos.descripcion}</h2>
                 </div>
 
-                <div className="flex gap-10">
-                    <div className="max-w-52 flex flex-col justify-around h-full">
-                        <h1 className="text-vgraylight font-medium text-md"> Fecha inicio: <br /> {lpagos.fechainicio}</h1>
-                        <h1 className="text-vgraylight font-medium text-md"> Fecha fin: <br /> {lpagos.fechafin}</h1>
+                <div className="flex flex-col gap-4">
+                    <div className="flex flex-row max-xl:flex-col max-xl:gap-5  gap-10">
+                        <h1 className="text-vgraylight font-medium text-md"> Fecha inicio: {lpagos.fechainicio}</h1>
+                        <h1 className="text-vgraylight font-medium text-md"> Fecha fin:  {lpagos.fechafin}</h1>
                     </div>
-                    <div className="max-w-40 flex flex-col gap-3">
+                    <div className=" flex max-xl:flex-col max-xl:gap-5 gap-20">
                         <CardPagos color={colorType} type={'Tipo'} text={lpagos.tipo} />
                         <CardPagos color={colorState} type={'Estado'} text={lpagos.estado} />
+
+                        <div className="flex items-center">
+                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && (
+                                <button className="h-12 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400">
+                                    Finalizar obra
+                                </button>
+                            )}
+                        </div>
                     </div>
-                    {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && (
-                        <button className="h-14 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400">
-                            Finalizar obra
-                        </button>
-                    )}
+
                 </div>
 
             </section>
