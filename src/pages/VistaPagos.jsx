@@ -1,16 +1,40 @@
-import { ChevronLeft } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, ChevronUp, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PaginationButtons } from "../components/paginationButtons";
 import { CardPagos } from "../components/cardPagos";
 import { getPagosObra } from "../requests/getPagosObra";
+import { postPagoMe } from "../requests/postPagoMe";
+import { getCalculoPagoMe } from "../requests/getCalculoPagoMe";
 
 export function VistaPagos() {
     const { idempresa } = useParams();
     const { idobra } = useParams();
     const [pagos, setPagos] = useState([]);
     const [lpagos, setLPagos] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [calc, setCalc] = useState([]);
+
+    const [fechapago, setFechapago] = useState('');
+    const [mes, setMes] = useState('');
+    const [anio, setAnio] = useState('');
+    const [tipopago, setTipoPago] = useState('');
+    const [numtrabajadores, setNumtrabajadores] = useState('');
+    const [valorfic, setValorfic] = useState('');
+    const [valorintereses, setValorintereses] = useState('');
+    const [valortotal, setValortotal] = useState('');
+
+
+    const [showAcordeon, setShowAcordeon] = useState(false);
+    const toggleAcordeon = () => {
+        setShowAcordeon(!showAcordeon);
+    };
+    const meses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const tpagos = [
+        "Cheque", "Efectivo"
+    ];
+
     // const [error, setError] = useState(null);
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(0)
@@ -34,6 +58,43 @@ export function VistaPagos() {
 
         fetchData();
     }, [currentPage]);
+
+
+    async function postPagosme() {
+        try {
+            const pagosData = await postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
+
+            console.log("pagosdata:", pagosData);
+
+        } catch (error) {
+            console.log("errorpost: ", error);
+
+
+        }
+    }
+
+    
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // Check if all required fields are filled
+                if (mes && anio && fechapago && numtrabajadores) {
+                    const calcData = await getCalculoPagoMe(mes,anio,fechapago,numtrabajadores);
+                    setCalc(calcData);
+                    setValorfic(calc.valor_fic)
+                    setValorintereses(calc.interescalculado)
+                    setValortotal(calc.totalconinteres)
+                    console.log("calcData:", calcData);
+                }
+            } catch (error) {
+                console.log("errorcalcData:", error);
+            }
+        }
+    
+        fetchData();
+    }, [mes, anio, fechapago, numtrabajadores, valorfic,valortotal,valorintereses]);
+
+
     const colorType = lpagos.tipo == 'Mensual' ? '#5A7FFF' : '#F97429'
     const colorState = lpagos.estado == 'En curso' ? '#39A900' : '#FF0000'
 
@@ -75,7 +136,89 @@ export function VistaPagos() {
                 <>
                     {lpagos.estado == 'En curso' && (
                         <>
-                            {/* registro pago mensual*/}
+                            <div className="relative flex xl:p-12 max-xl:p-4 items-center gap-4">
+                                <div className="xl:scale-0 max-xl:flex-grow max-xl:border-t max-xl:border-gray-400"></div>
+                                <button onClick={toggleAcordeon} className="flex  text-gray-400">
+                                    Nuevo pago
+                                    {showAcordeon ? (<ChevronUp />) : (<ChevronDown />)}
+                                </button>
+                                <div className="flex-grow border-t border-gray-400"></div>
+                            </div>
+
+                            {showAcordeon && (
+                                <>
+                                    <section className="mb-10">
+                                        <div className="flex flex-wrap mt-4 max-xl:justify-center">
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input
+                                                    onChange={(event) => {
+                                                        const inputValue = event.target.value;
+                                                        const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                                                        const limitedValue = sanitizedValue.substring(0, 4); // Limita a los primeros 4 caracteres
+                                                        setAnio(event.target.value = limitedValue);
+                                                    }}
+                                                    type="number"
+                                                    placeholder="Año"
+                                                    className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                                                    maxLength="4"
+                                                />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <select onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                                    <option value="" defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
+                                                    {meses.map((mes, index) => (
+                                                        <option key={index} value={mes}>{mes}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
+                                                <input onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <select onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                                    <option value="" defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
+                                                    {tpagos.map((tpago, index) => (
+                                                        <option key={index} value={tpago}>{tpago}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input
+                                                    onChange={(event) => {
+                                                        const inputValue = event.target.value;
+                                                        const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                                                        setNumtrabajadores(event.target.value = sanitizedValue);
+                                                    }}
+                                                    type="number"
+                                                    placeholder="Número trabajadores"
+                                                    className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                                                />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input  type="text"value={calc.valor_fic} placeholder="FIC" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input type="text" value={calc.interescalculado} placeholder="Intereses" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input  type="text" value={calc.totalconinteres} placeholder="Total" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                            </div>
+
+                                        </div>
+                                        <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
+                                            <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={()=>{
+                                                postPagosme();
+                                            }}>
+                                                <Plus />
+                                                Añadir
+                                            </button>
+                                        </div>
+                                    </section>
+                                </>
+                            )}
+
+
                         </>
                     )}
                     <section className="flex flex-col items-center relative overflow-x-auto">
@@ -117,7 +260,81 @@ export function VistaPagos() {
                 <>
                     {lpagos.estado == 'En curso' ? (
                         <>
-                            {/* registro pago presuntiva*/}
+                            <div className="relative flex xl:p-12 max-xl:p-4 items-center gap-4">
+                                <div className="xl:scale-0 max-xl:flex-grow max-xl:border-t max-xl:border-gray-400"></div>
+                                <button onClick={toggleAcordeon} className="flex  text-gray-400">
+                                    Registrar pago
+                                    {showAcordeon ? (<ChevronUp />) : (<ChevronDown />)}
+                                </button>
+                                <div className="flex-grow border-t border-gray-400"></div>
+                            </div>
+
+                            {showAcordeon && (
+                                <>
+                                    <section className="mb-10 mr-8">
+                                        <div className="flex xl:justify-end mt-4 max-xl:justify-center">
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 xl:mr-4 mt-6 centered-full ">
+                                                <input
+                                                    onChange={(event) => { (event.target.value); }}
+                                                    type="text"
+                                                    placeholder="% Porcentaje de pago"
+                                                    className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-wrap mt-4 max-xl:justify-center">
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
+                                                <input onChange={(event) => { setFecha(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <select onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                                    <option value="" defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
+                                                    {tpagos.map((tpago, index) => (
+                                                        <option key={index} value={tpago}>{tpago}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input
+                                                    onChange={(event) => {
+                                                        const inputValue = event.target.value;
+                                                        const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                                                        event.target.value = sanitizedValue;
+                                                    }}
+                                                    type="number"  // Cambiado a tipo 'tel'
+                                                    placeholder="Valor del contrato"
+                                                    className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                                                />
+                                            </div>
+                                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
+                                                <input
+                                                    onChange={(event) => {
+                                                        const inputValue = event.target.value;
+                                                        const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                                                        event.target.value = sanitizedValue;
+                                                    }}
+                                                    type="text"
+                                                    placeholder="FIC"
+                                                    className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                                                />
+                                            </div>
+
+
+                                        </div>
+
+                                        <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
+                                            <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2">
+                                                <Check />
+                                                Registrar
+                                            </button>
+                                        </div>
+                                    </section>
+                                </>
+                            )}
+
+
                         </>
                     ) : (
                         <>
@@ -143,8 +360,9 @@ export function VistaPagos() {
                         </>
                     )}
                 </>
-            )}
-        </div>
+            )
+            }
+        </div >
 
     )
 }
