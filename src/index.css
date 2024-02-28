@@ -24,7 +24,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .centered {
-  @media(max-width: 700px) {
+  @media(max-width: 1024px) {
     justify-content: center;
     align-items: center;
   }
