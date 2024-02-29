@@ -25,19 +25,19 @@ export function RegistroObra() {
                 </button>
             </div>
 
-            <div className=" flex flex-wrap mt-4 centered">
+        
                 <div>
-                    <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Nombre de la obra</label>
-                    <div className="bg-white max-xl:h-20 xl:h-20 w-[1130px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
+                    <label className="w-full flex mt-4 justify-center text-center text-black font-semibold">Nombre de la obra</label>
+                    <div className="bg-white max-xl:h-20 xl:h-20 w-11/12 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3  mt-1  centered ">
                         <textarea
                             onChange={(event) => { setNumIdentificacion(event.target.value); }}
                             placeholder="Numero de documento"
-                            className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full md:w-[1284px] max-xl:h-18 text-center" // Ajusta los estilos según tus necesidades
+                            className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full h-18 text-center" // Ajusta los estilos según tus necesidades
                             style={{ resize: 'none' }} // Evita que el usuario redimensione el textarea
                         />
                     </div>
                 </div>
-            </div>
+           
 
             <div className=" flex flex-wrap mt-4 centered">
                 <div>
@@ -50,7 +50,6 @@ export function RegistroObra() {
                             ))}
                         </select>
                     </div>
-
                 </div>
                 <div>
                     <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Fecha de inicio</label>
