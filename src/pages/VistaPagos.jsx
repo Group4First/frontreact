@@ -6,6 +6,7 @@ import { CardPagos } from "../components/cardPagos";
 import { getPagosObra } from "../requests/getPagosObra";
 import { postPagoMe } from "../requests/postPagoMe";
 import { getCalculoPagoMe } from "../requests/getCalculoPagoMe";
+import { postPagoPr } from "../requests/postPagoPr";
 
 export function VistaPagos() {
     const { idempresa } = useParams();
@@ -22,6 +23,9 @@ export function VistaPagos() {
     const [valorfic, setValorfic] = useState('');
     const [valorintereses, setValorintereses] = useState('');
     const [valortotal, setValortotal] = useState('');
+    const [porcentajeObra, setPorcentajeObra] = useState('');
+    const [valorContrato, setValorContrato] = useState('');
+    const [obraFinalizada, setObraFinalizada] = useState(false);
 
 
     const [showAcordeon, setShowAcordeon] = useState(false);
@@ -46,9 +50,11 @@ export function VistaPagos() {
     useEffect(() => {
         async function fetchData() {
             try {
+
                 const pagosData = await getPagosObra(idobra, currentPage);
                 setPagos(pagosData.listapagos);
                 setLPagos(pagosData);
+                setPorcentajeObra(lpagos.tipo === 'Mano de obra' ? 0.25 : 1);
                 console.log("pagosdata:", pagosData);
                 console.log("pagosdatalistapagos:", pagosData.listapagos);
             } catch (error) {
@@ -58,13 +64,23 @@ export function VistaPagos() {
         }
 
         fetchData();
-    }, [currentPage, reload]);
+    }, [currentPage, reload, porcentajeObra]);
 
 
     async function postPagosme() {
         try {
             const pagosData = await postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
             setReaload(!reload)
+
+            // Limpiar los inputs después de agregar un nuevo pago
+            setFechapago('');
+            setMes('');
+            setAnio('');
+            setTipoPago('');
+            setNumtrabajadores('');
+            setValorfic('');
+            setValorintereses('');
+            setValortotal('');
 
         } catch (error) {
             console.log("errorpost: ", error);
@@ -73,13 +89,43 @@ export function VistaPagos() {
         }
     }
 
-    
+    async function postPagospr() {
+        try {
+            const pagosData = await postPagoPr(fechapago, tipopago, valorfic, idobra);
+            setReaload(!reload)
+
+            // Limpiar los inputs después de agregar un nuevo pago
+
+            setTipoPago('');
+            setValorfic('');
+            console.log("pagospr: ", pagosData);
+
+        } catch (error) {
+            console.log("errorpost: ", error);
+
+
+        }
+    }
+
+    useEffect(() => {
+
+        // Check if all required fields are filled
+        if (valorContrato) {
+            const valorFIC = (parseFloat(valorContrato) * (porcentajeObra / 100)).toFixed(2);
+            setValorfic(valorFIC)
+
+            console.log("valorFIC:", valorFIC);
+        }
+    }
+
+        , [valorfic, valorContrato]);
+
     useEffect(() => {
         async function fetchData() {
             try {
                 // Check if all required fields are filled
                 if (mes && anio && fechapago && numtrabajadores) {
-                    const calcData = await getCalculoPagoMe(mes,anio,fechapago,numtrabajadores);
+                    const calcData = await getCalculoPagoMe(mes, anio, fechapago, numtrabajadores);
                     setCalc(calcData);
                     setValorfic(calc.valor_fic)
                     setValorintereses(calc.interescalculado)
@@ -90,9 +136,9 @@ export function VistaPagos() {
                 console.log("errorcalcData:", error);
             }
         }
-    
+
         fetchData();
-    }, [mes, anio, fechapago, numtrabajadores, valorfic,valortotal,valorintereses]);
+    }, [mes, anio, fechapago, numtrabajadores, valorfic, valortotal, valorintereses]);
 
 
     const colorType = lpagos.tipo == 'Mensual' ? '#5A7FFF' : '#F97429'
@@ -104,7 +150,7 @@ export function VistaPagos() {
             <button className="flex items-center text-vgreen font-semibold px-16 mt-5 text-xl gap-4" onClick={() => { navigate(`/empresas/${idempresa}/obras`); }}>
                 <ChevronLeft size={30} />Vista de pago
             </button>
-            <section className="w-full flex max-xl:flex-col max-xl:items-center justify-around flex-wrap mt-8  max-lg:mb-1 xl:mb-10 gap-10">
+            <section className="w-full flex max-xl:flex-col max-xl:items-center justify-around flex-wrap mt-8  max-lg:mb-1 xl:mb-2 gap-10">
                 <div className="max-w-[350px]">
                     <h1 className="text-vgraydark font-semibold text-xl">{lpagos.razonsocial}</h1>
                     <h2 className="text-vgraylight font-medium text-lg mt-4 ">{lpagos.descripcion}</h2>
@@ -121,14 +167,47 @@ export function VistaPagos() {
 
                         <div className="flex items-center">
                             {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && (
-                                <button className="h-12 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400">
+                                <button className="h-12 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400" onClick={() => {
+                                    // Actualiza el estado para indicar que la obra ha sido finalizada
+                                    setObraFinalizada(true);
+                                }}>
                                     Finalizar obra
                                 </button>
                             )}
                         </div>
+
                     </div>
 
                 </div>
+                {obraFinalizada && (
+                    <div className="w-full">
+                        <div className="relative flex xl:p-12 max-xl:p-4 items-center gap-4">
+                            <div className="flex-grow border-t border-gray-400"></div>
+                            <h1 className=" text-gray-400"> Fecha de finalizacion de la obra</h1>
+                            <div className="flex-grow border-t border-gray-400"></div>
+
+                        </div>
+                        <div className="w-full flex justify-center mt-2 gap-10 ">
+
+                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4  centered-full">
+                                <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
+                                <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                            </div>
+                            <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-vgreen  " onClick={() => {
+
+                            }}>
+                                Aceptar
+                            </button>
+
+                            <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-red-500  " onClick={() => {
+                                setObraFinalizada(false)
+                            }}>
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+                )}
 
             </section>
 
@@ -143,6 +222,7 @@ export function VistaPagos() {
                                     {showAcordeon ? (<ChevronUp />) : (<ChevronDown />)}
                                 </button>
                                 <div className="flex-grow border-t border-gray-400"></div>
+
                             </div>
 
                             {showAcordeon && (
@@ -151,6 +231,7 @@ export function VistaPagos() {
                                         <div className="flex flex-wrap mt-4 max-xl:justify-center">
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <input
+                                                    value={anio}
                                                     onChange={(event) => {
                                                         const inputValue = event.target.value;
                                                         const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
@@ -164,8 +245,8 @@ export function VistaPagos() {
                                                 />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <select onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                                    <option value="" defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
+                                                <select value={mes} onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                                    <option value={mes} defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
                                                     {meses.map((mes, index) => (
                                                         <option key={index} value={mes}>{mes}</option>
                                                     ))}
@@ -173,11 +254,11 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                                                <input onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                                <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <select onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                                    <option value="" defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
+                                                <select value={tipopago} onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                                    <option defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
                                                     {tpagos.map((tpago, index) => (
                                                         <option key={index} value={tpago}>{tpago}</option>
                                                     ))}
@@ -185,6 +266,7 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <input
+                                                    value={numtrabajadores}
                                                     onChange={(event) => {
                                                         const inputValue = event.target.value;
                                                         const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
@@ -196,18 +278,18 @@ export function VistaPagos() {
                                                 />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input  type="text"value={calc.valor_fic} placeholder="FIC" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                                <input type="text" value={valorfic} placeholder="FIC" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input type="text" value={calc.interescalculado} placeholder="Intereses" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                                <input type="text" value={valorintereses} placeholder="Intereses" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input  type="text" value={calc.totalconinteres} placeholder="Total" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                                <input type="text" value={valortotal} placeholder="Total" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
                                             </div>
 
                                         </div>
                                         <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
-                                            <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={()=>{
+                                            <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => {
                                                 postPagosme();
                                             }}>
                                                 <Plus />
@@ -252,7 +334,7 @@ export function VistaPagos() {
                     </section>
 
                     <div className="w-full flex justify-center mt-5">
-                        <PaginationButtons totalPages={lpagos.totalPages} setCurrentPage={setCurrentPage} />
+                        <PaginationButtons totalPages={lpagos.totalpaginas} setCurrentPage={setCurrentPage} />
                     </div>
 
                 </>
@@ -270,11 +352,13 @@ export function VistaPagos() {
                             </div>
 
                             {showAcordeon && (
+
                                 <>
                                     <section className="mb-10 mr-8">
                                         <div className="flex xl:justify-end mt-4 max-xl:justify-center">
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 xl:mr-4 mt-6 centered-full ">
                                                 <input
+                                                    value={`${porcentajeObra}%`}
                                                     onChange={(event) => { (event.target.value); }}
                                                     type="text"
                                                     placeholder="% Porcentaje de pago"
@@ -286,11 +370,11 @@ export function VistaPagos() {
                                         <div className="flex flex-wrap mt-4 max-xl:justify-center">
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                                                <input onChange={(event) => { setFecha(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                                <input onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <select onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                                    <option value="" defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
+                                                <select onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                                    <option value={tipopago} defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
                                                     {tpagos.map((tpago, index) => (
                                                         <option key={index} value={tpago}>{tpago}</option>
                                                     ))}
@@ -298,10 +382,11 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <input
+                                                    value={valorContrato}
                                                     onChange={(event) => {
                                                         const inputValue = event.target.value;
                                                         const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
-                                                        event.target.value = sanitizedValue;
+                                                        setValorContrato(event.target.value = sanitizedValue);
                                                     }}
                                                     type="number"  // Cambiado a tipo 'tel'
                                                     placeholder="Valor del contrato"
@@ -309,7 +394,7 @@ export function VistaPagos() {
                                                 />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input
+                                                <input value={valorfic}
                                                     onChange={(event) => {
                                                         const inputValue = event.target.value;
                                                         const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
@@ -325,7 +410,7 @@ export function VistaPagos() {
                                         </div>
 
                                         <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
-                                            <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2">
+                                            <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => { postPagospr() }}>
                                                 <Check />
                                                 Registrar
                                             </button>

@@ -6,8 +6,8 @@ export async function getPagosObra(id, currentpage) {
 
     // Agrega los parámetros a la URL
     url.searchParams.append('idwork', id);
-    url.searchParams.append('page', 0);
-    url.searchParams.append('size', 10);
+    url.searchParams.append('page', currentpage );
+    url.searchParams.append('size', '');
     console.log("url:", url);
     return await newRequest({ url, method: 'GET' })
 
