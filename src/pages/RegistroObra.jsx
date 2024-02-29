@@ -19,25 +19,35 @@ export function RegistroObra() {
                 </button>
             </div>
 
+           
+
+            <div className="relative flex xl:p-12 max-xl:p-4 items-center gap-4">
+                <div className="xl:scale-0 max-xl:flex-grow max-xl:border-t max-xl:border-gray-400"></div>
+                <h1 className=" text-gray-400">Nueva obra</h1>
+                <div className="flex-grow border-t border-gray-400"></div>
+
+            </div>
+
+
+            <div>
+                <label className="w-full flex mt-4 justify-center text-center text-black font-semibold">Nombre de la obra</label>
+                <div className="bg-white max-xl:h-20 xl:h-20 w-11/12 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3  mt-1  centered ">
+                    <textarea
+                        onChange={(event) => { setNumIdentificacion(event.target.value); }}
+                        placeholder="Numero de documento"
+                        className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full h-18 text-center" // Ajusta los estilos según tus necesidades
+                        style={{ resize: 'none' }} // Evita que el usuario redimensione el textarea
+                    />
+                </div>
+                
+            </div>
+
             <div className="w-11/12 flex justify-end mt-10 ml-5 centered">
                 <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={""}>
                     <Check className="max-h-4 max-w-4" /> Registrar
                 </button>
             </div>
 
-        
-                <div>
-                    <label className="w-full flex mt-4 justify-center text-center text-black font-semibold">Nombre de la obra</label>
-                    <div className="bg-white max-xl:h-20 xl:h-20 w-11/12 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3  mt-1  centered ">
-                        <textarea
-                            onChange={(event) => { setNumIdentificacion(event.target.value); }}
-                            placeholder="Numero de documento"
-                            className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full h-18 text-center" // Ajusta los estilos según tus necesidades
-                            style={{ resize: 'none' }} // Evita que el usuario redimensione el textarea
-                        />
-                    </div>
-                </div>
-           
 
             <div className=" flex flex-wrap mt-4 centered">
                 <div>
