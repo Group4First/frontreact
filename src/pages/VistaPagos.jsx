@@ -38,6 +38,7 @@ export function VistaPagos() {
     // const [error, setError] = useState(null);
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(0)
+    const [reload, setReaload] = useState(false)
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
     };
@@ -57,14 +58,13 @@ export function VistaPagos() {
         }
 
         fetchData();
-    }, [currentPage]);
+    }, [currentPage, reload]);
 
 
     async function postPagosme() {
         try {
             const pagosData = await postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
-
-            console.log("pagosdata:", pagosData);
+            setReaload(!reload)
 
         } catch (error) {
             console.log("errorpost: ", error);
