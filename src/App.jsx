@@ -15,6 +15,7 @@ import { RegistroIntereses } from './pages/RegistroIntereses'
 import { RegistroUsuarios } from './pages/RegistroUsuarios'
 import { ContainerAlerts } from './components/ContainerAlerts'
 import { VistaPagos } from './pages/VistaPagos'
+import { RegistroObra } from './pages/RegistroObra'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: '/empresas/:id/obras',
     element: <MainContentWithSidebar> <Obras /> </MainContentWithSidebar>
+  },
+  {
+    path: '/empresas/:id/obras/registroobra',
+    element: <MainContentWithSidebar> <RegistroObra /> </MainContentWithSidebar>
   },
   {
     path: '/empresas/:idempresa/obras/:idobra/pagos',
