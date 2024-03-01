@@ -73,13 +73,13 @@ export function RegistroEmpresa() {
     }, []);
 
     async function actualizarempresa() {
-        const camposRequeridos = [Direccion, Municipio, Telefono, Fax, Correo, Representantelegal,CCrepresentantelegal,Cajadecompensacion];
+        const camposRequeridos = [Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion];
         if (camposRequeridos.some(valor => !valor.trim())) {
             activeAlert('error', 'Todos los campos son requeridos', 2000);
             return;
         }
         try {
-            const res = await updatebuss(idempresa,Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion);
+            const res = await updatebuss(idempresa, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion);
             activeAlert('success', res, 2000);
         } catch (error) {
             activeAlert('error', error.message, 2000);
@@ -137,16 +137,17 @@ export function RegistroEmpresa() {
                         </div>
                     )}
                     {!idempresa && (
-                        <div className=" flex flex-wrap mt-4 centered">
+                        <div className=" flex flex-wrap centered">
                             <div >
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold">Codigo</label>
-                                <div className="bg-white h-12  w-32 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3">
+                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Codigo</label>
+                                <div className="bg-white h-12  w-32 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4" >
                                     <input onChange={(event) => { setCIIU(event.target.value); }} type="text" placeholder="CIIU" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-20 text-center" />
                                 </div>
                             </div>
+
                             <div>
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold">Actividad economica</label>
-                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 ml-10 ">
+                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Actividad economica</label>
+                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
                                     <input onChange={(event) => { setActividadeconomica(event.target.value); }} type="text" placeholder="Actividad economica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                                 </div>
                             </div>
@@ -160,7 +161,7 @@ export function RegistroEmpresa() {
                             </div>
                         </div>
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold">Municipio</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Municipio</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
                                 <input onChange={(event) => { setMunicipio(event.target.value); }} value={Municipio} type="text" placeholder="Municipio" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                             </div>
@@ -168,7 +169,7 @@ export function RegistroEmpresa() {
                     </div>
                     <div className=" flex flex-wrap centered">
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4 ">Telefono</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Telefono</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
                                 <input onChange={(event) => { setTelefono(event.target.value); }} value={Telefono} type="text" placeholder="Telefono" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                             </div>

@@ -46,9 +46,22 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-left: 70px;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 500px) and  (min-width: 0px){
     width: 284px;
   }
+
+  @media (max-width: 768px) and (min-width: 501px) {
+    width: 500px;
+  }
+
+  @media (max-width: 1200px) and (min-width: 769px) {
+    width: 580px;
+  }
+
+  @media (max-width: 1480px) and (min-width: 1201px) {
+    width: 800px;
+  }
+
 }
 
 
