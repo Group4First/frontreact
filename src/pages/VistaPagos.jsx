@@ -7,6 +7,7 @@ import { getPagosObra } from "../requests/getPagosObra";
 import { postPagoMe } from "../requests/postPagoMe";
 import { getCalculoPagoMe } from "../requests/getCalculoPagoMe";
 import { postPagoPr } from "../requests/postPagoPr";
+import { putFinalizarObra } from "../requests/putFinalizarObra";
 
 export function VistaPagos() {
     const { idempresa } = useParams();
@@ -16,6 +17,7 @@ export function VistaPagos() {
     const [calc, setCalc] = useState([]);
 
     const [fechapago, setFechapago] = useState('');
+    const [fechafin, setFechafin] = useState('');
     const [mes, setMes] = useState('');
     const [anio, setAnio] = useState('');
     const [tipopago, setTipoPago] = useState('');
@@ -91,6 +93,7 @@ export function VistaPagos() {
 
     async function postPagospr() {
         try {
+
             const pagosData = await postPagoPr(fechapago, tipopago, valorfic, idobra);
             setReaload(!reload)
 
@@ -107,6 +110,27 @@ export function VistaPagos() {
         }
     }
 
+    async function putFinalizar() {
+        try {
+            if (fechafin) {
+                const pagosData = await putFinalizarObra(idobra, fechafin);
+
+
+                setFechafin('')
+                setObraFinalizada(true);
+
+                console.log("putFinalizarObra: ", pagosData);
+            }
+
+
+
+        } catch (error) {
+            console.log("errorput: ", error);
+
+
+        }
+    }
+
     useEffect(() => {
 
         // Check if all required fields are filled
@@ -116,9 +140,7 @@ export function VistaPagos() {
 
             console.log("valorFIC:", valorFIC);
         }
-    }
-
-        , [valorfic, valorContrato]);
+    }, [valorfic, valorContrato]);
 
     useEffect(() => {
         async function fetchData() {
@@ -191,10 +213,10 @@ export function VistaPagos() {
 
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4  centered-full">
                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                                <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                <input value={fechafin} onChange={(event) => { setFechafin(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                             </div>
                             <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-vgreen  " onClick={() => {
-
+                                putFinalizar()
                             }}>
                                 Aceptar
                             </button>
@@ -246,7 +268,8 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <select value={mes} onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                                    <option value={mes} defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
+                                                    <option 
+                                                     defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
                                                     {meses.map((mes, index) => (
                                                         <option key={index} value={mes}>{mes}</option>
                                                     ))}
@@ -370,7 +393,7 @@ export function VistaPagos() {
                                         <div className="flex flex-wrap mt-4 max-xl:justify-center">
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                                                <input onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                                <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <select onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
