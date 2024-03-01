@@ -56,6 +56,7 @@ export function VistaPagos() {
                 const pagosData = await getPagosObra(idobra, currentPage);
                 setPagos(pagosData.listapagos);
                 setLPagos(pagosData);
+    
                 setPorcentajeObra(lpagos.tipo === 'Mano de obra' ? 0.25 : 1);
                 console.log("pagosdata:", pagosData);
                 console.log("pagosdatalistapagos:", pagosData.listapagos);
@@ -112,7 +113,7 @@ export function VistaPagos() {
         try {
             if (fechafin) {
                 const pagosData = await putFinalizarObra(idobra, fechafin);
-
+                setReaload(!reload)
 
                 setFechafin('')
                 setObraFinalizada(true);
@@ -185,7 +186,7 @@ export function VistaPagos() {
                         <CardPagos color={colorState} type={'Estado'} text={lpagos.estado} />
 
                         <div className="flex items-center">
-                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && (
+                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && pagos.length>0 &&(
                                 <button className="h-12 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400" onClick={() => {
                                     // Actualiza el estado para indicar que la obra ha sido finalizada
                                     setObraFinalizada(true);
