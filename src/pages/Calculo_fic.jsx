@@ -22,18 +22,11 @@ export function Calculo_fic() {
 
         fetchSalario();
     }, []);
-
-
-    // Función para manejar el cambio en el input del número de empleados
-    const handleChangeNumEmpleados = (event) => {
-        setNumEmpleados(event.target.value);
-    };
-
+   
     // Función para realizar el cálculo y actualizar el estado del resultado
     const handleCalcular = () => {
         setResultado(0);
         setResultadoxemp(0);
-
         // Realizar el cálculo basado en el número de empleados y el salario
         const costoPorEmpleado = resultsalario;
         const numCostoPorEmpleado = numEmpleados / 40;
@@ -58,7 +51,11 @@ export function Calculo_fic() {
                 <span className="mb-20 text-center">Calcular gastos mensuales y por empleado</span>
                 <h2 className="text-xl font-semibold text-gray-00 ">Numero de trabajadores</h2>
                 <div className="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mt-2">
-                    <input type="number" placeholder="Digite un numero" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-44" onChange={handleChangeNumEmpleados} />
+                    <input type="number" placeholder="Digite un numero" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-44" onChange={(event) => {
+                                                        const inputValue = event.target.value;
+                                                        const sanitizedValue = inputValue.replace(/\D/g, ''); 
+                                                        setNumEmpleados(event.target.value = sanitizedValue);
+                                                    }} />
                 </div>
                 <button className="px-4 py-2 bg-vgreen text-white font-bold text-lg mt-8 rounded-xl" onClick={handleCalcular}> Calcular</button>
 
