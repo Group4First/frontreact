@@ -93,32 +93,25 @@ export function VistaPagos() {
         try {
             const pagosData = await postPagoPr(fechapago, tipopago, valorfic, idobra);
             setReaload(!reload)
-
             // Limpiar los inputs después de agregar un nuevo pago
-
             setTipoPago('');
             setValorfic('');
             console.log("pagospr: ", pagosData);
 
         } catch (error) {
             console.log("errorpost: ", error);
-
-
         }
     }
 
     useEffect(() => {
-
         // Check if all required fields are filled
         if (valorContrato) {
             const valorFIC = (parseFloat(valorContrato) * (porcentajeObra / 100)).toFixed(2);
             setValorfic(valorFIC)
-
             console.log("valorFIC:", valorFIC);
         }
     }
-
-        , [valorfic, valorContrato]);
+    , [valorfic, valorContrato]);
 
     useEffect(() => {
         async function fetchData() {
@@ -136,7 +129,6 @@ export function VistaPagos() {
                 console.log("errorcalcData:", error);
             }
         }
-
         fetchData();
     }, [mes, anio, fechapago, numtrabajadores, valorfic, valortotal, valorintereses]);
 

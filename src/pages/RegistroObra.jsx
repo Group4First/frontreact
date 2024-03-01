@@ -45,14 +45,6 @@ export function RegistroObra() {
         traerinfoempresa();
     }, []);
 
-
-    const handleChange = (event) => {
-        const { value } = event.target;
-        if (value.length <= 100) {
-          setDescripcion(value);
-        }
-    };
-
     async function registrarobra() {
         if (!descripcion.trim() || !tipoObra.trim() || !fechainicio.trim() ) {
             activeAlert('error', 'Todos los campos son requeridos', 2000);
@@ -100,7 +92,11 @@ export function RegistroObra() {
                             <div className="bg-white h-16 w-[1130px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-textarea">
                                 <textarea
                                     value={descripcion}
-                                    onChange={handleChange}
+                                    onChange={(event) => {
+                                        const inputValue = event.target.value;
+                                        const limitedValue = inputValue.substring(0, 100); // Limita a los primeros 4 caracteres
+                                        setDescripcion(event.target.value = limitedValue);
+                                    }}
                                     placeholder="Descripcion / Nombre"
                                     className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center"
                                     style={{ resize: 'none' }}
