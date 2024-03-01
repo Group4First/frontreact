@@ -1,14 +1,26 @@
 import { ChevronLeft, Check, Plus } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useGlobalContext } from "../context/context"
+import { getbussinfo } from "../requests/getEmpresasInfo";
+import { postObras } from "../requests/postObras";
 
 
 export function RegistroObra() {
 
     const navigate = useNavigate()
-    const { id } = useParams();
+    const { activeAlert } = useGlobalContext()
 
-    const [tipoObra, setTipoObra] = useState(""); // Estado para el tipo de obra
+    const { id } = useParams();
+    const [razonsocialempresa, setRazonsocial] = useState("");
+    const [descripcion, setDescripcion] = useState('');
+    const [tipoObra, setTipoObra] = useState("");
+    const [fechainicio, setFechaInicio] = useState(""); 
+    const [fechafin, setFechaFin] = useState(""); 
+
+
+
+
     const Tipos = [
         "Mensual", "A todo costo", "Mano de obra"
     ];
@@ -18,8 +30,44 @@ export function RegistroObra() {
         setTipoObra(event.target.value);
     };
 
+    useEffect(() => {
+        async function traerinfoempresa() {
+            if (id) {
+                const emptra = await getbussinfo(id);
+                if (Object.keys(emptra).length > 0) {
+                    setRazonsocial(emptra.razonsocial);
+                }
+                else {
+                    activeAlert("error", "La informacion es vacia", 2000);
+                }
+            }
+        }
+        traerinfoempresa();
+    }, []);
 
 
+    const handleChange = (event) => {
+        const { value } = event.target;
+        if (value.length <= 100) {
+          setDescripcion(value);
+        }
+    };
+
+    async function registrarobra() {
+        if (!descripcion.trim() || !tipoObra.trim() || !fechainicio.trim() ) {
+            activeAlert('error', 'Todos los campos son requeridos', 2000);
+            return;
+        }
+        try {
+            const res = await postObras(descripcion, tipoObra, fechainicio , fechafin || null, id);
+            activeAlert('success', res, 2000);
+            navigate(`/empresas/${id}/obras`) 
+            
+            
+        } catch (error) {
+            activeAlert('error', error.message, 2000);
+        }
+    }
 
 
 
@@ -30,31 +78,34 @@ export function RegistroObra() {
                     <ChevronLeft size={30} />Registrar obras
                 </button>
 
-
+                <div className="w-full flex mt-14 ">
+                    <h1 className="ml-24 font-semibold text-xl text-vgraydark">{razonsocialempresa}</h1>
+                </div>
 
                 <section className="mt-5 ml-5 overflow-y-auto" style={{ maxHeight: "calc(100vh - 100px)" }}>
                     <div className="relative flex xl:p-12 max-xl:p-4 items-center gap-4">
                         <div className="xl:scale-0 max-xl:flex-grow max-xl:border-t max-xl:border-gray-400"></div>
                         <h1 className=" text-gray-400">Nueva obra</h1>
                         <div className="flex-grow border-t border-gray-400"></div>
-
                     </div>
 
                     <div className="w-11/12 flex justify-end mt-10 ml-5 centered">
-                        <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={""}>
+                        <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={registrarobra}>
                             <Check className="max-h-4 max-w-4" /> Registrar
                         </button>
                     </div>
-                    <div className=" flex flex-wrap mt-4 centered">
+                    <div className="flex flex-wrap mt-4 centered">
                         <div>
                             <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Nombre o descripcion de la obra</label>
                             <div className="bg-white h-16 w-[1130px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-textarea">
                                 <textarea
-                                    onChange={(event) => { setNumIdentificacion(event.target.value); }}
+                                    value={descripcion}
+                                    onChange={handleChange}
                                     placeholder="Descripcion / Nombre"
-                                    className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" // Ajusta los estilos según tus necesidades
-                                    style={{ resize: 'none' }} // Evita que el usuario redimensione el textarea
-                                />                    </div>
+                                    className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center"
+                                    style={{ resize: 'none' }}
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -76,7 +127,7 @@ export function RegistroObra() {
                         <div>
                             <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Fecha de inicio</label>
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                <input type="Date" placeholder="Fecha de inicio" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
+                                <input onChange={(event) => { setFechaInicio(event.target.value); }} type="Date" placeholder="Fecha de inicio" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
                             </div>
                         </div>
                         {tipoObra !== "Mensual" && ( // Si no es Mensual, muestra los inputs de fecha
@@ -84,7 +135,7 @@ export function RegistroObra() {
                                 <div>
                                     <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Fecha de fin</label>
                                     <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                        <input type="Date" placeholder="Fecha de fin" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
+                                        <input onChange={(event) => { setFechaFin(event.target.value); }}type="Date" placeholder="Fecha de fin" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
                                     </div>
                                 </div>
                             </>
