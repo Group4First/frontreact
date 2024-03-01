@@ -32,6 +32,7 @@ export function Intereses() {
             setCurrentPage(0);
         }
     }, [searchTerm]);
+    
     return (
         <div className="w-full max-w-fu h-svh overflow-y-auto">
             <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de intereses</h1>

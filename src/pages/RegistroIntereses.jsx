@@ -44,7 +44,6 @@ export function RegistroIntereses() {
                 console.error('Error al obtener el salario:', error);
             }
         }
-
         fetchSalario();
     }, [anio,smmv]);
 
