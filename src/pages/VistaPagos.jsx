@@ -129,8 +129,7 @@ export function VistaPagos() {
                 const pagosData = await putFinalizarObra(idobra, fechafin);
                 setReaload(!reload)
 
-                setFechafin('')
-                setObraFinalizada(true);
+                setObraFinalizada(false);
 
                 console.log("putFinalizarObra: ", pagosData);
             }
@@ -190,7 +189,7 @@ export function VistaPagos() {
                     <h2 className="text-vgraylight font-medium text-lg mt-4 ">{lpagos.descripcion}</h2>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 mb-10">
                     <div className="flex flex-row max-xl:flex-col max-xl:gap-5  gap-10">
                         <h1 className="text-vgraylight font-medium text-md"> Fecha inicio: {lpagos.fechainicio}</h1>
                         <h1 className="text-vgraylight font-medium text-md"> Fecha fin:  {lpagos.fechafin}</h1>
@@ -221,7 +220,7 @@ export function VistaPagos() {
                             <div className="flex-grow border-t border-gray-400"></div>
 
                         </div>
-                        <div className="w-full flex justify-center mt-2 gap-10 ">
+                        <div className="w-full flex justify-center mt-2 gap-10  ">
 
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4  centered-full">
                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
