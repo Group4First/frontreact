@@ -17,7 +17,7 @@ export function RegistroIntereses() {
     const [mes, setMes] = useState('');
     const [anio, setAnio] = useState('');
     const [tasaanual, setTasaanual] = useState('');
-    const [smmv, setSmmv] = useState('');
+    const [smmv, setSmmv] = useState(0);
 
     async function registrarintereses() {
         if (!mes.trim() || !anio.trim() || !tasaanual.trim() || !smmv.trim()) {
@@ -35,17 +35,22 @@ export function RegistroIntereses() {
     useEffect(() => {
         async function fetchSalario() {
             try {
-                if(anio){
+                if (anio.length >= 4) {
                     const data = await getsmlv(anio);
-                    setSmmv(parseFloat(data));
+                    console.log(data);
+                    if (data != null) {
+                        setSmmv(parseFloat(data));
+                    } else {
+                        setSmmv(0); // Establecer en 0 si data es null
+                    }
                 }
-              
             } catch (error) {
-                console.error('Error al obtener el salario:', error);
+                // Manejar el error si es necesario
             }
         }
+
         fetchSalario();
-    }, [anio,smmv]);
+    }, [anio]);
 
 
     return (
@@ -86,7 +91,7 @@ export function RegistroIntereses() {
                     <div>
                         <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">SMLMV</label>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                            <input onChange={(event) => { setSmmv(event.target.value); }} value={smmv}type="number" placeholder="SMLV" className="outline-none text-vgray2 font-semibold w-[300px] text-center" min="2000" max="2099" />
+                            <input onChange={(event) => { setSmmv(event.target.value); }} value={smmv.toString()} type="number" placeholder="SMLV" className="outline-none text-vgray2 font-semibold w-[300px] text-center"/>
                         </div>
                     </div>
                 </div>

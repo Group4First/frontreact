@@ -97,7 +97,7 @@ export function RegistroEmpresa() {
                     <button className="px-4 py-2 bg-red-500 text-white font-medium text-sm rounded-lg flex items-center gap-2 mr-4" onClick={() => { navigate(`/empresas`); }}>
                         <X className="h-4 w-4" /> Cancelar
                     </button>
-                    <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={idempresa ? actualizarempresa : registrarempresa}>
+                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={idempresa ? actualizarempresa : registrarempresa}>
                         <Check className="h-4 w-4" /> {idempresa ? 'Actualizar' : 'Registrar'}
                     </button>
 
