@@ -20,7 +20,7 @@ export function Intereses() {
                 setIntereses(interesesData.listaintereses);
                 setLintereses(interesesData);
             } catch (error) {
-                console.error('Error al obtener datos de empresas:', error);
+                console.error('Error al obtener datos de intereses:', error);
             }
         }
 
@@ -63,7 +63,7 @@ export function Intereses() {
                     <h1 className=" text-vgraylight font-medium text-center">Tasa diaria</h1>
                 </div>
                 <div className="w-full flex xl:items-center xl:flex-col max-xl:justify-center max-xl:flex-row max-xl:flex-wrap max-xl:-translate-y-16">
-                    {intereses.map((interes, index) => (
+                    {intereses?.map((interes, index) => (
                         <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-6 xl:h-14 xl:w-11/12`}>
                            
                            <h1 className="text-left"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Mes: </span>{interes.mes}</h1>

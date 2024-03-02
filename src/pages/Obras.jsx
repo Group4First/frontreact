@@ -37,7 +37,7 @@ export function Obras() {
                         <Search size={20} color="#7D7D7D" />
                         <input onChange={(event) => { setSearchTerm(event.target.value); }} type="text" placeholder="Buscar" className=" bg-[#E6E5E5] placeholder:font-medium placeholder:text-[#7D7D7D] outline-none text-black font-semibold ml-3 w-44" />
                     </div>
-                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => {navigate(`/empresas/${id}/obras/registroobra`)}}>
+                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => { navigate(`/empresas/${id}/obras/registroobra`) }}>
                         <Plus size={20} color="#FFFFFF" />
                         Añadir
                     </button>
@@ -59,7 +59,7 @@ export function Obras() {
                                 return <div key={index} className="bg-white rounded-lg cursor-pointer"
                                     onClick={() => { navigate(`/empresas/${id}/obras/${obra.id}/pagos`) }}>
                                     <div className="w-full flex-col ml-10 mt-7 mb-7">
-                                        <h1 className="font-semibold text-vgraydark text-lg ">{obra.descripcion}</h1>
+                                        <h1 className="font-semibold text-vgraydark text-lg w-11/12 text-wrap">{obra.descripcion}</h1>
                                         <h2 className="font-medium text-vgraylight mt-10 text-nowrap">Ultimo pago: {obra.fechaultimopago == null ? 'No hay pagos' : obra.fechaultimopago}</h2>
                                         <h2 className="font-medium text-vgraylight mt-6">Fecha inicio: {obra.fechainicio}</h2>
                                     </div>

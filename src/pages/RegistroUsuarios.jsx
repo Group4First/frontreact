@@ -19,6 +19,7 @@ export function RegistroUsuarios() {
     const [correo, setCorreo] = useState('');
     const [rol, setRol] = useState('');
     const [estado, setEstado] = useState('');
+    const [correoError, setCorreoError] = useState('');
 
     const Roles = [
         "Superadmin", "Usuario"
@@ -31,13 +32,21 @@ export function RegistroUsuarios() {
     function showHidePassword() {
         type == 'password' ? setType('text') : setType('password');
     }
-
     async function registrarusuario() {
         const camposRequeridos = [documento, nombre, apellido, contraseña, correo, rol];
-        if (camposRequeridos.some(valor => !valor.trim())) {
-            activeAlert('error', 'Todos los campos son requeridos', 2000);
+
+        // Validar formato de correo
+        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+
+        if (camposRequeridos.some(valor => !valor.trim()) || !correoValido) {
+            if (!correoValido) {
+                activeAlert('error', 'El formato del correo electrónico no es válido', 2000);
+            } else {
+                activeAlert('error', 'Por favor, completa todos los campos correctamente', 2000);
+            }
             return;
         }
+
         try {
             const res = await postuser(documento, nombre, apellido, contraseña, correo, rol);
             activeAlert('success', res, 2000);
@@ -46,10 +55,17 @@ export function RegistroUsuarios() {
         }
     };
 
+
     async function actualizarusuario() {
         const camposRequeridos = [documento, nombre, apellido, correo, rol, estado];
-        if (camposRequeridos.some(valor => !valor.trim())) {
-            activeAlert('error', 'Todos los campos son requeridos', 2000);
+        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+
+        if (camposRequeridos.some(valor => !valor.trim()) || !correoValido) {
+            if (!correoValido) {
+                activeAlert('error', 'El formato del correo electrónico no es válido', 2000);
+            } else {
+                activeAlert('error', 'Por favor, completa todos los campos correctamente', 2000);
+            }
             return;
         }
         try {
@@ -131,7 +147,7 @@ export function RegistroUsuarios() {
                             <div>
                                 <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Correo</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <input onChange={(event) => { setCorreo(event.target.value); }} value={correo} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" />
+                                    <input onChange={(event) => { setCorreo(event.target.value); setCorreoError(null); }} value={correo} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" />
                                 </div>
                             </div>
                             <div>
