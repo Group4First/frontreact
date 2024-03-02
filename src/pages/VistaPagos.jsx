@@ -29,6 +29,8 @@ export function VistaPagos() {
     const [valorContrato, setValorContrato] = useState('');
     const [obraFinalizada, setObraFinalizada] = useState(false);
 
+    const [formattedFechaPagoMayor, setFormattedFechaPagoMayor] = useState('');
+
 
     const [showAcordeon, setShowAcordeon] = useState(false);
     const toggleAcordeon = () => {
@@ -56,7 +58,18 @@ export function VistaPagos() {
                 const pagosData = await getPagosObra(idobra, currentPage);
                 setPagos(pagosData.listapagos);
                 setLPagos(pagosData);
-    
+
+                const fechaPagoMayor = pagos.reduce((fechaMayor, pago) => {
+                    const fechaPago = new Date(pago.fechapago);
+                    fechaPago.setDate(fechaPago.getDate());
+                    return fechaPago > fechaMayor ? fechaPago : fechaMayor;
+                }, new Date(0));
+                
+                // Formatear la fecha en el formato deseado (YYYY-MM-DD)
+                setFormattedFechaPagoMayor(fechaPagoMayor.toISOString().slice(0, 10));
+                
+                console.log('Fecha de pago mayor:', formattedFechaPagoMayor);
+
                 setPorcentajeObra(lpagos.tipo === 'Mano de obra' ? 0.25 : 1);
                 console.log("pagosdata:", pagosData);
                 console.log("pagosdatalistapagos:", pagosData.listapagos);
@@ -186,7 +199,7 @@ export function VistaPagos() {
                         <CardPagos color={colorState} type={'Estado'} text={lpagos.estado} />
 
                         <div className="flex items-center">
-                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && pagos.length>0 &&(
+                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && pagos.length > 0 && (
                                 <button className="h-12 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400" onClick={() => {
                                     // Actualiza el estado para indicar que la obra ha sido finalizada
                                     setObraFinalizada(true);
@@ -266,8 +279,8 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <select value={mes} onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                                    <option 
-                                                     defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
+                                                    <option
+                                                        defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
                                                     {meses.map((mes, index) => (
                                                         <option key={index} value={mes}>{mes}</option>
                                                     ))}
@@ -275,7 +288,7 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                                                <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                                                <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <select value={tipopago} onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
