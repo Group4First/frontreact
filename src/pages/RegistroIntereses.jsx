@@ -18,6 +18,7 @@ export function RegistroIntereses() {
     const [anio, setAnio] = useState('');
     const [tasaanual, setTasaanual] = useState('');
     const [smmv, setSmmv] = useState(0);
+    const [condicion, setCondicion] = useState(true);
 
     async function registrarintereses() {
         if (!mes.trim() || !anio.trim() || !tasaanual.trim() || !smmv.trim()) {
@@ -33,23 +34,21 @@ export function RegistroIntereses() {
     }
 
     useEffect(() => {
-        async function fetchSalario() {
+        (async () => {
             try {
-                if (anio.length >= 4) {
+                if (anio.length === 4) {
                     const data = await getsmlv(anio);
-                    console.log(data);
-                    if (data != null) {
-                        setSmmv(parseFloat(data));
-                    } else {
-                        setSmmv(0); // Establecer en 0 si data es null
-                    }
+                    setSmmv(data ? parseFloat(data) : 0);
+                    setCondicion(true);
+                } else {
+                    setSmmv("smmv");
+                    setCondicion(false);
                 }
             } catch (error) {
-                // Manejar el error si es necesario
+                setSmmv("smmv");
+                setCondicion(false);
             }
-        }
-
-        fetchSalario();
+        })();
     }, [anio]);
 
 
@@ -85,18 +84,23 @@ export function RegistroIntereses() {
                     <div>
                         <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Año</label>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                            <input onChange={(event) => { setAnio(event.target.value); }} type="number" placeholder="Digita un año" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" min="2000" max="2099" />
+                            <input onChange={(event) => {
+                                                        const inputValue = event.target.value;
+                                                        const sanitizedValue = inputValue.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                                                        event.target.value = sanitizedValue.substring(0,4);
+                                                        setAnio((event.target.value));
+                                                    }} type="number" placeholder="Digita un año" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" min="2000" max="2099" />
                         </div>
                     </div>
                     <div>
                         <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">SMLMV</label>
                         <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                            <input onChange={(event) => { setSmmv(event.target.value); }} value={smmv.toString()} type="number" placeholder="SMLV" className="outline-none text-vgray2 font-semibold w-[300px] text-center"/>
+                        <input onChange={({ target }) => setSmmv(target.value)} value={smmv !== "smmv" ? smmv : ""} type="number" placeholder="SMLV" className="outline-none text-vgray2 font-semibold w-[300px] text-center" disabled={condicion} />
                         </div>
                     </div>
                 </div>
                 <div className="w-11/12 flex justify-end mt-10 ml-5 centered">
-                    <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={registrarintereses}>
+                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={registrarintereses}>
                         <Check className="h-4 w-4" /> Guardar
                     </button>
                 </div>
