@@ -19,6 +19,12 @@ export function Dasboard() {
     getreportfirst();
   }, []);
 
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
   return (
     <section class="w-full max-h-svh  overflow-auto">
       <div className="flex flex-row flex-wrap items-start content-start p-0 gap-28 w-850 left-16">
@@ -50,17 +56,45 @@ export function Dasboard() {
         </div>
 
         {/* Contenedor para las gráficas de donas */}
-        <div className="container mx-auto px-4 md:px-0 max-w-screen-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-            <div className="rounded-lg bg-white mt-2">
-              <h1 className="text-xl md:text-2xl font-bold p-4">Empresas que más han aportado</h1>
-            </div>
-            <div className="rounded-lg bg-white mt-2">
-              <h1 className="text-xl md:text-2xl font-bold p-4">Composición de pagos FIC</h1>
-              <ApexChart />
+        <div className="w-full flex flex-wrap justify-center items-center">
+          <div className="rounded-lg bg-white mt-2 min-w-min p-5">
+            <div className="rounded-lg bg-white mt-2 min-w-min p-5">
+              <h1 className="text-xl md:text-2xl font-bold p-4 justify-center">Composición de pagos FIC</h1>
+              <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : null} />
+              <div className="flex justify-center mt-4 space-x-4">
+                <label htmlFor="porCantidad" className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    id="porCantidad"
+                    name="composicion"
+                    value="porCantidad"
+                    className="form-radio h-5 w-5 text-indigo-600"
+                    onChange={handleOptionChange}
+                    defaultChecked  // Añadir esta línea para seleccionar por defecto
+                  />
+                  <span className="ml-2">Por Cantidad</span>
+                </label>
+                <label htmlFor="porAportes" className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    id="porAportes"
+                    name="composicion"
+                    value="porAportes"
+                    className="form-radio h-5 w-5 text-indigo-600"
+                    onChange={handleOptionChange}
+                  />
+                  <span className="ml-2">Por Aportes</span>
+                </label>
+              </div>
             </div>
           </div>
         </div>
+
+
+
+
+
+
 
         <div className="container mx-auto px-10 grid space-x-4 -mt-1 justify-center w-full gap-8">
           <div className="container rounded-lg  overflow-y-auto bg-white -mt-20 h-max gap-6">
