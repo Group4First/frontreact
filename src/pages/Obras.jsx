@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getObrasEmpresa } from "../requests/getObrasEmpresa";
 import { ChevronLeft, Plus, Search } from "lucide-react";
 import { CardPagos } from "../components/cardPagos";
+import { useGlobalContext } from "../context/context";
 
 export function Obras() {
     const { id } = useParams();
@@ -10,6 +11,7 @@ export function Obras() {
     const [searchTerm, setSearchTerm] = useState('')
     const [error, setError] = useState(null);
     const navigate = useNavigate()
+    const {activeAlert} = useGlobalContext()
 
 
     useEffect(() => {
@@ -21,6 +23,12 @@ export function Obras() {
             } catch (error) {
                 setObras([]);
                 setError(error.message);
+                if (error.status == 401) {
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
         }
 
@@ -59,7 +67,7 @@ export function Obras() {
                                 return <div key={index} className="bg-white rounded-lg cursor-pointer"
                                     onClick={() => { navigate(`/empresas/${id}/obras/${obra.id}/pagos`) }}>
                                     <div className="w-full flex-col ml-10 mt-7 mb-7">
-                                        <h1 className="font-semibold text-vgraydark text-lg w-11/12 text-wrap">{obra.descripcion}</h1>
+                                        <h1 className="font-semibold text-vgraydark text-lg w-10/12 text-wrap">{obra.descripcion}</h1>
                                         <h2 className="font-medium text-vgraylight mt-10 text-nowrap">Ultimo pago: {obra.fechaultimopago == null ? 'No hay pagos' : obra.fechaultimopago}</h2>
                                         <h2 className="font-medium text-vgraylight mt-6">Fecha inicio: {obra.fechainicio}</h2>
                                     </div>

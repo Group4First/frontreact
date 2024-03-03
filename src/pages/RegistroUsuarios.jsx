@@ -80,22 +80,32 @@ export function RegistroUsuarios() {
     useEffect(() => {
         async function validarurl() {
             if (docusuario) {
-                const usuariotra = await getuserinfo(docusuario);
-                if (Object.keys(usuariotra).length > 0) {
-                    setNombre(usuariotra.nombre);
-                    setApellido(usuariotra.apellido);
-                    setDocumento(usuariotra.documento);
-                    setCorreo(usuariotra.email)
-                    setRol(usuariotra.nombrerol)
-                    if (usuariotra.isactive) {
-                        setEstado("Activo")
+                try {
+                    const usuariotra = await getuserinfo(docusuario);
+                    if (Object.keys(usuariotra).length > 0) {
+                        setNombre(usuariotra.nombre);
+                        setApellido(usuariotra.apellido);
+                        setDocumento(usuariotra.documento);
+                        setCorreo(usuariotra.email)
+                        setRol(usuariotra.nombrerol)
+                        if (usuariotra.isactive) {
+                            setEstado("Activo")
+                        }
+                        else {
+                            setEstado("Inactivo")
+                        }
                     }
                     else {
-                        setEstado("Inactivo")
+                        activeAlert("error", "La informacion es vacia", 2000);
                     }
-                }
-                else {
-                    activeAlert("sucess", "La informacion es vacia", 2000);
+                    
+                } catch (error) {
+                    if (error.status == 401) {
+                        activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 3000)
+                    }
                 }
             }
         }

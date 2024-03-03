@@ -47,6 +47,12 @@ export function RegistroIntereses() {
             } catch (error) {
                 setSmmv("smmv");
                 setCondicion(false);
+                if (error.status == 401) {
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
         })();
     }, [anio]);

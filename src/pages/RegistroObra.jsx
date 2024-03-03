@@ -33,12 +33,21 @@ export function RegistroObra() {
     useEffect(() => {
         async function traerinfoempresa() {
             if (id) {
-                const emptra = await getbussinfo(id);
-                if (Object.keys(emptra).length > 0) {
-                    setRazonsocial(emptra.razonsocial);
-                }
-                else {
-                    activeAlert("error", "La informacion es vacia", 2000);
+                try {
+                    const emptra = await getbussinfo(id);
+                    if (Object.keys(emptra).length > 0) {
+                        setRazonsocial(emptra.razonsocial);
+                    }
+                    else {
+                        activeAlert("error", "La informacion es vacia", 2000);
+                    }
+                } catch (error) {
+                    if (error.status == 401) {
+                        activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 3000)
+                    }
                 }
             }
         }

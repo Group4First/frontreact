@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getsmlv } from "../requests/getsmlv";
+import { useGlobalContext } from '../context/context';
+import { useNavigate } from 'react-router-dom';
 
 export function Calculo_fic() {
     // Estado para almacenar el número de empleados
@@ -8,6 +10,8 @@ export function Calculo_fic() {
     const [resultado, setResultado] = useState(0);
     const [resultadoxemp, setResultadoxemp] = useState(0);
     const [resultsalario, setResultSalario] = useState(0);
+    const {activeAlert} = useGlobalContext()
+    const navigate = useNavigate()
 
     // Llamar a getsmlv y establecer el costo por empleado al montar el componente
     useEffect(() => {
@@ -17,6 +21,12 @@ export function Calculo_fic() {
                 setResultSalario(parseFloat(data));
             } catch (error) {
                 console.error('Error al obtener el salario:', error);
+                if (error.status == 401) {
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
         }
 

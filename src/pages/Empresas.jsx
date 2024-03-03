@@ -3,6 +3,7 @@ import { getEmpresas } from "../requests/getEmpresas";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { PaginationButtons } from "../components/paginationButtons";
+import { useGlobalContext } from "../context/context";
 
 
 
@@ -13,6 +14,7 @@ export function Empresas() {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(0)
   const navigate = useNavigate()
+  const {activeAlert} = useGlobalContext()
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +24,12 @@ export function Empresas() {
         setLempresas(empresasData);
       } catch (error) {
         console.error('Error al obtener datos de empresas:', error);
+        if (error.status == 401) {
+          activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+          setTimeout(() => {
+              navigate("/")
+          }, 3000)
+      }
       }
     }
 

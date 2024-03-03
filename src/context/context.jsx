@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 // Se pone para tener autocompletado
-const context = createContext() 
+const context = createContext({activeAlert: ()=>{}}) 
 
 export function ContextProvider({children}) {
 

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getUsuarios } from "../requests/getUsuarios";
 import { PaginationButtons } from "../components/paginationButtons";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../context/context";
 
 
 export function Usuarios() {
@@ -12,6 +13,7 @@ export function Usuarios() {
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(0)
     const navigate = useNavigate()
+    const {activeAlert} = useGlobalContext()
 
 
     useEffect(() => {
@@ -22,6 +24,12 @@ export function Usuarios() {
                 setLusuarios(usuariosData)
             } catch (error) {
                 console.error('Error al obtener datos de usuarios:', error);
+                if (error.status == 401) {
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
         }
 

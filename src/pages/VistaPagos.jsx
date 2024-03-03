@@ -8,10 +8,12 @@ import { postPagoMe } from "../requests/postPagoMe";
 import { getCalculoPagoMe } from "../requests/getCalculoPagoMe";
 import { postPagoPr } from "../requests/postPagoPr";
 import { putFinalizarObra } from "../requests/putFinalizarObra";
+import { useGlobalContext } from "../context/context";
 
 export function VistaPagos() {
     const { idempresa } = useParams();
     const { idobra } = useParams();
+    const {activeAlert} = useGlobalContext()
     const [pagos, setPagos] = useState([]);
     const [lpagos, setLPagos] = useState([]);
     const [calc, setCalc] = useState([]);
@@ -22,9 +24,9 @@ export function VistaPagos() {
     const [anio, setAnio] = useState('');
     const [tipopago, setTipoPago] = useState('');
     const [numtrabajadores, setNumtrabajadores] = useState('');
-    const [valorfic, setValorfic] = useState('');
-    const [valorintereses, setValorintereses] = useState('');
-    const [valortotal, setValortotal] = useState('');
+    const [valorfic, setValorfic] = useState('FIC');
+    const [valorintereses, setValorintereses] = useState('Intereses');
+    const [valortotal, setValortotal] = useState('Total');
     const [porcentajeObra, setPorcentajeObra] = useState('');
     const [valorContrato, setValorContrato] = useState('');
     const [obraFinalizada, setObraFinalizada] = useState(false);
@@ -65,10 +67,10 @@ export function VistaPagos() {
                     fechaPago.setDate(fechaPago.getDate());
                     return fechaPago > fechaMayor ? fechaPago : fechaMayor;
                 }, new Date(0));
-                
+
                 // Formatear la fecha en el formato deseado (YYYY-MM-DD)
                 setFormattedFechaPagoMayor(fechaPagoMayor.toISOString().slice(0, 10));
-                
+
                 console.log('Fecha de pago mayor:', formattedFechaPagoMayor);
 
                 setPorcentajeObra(lpagos.tipo === 'Mano de obra' ? 0.25 : 1);
@@ -76,7 +78,12 @@ export function VistaPagos() {
                 console.log("pagosdatalistapagos:", pagosData.listapagos);
             } catch (error) {
                 setPagos([])
-
+                if (error.status == 401) {
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
         }
 
@@ -102,7 +109,12 @@ export function VistaPagos() {
         } catch (error) {
             console.log("errorpost: ", error);
 
-
+            if (error.status == 401) {
+                activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                setTimeout(() => {
+                    navigate("/")
+                }, 3000)
+            }
         }
     }
 
@@ -118,6 +130,12 @@ export function VistaPagos() {
 
         } catch (error) {
             console.log("errorpost: ", error);
+            if (error.status == 401) {
+                activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                setTimeout(() => {
+                    navigate("/")
+                }, 3000)
+            }
 
 
         }
@@ -139,7 +157,12 @@ export function VistaPagos() {
 
         } catch (error) {
             console.log("errorput: ", error);
-
+            if (error.status == 401) {
+                activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                setTimeout(() => {
+                    navigate("/")
+                }, 3000)
+            }
 
         }
     }
@@ -162,17 +185,23 @@ export function VistaPagos() {
                 if (mes && anio && fechapago && numtrabajadores) {
                     const calcData = await getCalculoPagoMe(mes, anio, fechapago, numtrabajadores);
                     setCalc(calcData);
-                    setValorfic(calc.valor_fic)
-                    setValorintereses(calc.interescalculado)
-                    setValortotal(calc.totalconinteres)
+                    setValorfic(calcData.valor_fic)
+                    setValorintereses(calcData.interescalculado)
+                    setValortotal(calcData.totalconinteres)
                     console.log("calcData:", calcData);
                 }
             } catch (error) {
                 console.log("errorcalcData:", error);
+                if (error.status == 401) {
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
         }
         fetchData();
-    }, [mes, anio, fechapago, numtrabajadores, valorfic, valortotal, valorintereses]);
+    }, [mes, anio, fechapago, numtrabajadores]);
 
 
     const colorType = lpagos.tipo == 'Mensual' ? '#5A7FFF' : '#F97429'
@@ -200,7 +229,7 @@ export function VistaPagos() {
                         <CardPagos color={colorState} type={'Estado'} text={lpagos.estado} />
 
                         <div className="flex items-center">
-                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && pagos.length>0 &&(
+                            {lpagos.tipo == 'Mensual' && lpagos.estado == 'En curso' && pagos.length > 0 && (
                                 <button className="h-12 w-32 text-white font-medium text-sm rounded-lg  bg-blue-400" onClick={() => {
                                     // Actualiza el estado para indicar que la obra ha sido finalizada
                                     setObraFinalizada(true);
@@ -280,8 +309,8 @@ export function VistaPagos() {
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                                                 <select value={mes} onChange={(event) => { setMes(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                                                    <option 
-                                                     defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
+                                                    <option
+                                                        defaultValue={"Selecciona un mes"}>Selecciona un mes</option>
                                                     {meses.map((mes, index) => (
                                                         <option key={index} value={mes}>{mes}</option>
                                                     ))}
@@ -309,17 +338,21 @@ export function VistaPagos() {
                                                     }}
                                                     type="number"
                                                     placeholder="Número trabajadores"
+                                                    autoComplete="cc"
                                                     className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
                                                 />
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input type="text" value={valorfic} placeholder="FIC" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                                <h1 className="font-semibold text-center w-full"> {valorfic} </h1>
+                                                {/* <input type="text" onChange={()=>{}} value={valorfic} placeholder="FIC" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" /> */}
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input type="text" value={valorintereses} placeholder="Intereses" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                                <h1 className="font-semibold text-center w-full"> {valorintereses} </h1>
+                                                {/* <input type="text" onChange={()=>{}} value={valorintereses} placeholder="Intereses" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" /> */}
                                             </div>
                                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                                                <input type="text" value={valortotal} placeholder="Total" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" />
+                                                <h1 className="font-semibold text-center w-full"> {valortotal} </h1>
+                                                {/* <input type="text" onChange={()=>{}} value={valortotal} placeholder="Total" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" /> */}
                                             </div>
 
                                         </div>
@@ -351,7 +384,7 @@ export function VistaPagos() {
                         </div>
                         {pagos.map((pago, index) => {
                             const colorInterest = pago.valorintereses === 0 ? '#848484' : '#FF0000';
-                          
+
                             return (
                                 <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[0.3fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr] xl:h-14 xl:w-11/12`}>
                                     <h1 className="text-left"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Año: </span> {pago.anio}</h1>

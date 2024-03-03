@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPagosUsuario } from "../requests/getPagosUsuario";
 import { PaginationButtons } from "../components/paginationButtons";
+import { useGlobalContext } from "../context/context";
 
 export function PagosUsuario() {
   const { id } = useParams();
@@ -12,6 +13,7 @@ export function PagosUsuario() {
   const [currentPage, setCurrentPage] = useState(0);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const {activeAlert} = useGlobalContext()
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +25,12 @@ export function PagosUsuario() {
       } catch (error) {
         setPagos([])
         setError(error.message)
+        if (error.status == 401) {
+          activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+          setTimeout(() => {
+              navigate("/")
+          }, 3000)
+      }
       }
     }
 

@@ -53,19 +53,28 @@ export function RegistroEmpresa() {
     useEffect(() => {
         async function traerinfoempresa() {
             if (idempresa) {
-                const emptra = await getbussinfo(idempresa);
-                if (Object.keys(emptra).length > 0) {
-                    setDireccion(emptra.direccion);
-                    setMunicipio(emptra.municipio);
-                    setTelefono(emptra.telefono);
-                    setFax(emptra.fax)
-                    setCorreo(emptra.correo)
-                    setRepresentantelegal(emptra.representantelegal)
-                    setCCrepresentantelegal(emptra.ccrepresentante)
-                    setCajadecompensacion(emptra.cajadecompensacion)
-                }
-                else {
-                    activeAlert("sucess", "La informacion es vacia", 2000);
+                try {
+                    const emptra = await getbussinfo(idempresa);
+                    if (Object.keys(emptra).length > 0) {
+                        setDireccion(emptra.direccion);
+                        setMunicipio(emptra.municipio);
+                        setTelefono(emptra.telefono);
+                        setFax(emptra.fax)
+                        setCorreo(emptra.correo)
+                        setRepresentantelegal(emptra.representantelegal)
+                        setCCrepresentantelegal(emptra.ccrepresentante)
+                        setCajadecompensacion(emptra.cajadecompensacion)
+                    }
+                    else {
+                        activeAlert("error", "La informacion es vacia", 2000);
+                    }
+                } catch (error) {
+                    if (error.status == 401) {
+                        activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 3000)
+                    }
                 }
             }
         }
