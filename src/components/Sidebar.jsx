@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export function Sidebar({isActive, setIsActive}) {
 
   const navigate = useNavigate()
+  const [idRol, setIdRol] = useState(JSON.parse(Cookies.get('session')).inforoles.idrol)
 
   function logout() {
     Cookies.remove('session')
@@ -20,11 +21,11 @@ export function Sidebar({isActive, setIsActive}) {
         <div className="w-full flex flex-col items-center">
           <img className="w-28 mt-5 mb-14" src="/logoSena.svg" alt=""></img>
 
-          <NavButton Icon={LayoutDashboard} text="Dashboard" url="/dashboard" />
+          {idRol == 1 && <NavButton Icon={LayoutDashboard} text="Dashboard" url="/dashboard" />}
           <NavButton Icon={Building2} text="Empresas" url="/empresas" />
           <NavButton Icon={Calculator} text="Calculo Fic" url="/calculo-fic" />
           <NavButton Icon={HandCoins} text="Intereses" url="/intereses" />
-          <NavButton Icon={UsersRound} text="Usuarios" url="/usuarios" />
+          {idRol == 1 && <NavButton Icon={UsersRound} text="Usuarios" url="/usuarios" />}
         </div>
 
         <button onClick={logout} className="flex mb-10 px-5 py-2 hover:bg-red-400 transition-all duration-300 rounded-full">

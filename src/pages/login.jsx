@@ -23,11 +23,17 @@ function Login() {
 	async function login() {
 		try {
 			setIsLoading(true)
+			Cookies.remove('session')
 			const data = await postLogin(documento, contraseña)
 			Cookies.set('session', JSON.stringify(data))
 			activeAlert('success', 'Inicio de sesion exitoso', 2000)
 			setIsLoading(false)
-			navigate('/dashboard')
+
+			if (data.inforoles.idrol !== 1){
+				navigate('/empresas')
+			} else {
+				navigate('/dashboard')
+			}
 		} catch (error) {
 			setIsLoading(false)
 			activeAlert('error', error.message)

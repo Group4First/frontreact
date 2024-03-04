@@ -1,6 +1,6 @@
-import { createBrowserRouter, RouterProvider, useLocation } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 import Login from './pages/login'
-import { ContextProvider } from './context/context'
+import { ContextProvider, useGlobalContext } from './context/context'
 import { Sidebar } from './components/Sidebar'
 import { Empresas } from './pages/Empresas'
 import { useEffect, useState } from 'react'
@@ -16,6 +16,7 @@ import { RegistroUsuarios } from './pages/RegistroUsuarios'
 import { ContainerAlerts } from './components/ContainerAlerts'
 import { VistaPagos } from './pages/VistaPagos'
 import { RegistroObra } from './pages/RegistroObra'
+import Cookies from 'js-cookie'
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,23 @@ export function App() {
 function MainContentWithSidebar({ children }) {
 
   const [isActive, setIsActive] = useState(false)
+
+  const navigate = useNavigate()
+  const session = JSON.parse(Cookies.get('session'))
+  const location = useLocation()
+  const {activeAlert} = useGlobalContext()
+
+  function incluyeRuta (ruta) {
+    return location.pathname.includes(ruta)
+  }
+
+
+  useEffect(() => {
+    if ( (incluyeRuta('usuarios') || incluyeRuta('dashboard')) && session.inforoles.idrol !== 1) {
+      activeAlert("warning", "No tiene permisos care nalga!")
+      navigate("/empresas")
+    }
+  }, [location.pathname])
 
   return (
     <section className='w-full max-h-svh flex overflow-hidden lg:pl-[260px] transition-all duration-300'>
