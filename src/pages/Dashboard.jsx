@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import Graficas from './graficas';
 import ApexChart from './grafDona';
 import Pagos from './graficaregpag';
-
+import Graficasempresa from './graficasempresas'
 
 export function Dasboard() {
   const [data, setData] = useState({});
@@ -89,6 +89,9 @@ export function Dasboard() {
               </label>
             </div>
           </div>
+          <div className="rounded-lg bg-red mt-2 min-w-min p-5">
+            <Graficasempresa/>
+          </div>
         </div>
 
         {/* Contenedor para las gráficas de donas */}
@@ -124,7 +127,7 @@ export function Dasboard() {
               </div>
             </div>
           </div>
-
+        
         </div>
 
         <div className="w-full flex flex-wrap justify-center items-center">

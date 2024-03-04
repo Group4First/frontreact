@@ -68,11 +68,11 @@ const Graficas = ({ value }) => {
 
   const series = [
     {
-      name: value === 0 ? "Número Pagos Presuntivos" : "Número Pagos Presuntivos",
+      name: value === 0 ? "Recaudo Pagos Presuntivos" : "Recaudo Pagos Presuntivos",
       data: totalAndAdditionalData?.map(item => item.valorpagospr) || []
     },
     {
-      name: value === 0 ? "Número Pagos Mensuales" : "Número Pagos Mensuales",
+      name: value === 0 ? "Recaudo Pagos Mensuales" : "Recaudo Pagos Mensuales",
       data: totalAndAdditionalData?.map(item => item.valorpagosme) || []
     }
   ];
