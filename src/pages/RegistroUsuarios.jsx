@@ -5,6 +5,7 @@ import { useGlobalContext } from "../context/context"
 import { postuser } from "../requests/postusuarios";
 import { updateuser } from "../requests/updateusuario";
 import { getuserinfo } from "../requests/getUsuarioInfo";
+import { Modal } from "../components/Modal";
 
 export function RegistroUsuarios() {
 
@@ -20,6 +21,8 @@ export function RegistroUsuarios() {
     const [rol, setRol] = useState('');
     const [estado, setEstado] = useState('');
     const [correoError, setCorreoError] = useState('');
+    
+    const [open, setOpen] = useState(false);
 
     const Roles = [
         "Superadmin", "Usuario"
@@ -33,20 +36,6 @@ export function RegistroUsuarios() {
         type == 'password' ? setType('text') : setType('password');
     }
     async function registrarusuario() {
-        const camposRequeridos = [documento, nombre, apellido, contraseña, correo, rol];
-
-        // Validar formato de correo
-        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
-
-        if (camposRequeridos.some(valor => !valor.trim()) || !correoValido) {
-            if (!correoValido) {
-                activeAlert('error', 'El formato del correo electrónico no es válido', 2000);
-            } else {
-                activeAlert('error', 'Por favor, completa todos los campos correctamente', 2000);
-            }
-            return;
-        }
-
         try {
             const res = await postuser(documento, nombre, apellido, contraseña, correo, rol);
             activeAlert('success', res, 2000);
@@ -55,19 +44,28 @@ export function RegistroUsuarios() {
         }
     };
 
+    const validateInputs = () => {
+        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+    
+        if (!documento.trim() || !nombre.trim() || !apellido.trim() || !correo.trim() || !rol.trim()) {
+          activeAlert('error', 'Todos los campos son requeridos', 2000);
+          return false;
+        } else if (!correoValido) {
+          activeAlert('error', 'El formato del correo electrónico no es válido', 2000);
+          return false;
+        } else if (!docusuario && !contraseña.trim()) {
+          activeAlert('error', 'La contraseña es requerida', 2000);
+          return false;
+        } else {
+          return true;
+        }
+      };
+    
+      // ... (resto del código)
+    
 
     async function actualizarusuario() {
-        const camposRequeridos = [documento, nombre, apellido, correo, rol, estado];
-        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
 
-        if (camposRequeridos.some(valor => !valor.trim()) || !correoValido) {
-            if (!correoValido) {
-                activeAlert('error', 'El formato del correo electrónico no es válido', 2000);
-            } else {
-                activeAlert('error', 'Por favor, completa todos los campos correctamente', 2000);
-            }
-            return;
-        }
         try {
             const isactive = estado.trim().toLowerCase() === "activo";
             const res = await updateuser(documento, nombre, apellido, contraseña.trim() || null, isactive, correo, rol);
@@ -98,7 +96,7 @@ export function RegistroUsuarios() {
                     else {
                         activeAlert("error", "La informacion es vacia", 2000);
                     }
-                    
+
                 } catch (error) {
                     if (error.status == 401) {
                         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
@@ -125,9 +123,14 @@ export function RegistroUsuarios() {
                         <button className="px-4 py-2 bg-red-500 text-white font-medium text-sm rounded-lg flex items-center gap-2 mr-4" onClick={() => { navigate(`/usuarios`); }}>
                             <X className="h-4 w-4" /> Cancelar
                         </button>
-                        <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={docusuario ? actualizarusuario : registrarusuario}>
+                        <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={() => {
+                            if (validateInputs()) {
+                                setOpen(true);
+                            }
+                        }}>
                             <Check className="h-4 w-4" /> {docusuario ? 'Actualizar' : 'Guardar'}
                         </button>
+                        <Modal open={open} onClose={() => setOpen(false)} title={docusuario ? 'Confirmar Actualización' : 'Comfirmar registro'} text={docusuario ? '¿Esta seguro de actualizar el nuevo usuario?' : '¿Esta seguro de agregar el nuevo usuario?'} onAcept={docusuario ? (actualizarusuario) : (registrarusuario)} />
                     </div>
                 </div>
 
