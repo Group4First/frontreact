@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from 'react-apexcharts';
-import Cookies from "js-cookie";
 import { getinitialdata } from "../requests/getReportsInitialdata";
 
 const ApexChart = ({ value }) => {
@@ -11,7 +10,7 @@ const ApexChart = ({ value }) => {
     async function getreportfirst() {
       const datatra = await getinitialdata();
 
-      if (value === 0) {
+      if (value == 0) {
         const { conteonummanodeobra, conteonumatodocosto, conteonummensual } = datatra.infografcomposicionfic.infografxnumero;
         const valuesArray = [conteonummanodeobra, conteonumatodocosto, conteonummensual];
         setSeries(valuesArray);

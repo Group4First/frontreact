@@ -4,7 +4,6 @@ import { getgraphicpays } from "../requests/getReportsGraphicPays";
 
 const Pagos = ({ value }) => {
   const [apiData, setApiData] = useState({});
-  const [mes, setmes] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {

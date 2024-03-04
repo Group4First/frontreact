@@ -20,10 +20,15 @@ export function Dasboard() {
   }, []);
 
   const [selectedOption, setSelectedOption] = useState('');
-  const [selectedOption3, setSelectedOption3] = useState('');
+  const [selectedOption3, setSelectedOption3] = useState(0);
+  const [selectedOption2, setSelectedOption2] = useState(0);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+
+  const handleOptionChange2 = (event) => {
+    setSelectedOption2(event.target.value);
   };
 
   const handleOptionChange3 = (event) => {
@@ -57,62 +62,84 @@ export function Dasboard() {
         {/* Gráfica principal línea */}
         <div className="w-full flex flex-wrap justify-center items-center">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
-            <Graficas />
-          </div>
-        </div>
-
-        {/* Contenedor para las gráficas de donas */}
-        <div className="w-full flex flex-wrap justify-center items-center">
-          <div className="rounded-lg bg-white mt-2 min-w-min p-5">
-            <h1 className="text-xl md:text-2xl font-bold p-4 justify-center">Composición de pagos FIC</h1>
-            <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : null} />
+            <Graficas value={selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
-              <label htmlFor="porCantidad" className="inline-flex items-center cursor-pointer">
+              <label htmlFor="porMes" className="inline-flex items-center cursor-pointer">
                 <input
                   type="radio"
-                  id="porCantidad"
-                  name="composicion"
-                  value="porCantidad"
+                  id="porMes"
+                  name="composicion3"
+                  value="porMes"
                   className="form-radio h-5 w-5 text-indigo-600"
-                  onChange={handleOptionChange}
-                  defaultChecked  // Añadir esta línea para seleccionar por defecto
+                  onChange={handleOptionChange2}
+                  defaultChecked={true}
                 />
-                <span className="ml-2">Por Aportes</span>
+                <span className="ml-2">Por Mes</span>
               </label>
-              <label htmlFor="porAportes" className="inline-flex items-center cursor-pointer">
+              <label htmlFor="porAño" className="inline-flex items-center cursor-pointer">
                 <input
                   type="radio"
-                  id="porAportes"
-                  name="composicion"
-                  value="porAportes"
+                  id="porAño"
+                  name="composicion3"
+                  value="porAño"
                   className="form-radio h-5 w-5 text-indigo-600"
-                  onChange={handleOptionChange}
+                  onChange={handleOptionChange2}
                 />
-                <span className="ml-2">Por Cantidad</span>
+                <span className="ml-2">Por Año</span>
               </label>
             </div>
           </div>
         </div>
 
+        {/* Contenedor para las gráficas de donas */}
+        <div className="w-full flex flex-wrap justify-center items-center">
+          <div className="w-full flex flex-wrap justify-center items-center">
+            <div className="rounded-lg bg-white mt-2 min-w-min p-5">
+              <h1 className="text-xl md:text-2xl font-bold p-4 justify-center">Composición de pagos FIC</h1>
+              <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : 0} />
+              <div className="flex justify-center mt-4 space-x-4">
+                <label htmlFor="porCantidad" className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    id="porCantidad"
+                    name="composicion"
+                    value="porCantidad"
+                    className="form-radio h-5 w-5 text-indigo-600"
+                    onChange={handleOptionChange}
+                    defaultChecked={true}
+                  />
+                  <span className="ml-2">Por Aportes</span>
+                </label>
+                <label htmlFor="porAportes" className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    id="porAportes"
+                    name="composicion"
+                    value="porAportes"
+                    className="form-radio h-5 w-5 text-indigo-600"
+                    onChange={handleOptionChange}
+                  />
+                  <span className="ml-2">Por Cantidad</span>
+                </label>
+              </div>
+            </div>
+          </div>
 
-
-
-
-
+        </div>
 
         <div className="w-full flex flex-wrap justify-center items-center">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
-            <Pagos value={selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : null} />
+            <Pagos value={selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMesesUG" className="inline-flex items-center cursor-pointer">
                 <input
                   type="radio"
                   id="porMesesUG"
-                  name="composicion"
+                  name="composicion2"
                   value="porMesesUG"
                   className="form-radio h-5 w-5 text-indigo-600"
                   onChange={handleOptionChange3}
-                  defaultChecked  // Añadir esta línea para seleccionar por defecto
+                  defaultChecked={true}
                 />
                 <span className="ml-2">Por Meses</span>
               </label>
@@ -120,7 +147,7 @@ export function Dasboard() {
                 <input
                   type="radio"
                   id="porAñosUG"
-                  name="composicion"
+                  name="composicion2"
                   value="porAñosUG"
                   className="form-radio h-5 w-5 text-indigo-600"
                   onChange={handleOptionChange3}
