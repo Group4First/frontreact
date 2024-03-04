@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-import Cookies from "js-cookie";
+import { getgraphicmoney } from "../requests/getReportsGraphicMoney";
 
-
-const Graficas = () => {
-  const [filter, setFilter] = useState("Por meses");
+const Graficas = ({ value }) => {
   const [apiData, setApiData] = useState({});
-  const token = Cookies.get('session') ? JSON.parse(Cookies.get('session')).token : '';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/reports/GraphicMoney?optional=${filter === "Por meses" ? 0 : 1}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
+        const data = await getgraphicmoney(value);
         setApiData(data);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
@@ -24,69 +16,73 @@ const Graficas = () => {
     };
 
     fetchData();
-  }, [filter, token]);
+  }, [value]);
 
-  const categories = filter === "Por meses" ? apiData.infomensualList?.map(item => item.mes) : apiData.infoanualList?.map(item => item.anio) ; //carga los meses y los años
+  const categories = value === 0 ? apiData.infomensualList?.map(item => item.mes) : apiData.infoanualList?.map(item => item.anio);
 
-  //datos que muestran en la grafica
-  const totalAndAdditionalData = filter === "Por meses"
-  ? apiData.infomensualList?.map(item => ({
+  const totalAndAdditionalData = value === 0
+    ? apiData.infomensualList?.map(item => ({
       mes: item.mes,
       valorpagosme: item.valorpagosme,
       valorpagospr: item.valorpagospr,
       valortotalpagos: item.valortotalpagos
     }))
-  : apiData.infoanualList?.map(item => ({
+    : apiData.infoanualList?.map(item => ({
       anio: item.anio,
       valorpagosme: item.valorpagosme,
       valorpagospr: item.valorpagospr,
       valortotalpagosanual: item.valortotalpagosanual
     }));
-    
+
   const options = {
     xaxis: {
-      categories: categories || [] 
+      categories: categories || []
     },
-    colors: ["#000000", "#ced4da"]
+    colors: ["#000000", "#ced4da"],
+    responsive: [{
+      breakpoint: 466,
+      options: {
+        chart: {
+          width: 300,
+          height: 300,
+        },
+      },
+    },
+    {
+      breakpoint: 9999,
+      options: {
+        chart: {
+          width: getWindowWidth() * 0.7, // Utiliza getWindowWidth para obtener el ancho de la ventana
+          height: 600,
+        },
+      },
+    },
+    ],
   };
 
-  //informacion que se muestra pasar el cursor por la grafica
+  function getWindowWidth() {
+    return window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+}
+
   const series = [
     {
-      name: filter === "Por meses" ? "Número Pagos Presuntivos"  : "Número Pagos Presuntivos",
-      data: totalAndAdditionalData?.map(item => item.valorpagospr) || [] 
+      name: value === 0 ? "Número Pagos Presuntivos" : "Número Pagos Presuntivos",
+      data: totalAndAdditionalData?.map(item => item.valorpagospr) || []
     },
     {
-      name: filter === "Por meses" ? "Número Pagos Mensuales"  : "Número Pagos Mensuales",
-      data: totalAndAdditionalData?.map(item => item.valorpagosme) || [] 
+      name: value === 0 ? "Número Pagos Mensuales" : "Número Pagos Mensuales",
+      data: totalAndAdditionalData?.map(item => item.valorpagosme) || []
     }
   ];
 
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
-  };
-
-  // botones para los filtros de entre meses y año
   return (
     <div>
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <Chart options={options} series={series} type="area" m width={1000} />
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Chart options={options} series={series} type="area" width={1000} />
+      </div>
     </div>
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "1px" }}>
-      <button
-        style={{ marginRight: "10px", padding: "10px", backgroundColor: filter === "Por meses" ? "#E3F5FF" : "#ecf0f1", color: "#000000", border: "none", cursor: "pointer" }}
-        onClick={() => handleFilterChange("Por meses")}
-      >
-        Por Meses
-      </button>
-      <button
-        style={{ padding: "10px", backgroundColor: filter === "Por año" ? "#E5ECF6" : "#ecf0f1", color: "#000000", border: "none", cursor: "pointer" }}
-        onClick={() => handleFilterChange("Por año")}
-      >
-        Por Año
-      </button>
-    </div>
-  </div>
   );
 };
 

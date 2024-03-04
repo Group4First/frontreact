@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from 'react-apexcharts';
-import Cookies from "js-cookie";
 import { getinitialdata } from "../requests/getReportsInitialdata";
 
 const ApexChart = ({ value }) => {
@@ -11,14 +10,14 @@ const ApexChart = ({ value }) => {
     async function getreportfirst() {
       const datatra = await getinitialdata();
 
-      if (value === 0) {
+      if (value == 0) {
         const { conteonummanodeobra, conteonumatodocosto, conteonummensual } = datatra.infografcomposicionfic.infografxnumero;
         const valuesArray = [conteonummanodeobra, conteonumatodocosto, conteonummensual];
         setSeries(valuesArray);
         setLabels([
-          "conteo obras A mano de obra",
-          "conteo obras A todo costo",
-          "conteo obras Obra mensual"
+          "Conteo obras: A mano de obra",
+          "Conteo obras: A todo costo",
+          "Conteo obras: Obra mensual"
         ]);
       } else {
         const { valormanodeobra, valoratodocosto, valormensual, valorintereses } = datatra.infografcomposicionfic.infografxvalores;
@@ -52,10 +51,23 @@ const ApexChart = ({ value }) => {
         },
       },
     }, {
+      breakpoint: 1024,
+      options: {
+        chart: {
+          width: getWindowWidth() * 0.65,
+          height: 300,
+        },
+        legend: {
+          position: 'bottom',
+          offsetY: 2,
+        },
+      },
+    },
+    {
       breakpoint: 9999,
       options: {
         chart: {
-          width: 600,
+          width:  600,
           height: 600,
         },
         legend: {
@@ -66,6 +78,13 @@ const ApexChart = ({ value }) => {
     }],
     labels: labels,
   };
+
+ 
+  function getWindowWidth() {
+    return window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+}
 
   return (
     <div className="flex flex-col items-center">
