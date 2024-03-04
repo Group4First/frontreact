@@ -108,7 +108,7 @@ function MainContentWithSidebar({ children }) {
 
   useEffect(() => {
     if ( (incluyeRuta('usuarios') || incluyeRuta('dashboard')) && session.inforoles.idrol !== 1) {
-      activeAlert("warning", "No tiene permisos care nalga!")
+      activeAlert("warning", "No tiene permisos!")
       navigate("/empresas")
     }
   }, [location.pathname])
