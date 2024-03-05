@@ -1,11 +1,15 @@
-import { ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { postPagoPr } from "../requests/postPagoPr";
 import { postPagoMe } from "../requests/postPagoMe";
 import { getCalculoPagoMe } from "../requests/getCalculoPagoMe";
+import { Modal } from "./Modal";
+import { useGlobalContext } from "../context/context";
 
-export function FormRegisterPay({ idobra, reload, setReaload, type, state, formattedFechaPagoMayor}) {
+export function FormRegisterPay({ idobra, reload, setReaload, type, state, formattedFechaPagoMayor }) {
 
+
+  const { activeAlert } = useGlobalContext()
 
   const [calc, setCalc] = useState([]);
 
@@ -20,14 +24,39 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   const [porcentajeObra, setPorcentajeObra] = useState(type === 'Mano de obra' ? 0.25 : 1);
   const [valorContrato, setValorContrato] = useState('');
 
+  const [open, setOpen] = useState(false);
+
+
   const [showAcordeon, setShowAcordeon] = useState(false);
   const toggleAcordeon = () => {
     setShowAcordeon(!showAcordeon);
   };
 
-  async function postPagosme() {
+  const validateInputsMe = () => {
+    const requiredFields = [fechapago, mes, anio, tipopago, numtrabajadores];
+
+    if (requiredFields.some(valor => !valor.trim())) {
+      activeAlert('error', 'Todos los campos son requeridos', 2000);
+      return false;
+    }
+    return true;
+
+  };
+  const validateInputsPr = () => {
+    const requiredFields = [fechapago, tipopago, valorfic];
+console.log('fechapago',fechapago);
+    if (requiredFields.some(valor => !valor.trim())) {
+      activeAlert('error', 'Todos los campos son requeridos', 2000);
+      return false;
+    }
+    return true;
+
+  };
+
+  async function registrarPagosMe() {
     try {
       const pagosData = await postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
+      activeAlert('success', pagosData, 2000);
       setReaload(!reload)
       toggleAcordeon()
 
@@ -53,10 +82,11 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
     }
   }
 
-  async function postPagospr() {
+  async function registrarPagosPr() {
     try {
 
       const pagosData = await postPagoPr(fechapago, tipopago, valorfic, idobra);
+      activeAlert('success', pagosData, 2000);
       setReaload(!reload)
       // Limpiar los inputs después de agregar un nuevo pago
       setTipoPago('');
@@ -201,11 +231,14 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                     </div>
                     <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
                       <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => {
-                        postPagosme();
-                      }}>
+                            if (validateInputsMe()) {
+                                setOpen(true);
+                            }
+                        }}>
                         <Plus />
                         Añadir
                       </button>
+                      <Modal open={open} onClose={() => setOpen(false)} title={ 'Confirmar pago' } text={ '¿Esta seguro de agregar el nuevo pago?' } onAcept={registrarPagosMe} />
                     </div>
                   </section>
                 </>
@@ -287,10 +320,15 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                     </div>
 
                     <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
-                      <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => { postPagospr() }}>
+                      <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => {
+                            if (validateInputsPr()) {
+                                setOpen(true);
+                            }
+                        }}>
                         <Check />
                         Registrar
                       </button>
+                      <Modal open={open} onClose={() => setOpen(false)} title={ 'Confirmar pago' } text={ '¿Esta seguro de agregar el nuevo pago?' } onAcept={registrarPagosPr} />
                     </div>
                   </section>
                 </>

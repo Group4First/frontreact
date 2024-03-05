@@ -7,6 +7,7 @@ import { putFinalizarObra } from "../requests/putFinalizarObra";
 import { useGlobalContext } from "../context/context";
 import { FormRegisterPay } from "../components/FormRegisterPay";
 import { TablePayWork } from "../components/TablePayWork";
+import { Modal } from "../components/Modal";
 
 export function VistaPagos() {
     const { idempresa } = useParams();
@@ -16,6 +17,8 @@ export function VistaPagos() {
     const [lpagos, setLPagos] = useState([]);
     const [obraFinalizada, setObraFinalizada] = useState(false);
     const [fechafin, setFechafin] = useState('');
+
+    const [open, setOpen] = useState(false);
 
 
     const [formattedFechaPagoMayor, setFormattedFechaPagoMayor] = useState('');
@@ -69,7 +72,7 @@ export function VistaPagos() {
                 setReaload(!reload)
 
                 setFechafin('')
-                setObraFinalizada(true);
+                setObraFinalizada(false);
 
                 console.log("putFinalizarObra: ", pagosData);
             }
@@ -143,11 +146,16 @@ export function VistaPagos() {
                                 <input value={fechafin} onChange={(event) => { setFechafin(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
                             </div>
                             <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-vgreen  " onClick={() => {
-                                putFinalizar()
+                                if(fechafin){
+                                    setOpen(true)
+                                }else{
+                                    activeAlert('error', 'Ingrese una fecha', 2000);
+                                }
+                               
                             }}>
                                 Aceptar
                             </button>
-
+                            <Modal open={open} onClose={() => setOpen(false)} title={ 'Confirmar actualización' } text={ '¿Esta seguro de finalizar esta obra?' } onAcept={putFinalizar} />
                             <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-red-500  " onClick={() => {
                                 setObraFinalizada(false)
                             }}>

@@ -61,7 +61,7 @@ export function RegistroUsuarios() {
         }
       };
     
-      // ... (resto del código)
+
     
 
     async function actualizarusuario() {
@@ -130,7 +130,7 @@ export function RegistroUsuarios() {
                         }}>
                             <Check className="h-4 w-4" /> {docusuario ? 'Actualizar' : 'Guardar'}
                         </button>
-                        <Modal open={open} onClose={() => setOpen(false)} title={docusuario ? 'Confirmar Actualización' : 'Comfirmar registro'} text={docusuario ? '¿Esta seguro de actualizar el nuevo usuario?' : '¿Esta seguro de agregar el nuevo usuario?'} onAcept={docusuario ? (actualizarusuario) : (registrarusuario)} />
+                        <Modal open={open} onClose={() => setOpen(false)} title={docusuario ? 'Confirmar Actualización' : 'Comfirmar registro'} text={docusuario ? '¿Esta seguro de actualizar el usuario?' : '¿Esta seguro de agregar el usuario?'} onAcept={docusuario ? (actualizarusuario) : (registrarusuario)} />
                     </div>
                 </div>
 

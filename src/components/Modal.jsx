@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 
 export function Modal({ open, onClose, title, text, onAcept }) {
     return (
-        <div onClick={onClose} className={`fixed inset-0 flex justify-center items-center transition-colors 
+        <div onClick={onClose} className={`fixed inset-0 flex justify-center items-center transition-colors z-50
      ${open ? "visible bg-black/20" : "invisible"}`}>
             <div onClick={(e) => e.stopPropagation()}
                 className={`bg-white rounded-xl shadow p-6 transition-all

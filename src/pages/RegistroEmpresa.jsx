@@ -5,6 +5,7 @@ import { useGlobalContext } from "../context/context"
 import { postbussiness } from "../requests/postempresas";
 import { updatebuss } from "../requests/updateEmpresas";
 import { getbussinfo } from "../requests/getEmpresasInfo";
+import { Modal } from "../components/Modal";
 
 export function RegistroEmpresa() {
 
@@ -35,20 +36,39 @@ export function RegistroEmpresa() {
     const [Ciudad, setCiudad] = useState('');
     const [Fecha, setFecha] = useState('');
 
-    async function registrarempresa() {
-        const requiredFields = [Razonsocial, NumIdentificacion, selectedDocumentType, DV, CIIU, Actividadeconomica, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion, Notaria, Ciudad, Fecha];
+    const [open, setOpen] = useState(false);
 
-        if (requiredFields.some(field => !field || !field.trim())) {
-            activeAlert('error', 'Todos los campos son requeridos', 2000);
-            return;
-        }
+
+    async function registrarempresa() {
+
         try {
             const res = await postbussiness(NumIdentificacion, Razonsocial, selectedDocumentType, DV, Direccion, Municipio, Telefono, Fax, Actividadeconomica, CIIU, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion, Notaria, Ciudad, Fecha);
             activeAlert('success', res, 2000);
+            navigate("/empresas")
         } catch (error) {
             activeAlert('error', error.message, 2000);
         }
     }
+    const validateInputs = () => {
+        const requiredFields = [Razonsocial, NumIdentificacion, selectedDocumentType, DV, CIIU, Actividadeconomica, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion, Notaria, Ciudad, Fecha];
+        const camposRequeridos = [Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion];
+
+        if (idempresa) {
+            if (camposRequeridos.some(valor => !valor.trim())) {
+                activeAlert('error', 'Todos los campos son requeridos', 2000);
+                return false;
+            }
+            return true;
+        } else if (requiredFields.some(field => !field || !field.trim())) {
+            activeAlert('error', 'Todos los campos son requeridos', 2000);
+            return false;
+        } else {
+
+            return true;
+        }
+
+    };
+
 
     useEffect(() => {
         async function traerinfoempresa() {
@@ -82,14 +102,11 @@ export function RegistroEmpresa() {
     }, []);
 
     async function actualizarempresa() {
-        const camposRequeridos = [Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion];
-        if (camposRequeridos.some(valor => !valor.trim())) {
-            activeAlert('error', 'Todos los campos son requeridos', 2000);
-            return;
-        }
+
         try {
             const res = await updatebuss(idempresa, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion);
             activeAlert('success', res, 2000);
+            navigate("/empresas")
         } catch (error) {
             activeAlert('error', error.message, 2000);
         }
@@ -106,9 +123,14 @@ export function RegistroEmpresa() {
                     <button className="px-4 py-2 bg-red-500 text-white font-medium text-sm rounded-lg flex items-center gap-2 mr-4" onClick={() => { navigate(`/empresas`); }}>
                         <X className="h-4 w-4" /> Cancelar
                     </button>
-                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={idempresa ? actualizarempresa : registrarempresa}>
+                    <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={() => {
+                        if (validateInputs()) {
+                            setOpen(true);
+                        }
+                    }}>
                         <Check className="h-4 w-4" /> {idempresa ? 'Actualizar' : 'Registrar'}
                     </button>
+                    <Modal open={open} onClose={() => setOpen(false)} title={idempresa ? 'Confirmar Actualización' : 'Comfirmar registro'} text={idempresa ? '¿Esta seguro de actualizar la empresa?' : '¿Esta seguro de agregar la empresa'} onAcept={idempresa ? (actualizarempresa) : (registrarempresa)} />
 
                 </div>
 
@@ -186,7 +208,7 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4 ">Fax</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setFax(event.target.value); }} value={Fax} type="number" placeholder="Fax" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setFax(event.target.value); }} value={Fax} type="text" placeholder="Fax" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
                             </div>
                         </div>
                         <div>
