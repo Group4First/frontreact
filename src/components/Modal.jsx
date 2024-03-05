@@ -11,7 +11,7 @@ export function Modal({ open, onClose, title, text, onAcept }) {
                 <button onClick={onClose} className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600">
                     <X></X>
                 </button>
-                <div className="text-center w-80">
+                <div className="text-center w-80 max-md:w-52">
                     <div className="mx-auto my-4 w-48 flex flex-col gap-3">
                         <h3 className="text-gray-800 text-lg font-black">{title}</h3>
                         <p className="text-sm text-gray-500">{text}</p>
