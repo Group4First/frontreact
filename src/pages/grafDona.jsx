@@ -51,7 +51,7 @@ const ApexChart = ({ value }) => {
         },
       },
     }, {
-      breakpoint: 1024,
+      breakpoint: 1400,
       options: {
         chart: {
           width: getWindowWidth() * 0.65,
@@ -67,8 +67,8 @@ const ApexChart = ({ value }) => {
       breakpoint: 9999,
       options: {
         chart: {
-          width:  600,
-          height: 600,
+          width:  getWindowWidth() * 0.35,
+          height: 500,
         },
         legend: {
           position: 'right',

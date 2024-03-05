@@ -12,17 +12,27 @@ const Graficasempresa = () => {
       const empresas = Object.entries(data.infografempresasconaportes); // Obtiene una matriz de [nombreEmpresa, valorAportado]
       const valoresAportados = empresas.map(([, valor]) => valor); // Obtiene solo los valores aportados
 
-      const { nombreempresa1, nombreempresa2, nombreempresa3,nombreempresa4,nombreempresa5 } = data.infografempresasconaportes;
-      const valuesArray = ["",nombreempresa1, "",nombreempresa2,"", nombreempresa3,"",nombreempresa4,"",nombreempresa5 ];
 
-      setSeries([{ data: valoresAportados }]);
+
+      const { nombreempresa1, nombreempresa2, nombreempresa3, nombreempresa4, nombreempresa5 } = data.infografempresasconaportes;
+      const valuesArray = ["", nombreempresa1, "", nombreempresa2, "", nombreempresa3, "", nombreempresa4, "", nombreempresa5];
+
+      setSeries(valoresAportados);
       setCategories(valuesArray); // Actualiza las categorías con los nombres de las empresas
     }
 
     getReportFirst();
   }, []);
 
-  var options = {
+
+  const seriestra = [
+    {
+      name: "Aporte de empresa: ",
+      data: series
+    }
+  ];
+
+  const options = {
     chart: {
       width: "100%",
       height: 380,
@@ -31,7 +41,7 @@ const Graficasempresa = () => {
     plotOptions: {
       bar: {
         horizontal: true,
-        barHeight: 40 
+        barHeight: 40
       }
     },
     dataLabels: {
@@ -55,8 +65,29 @@ const Graficasempresa = () => {
     },
     responsive: [
       {
-        breakpoint: 1000,
+        breakpoint: 9999,
         options: {
+          chart: {
+            width: getWindowWidth() * 0.35,
+            height: 500,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: true
+            }
+          },
+          legend: {
+            position: "bottom"
+          }
+        }
+      },
+      {
+        breakpoint: 711,
+        options: {
+          chart: {
+            width: 300,
+            height: 300,
+          },
           plotOptions: {
             bar: {
               horizontal: false
@@ -65,15 +96,41 @@ const Graficasempresa = () => {
           legend: {
             position: "bottom"
           }
-        }
-      }
+        },
+      }, {
+        breakpoint: 1400,
+        options: {
+          chart: {
+            width: getWindowWidth() * 0.65,
+            height: 300,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false
+            }
+          },
+          legend: {
+            position: "bottom"
+          }
+        },
+      },
     ]
   };
+
+
+  function getWindowWidth() {
+    return window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+}
+
+
+
 
   return (
     <div>
       <div className="chart-container">
-        <Chart options={options} series={series} type="bar" height={370} width={1000} />
+        <Chart options={options} series={seriestra} type="bar" height={370} width={1000} />
       </div>
     </div>
   );
