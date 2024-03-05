@@ -34,11 +34,25 @@ const Graficas = ({ value }) => {
       valortotalpagosanual: item.valortotalpagosanual
     }));
 
+
   const options = {
+    chart: {
+      height: 350,
+      type: 'area'
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth'
+    },
     xaxis: {
+      type: 'area',
       categories: categories || []
     },
-    colors: ["#000000", "#ced4da"],
+    toolbar: {
+      show: 'none'
+    },
     responsive: [{
       breakpoint: 466,
       options: {
@@ -52,30 +66,32 @@ const Graficas = ({ value }) => {
       breakpoint: 9999,
       options: {
         chart: {
-          width: getWindowWidth() * 0.7, // Utiliza getWindowWidth para obtener el ancho de la ventana
+          width: getWindowWidth() * 0.7,
           height: 600,
         },
       },
     },
     ],
+    colors: ['#713BDB', '#04E38A'],
   };
+
 
   function getWindowWidth() {
     return window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
-}
-
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+  }
   const series = [
     {
       name: value === 0 ? "Recaudo Pagos Presuntivos" : "Recaudo Pagos Presuntivos",
-      data: totalAndAdditionalData?.map(item => item.valorpagospr) || []
+      data: totalAndAdditionalData?.map(item => Math.floor(item.valorpagospr)) || []
     },
     {
       name: value === 0 ? "Recaudo Pagos Mensuales" : "Recaudo Pagos Mensuales",
-      data: totalAndAdditionalData?.map(item => item.valorpagosme) || []
+      data: totalAndAdditionalData?.map(item => Math.floor(item.valorpagosme)) || []
     }
   ];
+  
 
   return (
     <div>

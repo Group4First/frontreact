@@ -17,7 +17,7 @@ const Graficasempresa = () => {
       const { nombreempresa1, nombreempresa2, nombreempresa3, nombreempresa4, nombreempresa5 } = data.infografempresasconaportes;
       const valuesArray = ["", nombreempresa1, "", nombreempresa2, "", nombreempresa3, "", nombreempresa4, "", nombreempresa5];
 
-      setSeries(valoresAportados);
+      setSeries(valoresAportados.map(valor => Math.round(valor)));
       setCategories(valuesArray); // Actualiza las categorías con los nombres de las empresas
     }
 
@@ -49,7 +49,7 @@ const Graficasempresa = () => {
     },
     stroke: {
       width: 1,
-      colors: ["#fff"]
+      colors: ["#04E38A"]
     },
 
     xaxis: {
@@ -68,7 +68,7 @@ const Graficasempresa = () => {
         breakpoint: 9999,
         options: {
           chart: {
-            width: getWindowWidth() * 0.35,
+            width: getWindowWidth() * 0.336,
             height: 500,
           },
           plotOptions: {
@@ -114,7 +114,8 @@ const Graficasempresa = () => {
           }
         },
       },
-    ]
+    ],
+    colors: ['#04E38A', '#04E38A'],
   };
 
 

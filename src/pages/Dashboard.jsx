@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Cards } from "./Cards";
 import { getinitialdata } from "../requests/getReportsInitialdata";
-import Cookies from "js-cookie";
-import Graficas from './graficas';
-import ApexChart from './grafDona';
-import Pagos from './graficaregpag';
-import Graficasempresa from './graficasempresas'
+import Graficas from '../components/graficas';
+import ApexChart from '../components/grafDona';
+import Pagos from '../components/graficaregpag';
+import Graficasempresa from '../components/graficasempresas';
+import { Cards as CardsComponent } from "./Cards"; // Cambiando el nombre del componente importado
+
 
 export function Dasboard() {
   const [data, setData] = useState({});
@@ -35,32 +35,49 @@ export function Dasboard() {
     setSelectedOption3(event.target.value);
   };
 
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
+  };
 
   return (
-    <section class="bg-white w-full max-h-svh  overflow-auto justify-center">
-      <div className="flex flex-row flex-wrap items-start content-start p-0 gap-28 w-850 left-16">
-        <h1 className="text-3xl mb-5 left-16 lg:text-xl mt-6 relative">Vista general</h1>
+    <section class=" w-full max-h-svh overflow-auto">
+      <div className="flex flex-row flex-wrap items-start content-start p-0 gap-5  mb-10">
 
-        {/* Cards superiores */}
-        <div className="container mx-auto px-10 grid space-x-4 gap-8">
-          <div className="container mx-auto px-4 grid grid-cols-3 gap-4">
-            <Cards title="Empresas" valor={data.totalempresas} className="bg-[#E3F5FF]" />
-            <Cards title="Obras" valor={data.totalkobras} className="bg-[#E5ECF6]" />
-            <Cards title="Empresas con obras activas" valor={data.empresasconobrasactivas} className="bg-[#E3F5FF]" />
+
+        <div className="w-full flex flex-wrap justify-center items-center">
+          <h1 className="text-3xl lg:text-xl mt-6 ml-6 w-full">Vista general</h1>
+          <div>
+
+            <div className="flex flex-wrap justify-center items-center mt-5 space-x-5 sm:space-x-10">
+              <div>
+                <CardsComponent title={"Total de empresas"} valor={data.totalempresas} className={"bg-white px-3 mt-5"} />
+              </div>
+              <div>
+                <CardsComponent title={"Total de obras"} valor={data.totalkobras} className={"bg-white px-3 mt-5"} />
+              </div>
+              <div>
+                <CardsComponent title={"Total de empresas con obras activas"} valor={data.empresasconobrasactivas} className={"bg-white px-3 mt-5"} />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center items-center mt-5 space-x-5 sm:space-x-10">
+              <div>
+                <CardsComponent title={"Recaudo fic"} valor={formatCurrency(data.sumavalorfictotalhis)} className={"bg-white px-3 mt-5"} />
+              </div>
+              <div>
+                <CardsComponent title={"Recaudo por intereses"} valor={formatCurrency(data.sumavalorficintereses)} className={"bg-white px-3 mt-5"} />
+              </div>
+            </div>
+
+
           </div>
         </div>
 
-        {/* Cards inferiores */}
-        <div className="container mx-auto px-10 grid space-x-4 gap-8">
-          <div className="container mx-auto px-4 grid grid-cols-3  -mt-16 gap-4">
-            <Cards title="Total recaudo FIC" valor={data.sumavalorfictotalhis} className="bg-[#E5ECF6]" />
-            <Cards title="Total recaudo Mora" valor={data.sumavalorficintereses} className="bg-[#E5ECF6]" />
-          </div>
-        </div>
+
 
 
         {/* Gráfica principal línea */}
-        <div className="w-full flex flex-wrap justify-center items-center">
+        <div className="w-full flex flex-wrap justify-center items-center ">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
             <Graficas value={selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
@@ -95,10 +112,10 @@ export function Dasboard() {
         {/* Contenedor para las gráficas de donas */}
         <div className="w-full flex flex-wrap mt-3 centered">
           <div className="max-w-screen-xl mx-auto flex flex-wrapauto justify-center">
-            <div className="rounded-lg bg-red mt-2 min-w-min p-5 max-h-full md:w-1/2 md:mr-2">
+            <div className=" bg-white rounded-lg bg-red  min-w-min p-5 max-h-full md:w-1/2 md:mr-2 mt-5 mb-5">
               <Graficasempresa />
             </div>
-            <div className="rounded-lg bg-white p-5 max-h-full md:w-1/2 md:ml-2 justify-center min-w-min"> {/* Agrega las clases justify-center y w-full aquí */}
+            <div className="rounded-lg bg-white p-5 max-h-full md:w-1/2 justify-center min-w-min mt-5 mb-5"> {/* Agrega las clases justify-center y w-full aquí */}
               <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Composición de pagos FIC</h1>
               <div className="flex justify-center">
                 <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : 1} />

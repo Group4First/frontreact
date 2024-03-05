@@ -67,8 +67,8 @@ const ApexChart = ({ value }) => {
       breakpoint: 9999,
       options: {
         chart: {
-          width:  getWindowWidth() * 0.35,
-          height: 500,
+          width:  getWindowWidth() * 0.336,
+          height: 400,
         },
         legend: {
           position: 'right',

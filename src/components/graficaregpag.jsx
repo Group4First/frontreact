@@ -50,7 +50,7 @@ const Pagos = ({ value }) => {
     xaxis: {
       categories: categories || []
     },
-    colors: ["#000000", "#90e0ef"],
+    colors: ["#713BDB", "#FFC644"],
     plotOptions: {
       bar: {
         borderRadius: 10,
