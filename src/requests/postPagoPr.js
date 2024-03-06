@@ -13,7 +13,7 @@ export async function postPagoPr(fechapago, tipopago, valorfic, idobra) {
     idusuario: idusuario
   }
 
-  const url = new URL('http://localhost:8080/api/payment/addpr');
+  const url = new URL('https://api-wvh8.onrender.com/api/payment/addpr');
 
   return await newRequest({ url, body, method: 'POST' })
 }

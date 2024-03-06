@@ -2,7 +2,7 @@ import { newRequest } from "./newRequest";
 
 export async function getObrasEmpresa(id, searchTerm) {
 
-    const url = new URL('http://localhost:8080/api/works/getbybussines');
+    const url = new URL('https://api-wvh8.onrender.com/api/works/getbybussines');
 
     // Agrega los parámetros a la URL
     url.searchParams.append('bussinesid', id);

@@ -10,7 +10,7 @@ export async function postinterest(mes, anio, tasaanual, smmv){
   }
 
 
-  const url = new URL('http://localhost:8080/api/interest/add');
+  const url = new URL('https://api-wvh8.onrender.com/api/interest/add');
 
   return await newRequest({url, body, method: 'POST'})
 }

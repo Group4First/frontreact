@@ -7,7 +7,7 @@ export async function postLogin(documento, contraseña){
     contraseñausuario: contraseña
   }
 
-  const url = "http://localhost:8080/api/user/auth"
+  const url = "https://api-wvh8.onrender.com/api/user/auth"
 
   return await newRequest({url, body, method: 'POST'})
 }

@@ -15,7 +15,7 @@ export async function updatebuss(numidentificacion,direccion,municipio,telefono,
     cajadecompensacion: cajadecompensacion,
   }
 
-  const url = new URL('http://localhost:8080/api/bussiness/update');
+  const url = new URL('https://api-wvh8.onrender.com/api/bussiness/update');
 
   return await newRequest({url, body, method: 'PUT'})
 }

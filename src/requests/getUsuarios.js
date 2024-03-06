@@ -4,7 +4,7 @@ import { newRequest } from "./newRequest";
 
 export async function getUsuarios(currentpage, searchTerm) {
     
-    const url = new URL('http://localhost:8080/api/user/getall');
+    const url = new URL('https://api-wvh8.onrender.com/api/user/getall');
 
     // Agrega los parámetros a la URL
     url.searchParams.append('searchTerm', searchTerm);

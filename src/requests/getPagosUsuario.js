@@ -2,7 +2,7 @@ import { newRequest } from "./newRequest";
 
 export async function getPagosUsuario(id, currentpage, searchTerm) {
 
-    const url = new URL('http://localhost:8080/api/user/getuserxpay');
+    const url = new URL('https://api-wvh8.onrender.com/api/user/getuserxpay');
 
     // Agrega los parámetros a la URL
     url.searchParams.append('Iduser', id);

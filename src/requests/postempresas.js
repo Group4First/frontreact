@@ -25,7 +25,7 @@ export async function postbussiness(numidentificacion,razonsocial,tipodocumento,
   }
 
 
-  const url = new URL('http://localhost:8080/api/bussiness/add');
+  const url = new URL('https://api-wvh8.onrender.com/api/bussiness/add');
 
   return await newRequest({url, body, method: 'POST'})
 }

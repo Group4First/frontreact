@@ -2,7 +2,7 @@ import { newRequest } from "./newRequest";
 
 export async function getPagosObra(id, currentpage) {
 
-    const url = new URL('http://localhost:8080/api/works/getbyid');
+    const url = new URL('https://api-wvh8.onrender.com/api/works/getbyid');
 
     // Agrega los parámetros a la URL
     url.searchParams.append('idwork', id);

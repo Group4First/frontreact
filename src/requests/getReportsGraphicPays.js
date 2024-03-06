@@ -2,7 +2,7 @@ import { newRequest } from "./newRequest";
 
 export async function getgraphicpays(optional) {
 
-    const url = new URL('http://localhost:8080/api/reports/GraphicPays');
+    const url = new URL('https://api-wvh8.onrender.com/api/reports/GraphicPays');
 
     url.searchParams.append('optional', optional);
 

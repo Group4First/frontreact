@@ -19,7 +19,7 @@ export async function postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores
 
   }
 
-  const url = new URL('http://localhost:8080/api/payment/addme');
+  const url = new URL('https://api-wvh8.onrender.com/api/payment/addme');
 
   return await newRequest({ url, body, method: 'POST' })
 }

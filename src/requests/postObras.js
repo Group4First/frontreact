@@ -11,7 +11,7 @@ export async function postObras(descripcion, tipo, fechainicio, fechafin, empres
     empresaid :empresaid
   }
 
-  const url = new URL('http://localhost:8080/api/works/add');
+  const url = new URL('https://api-wvh8.onrender.com/api/works/add');
 
   return await newRequest({ url, body, method: 'POST' })
 }

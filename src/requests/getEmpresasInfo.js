@@ -2,7 +2,7 @@ import { newRequest } from "./newRequest";
 
 export async function getbussinfo(idbuss) {
 
-    const url = new URL('http://localhost:8080/api/bussiness/search');
+    const url = new URL('https://api-wvh8.onrender.com/api/bussiness/search');
 
     url.searchParams.append('idbuss', idbuss);
 

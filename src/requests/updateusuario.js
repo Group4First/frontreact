@@ -12,7 +12,7 @@ export async function updateuser(documento, nombre, apellido, contraseña, isact
     nombrerol: rol
   }
 
-  const url = new URL('http://localhost:8080/api/user/update');
+  const url = new URL('https://api-wvh8.onrender.com/api/user/update');
 
   return await newRequest({url, body, method: 'PUT'})
 }

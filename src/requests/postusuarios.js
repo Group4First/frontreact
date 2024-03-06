@@ -11,7 +11,7 @@ export async function postuser(documento, nombre, apellido, contraseña, correo,
     nombrerol: rol
   }
 
-  const url = new URL('http://localhost:8080/api/user/create');
+  const url = new URL('https://api-wvh8.onrender.com/api/user/create');
 
   return await newRequest({url, body, method: 'POST'})
 }
