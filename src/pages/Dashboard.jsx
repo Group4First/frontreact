@@ -48,23 +48,23 @@ export function Dasboard() {
           <h1 className="text-3xl lg:text-xl mt-6 ml-6 w-full">Vista general</h1>
           <div>
 
-            <div className="flex flex-wrap justify-center items-center mt-5 space-x-5 sm:space-x-10">
-              <div>
+            <div className="flex max-xl:flex-wrap justify-center items-center mt-5 gap-5 px-5">
+              <div className='w-full'>
                 <CardsComponent title={"Total de empresas"} valor={data.totalempresas} className={"bg-white px-3 mt-5"} />
               </div>
-              <div>
+              <div className='w-full'>
                 <CardsComponent title={"Total de obras"} valor={data.totalkobras} className={"bg-white px-3 mt-5"} />
               </div>
-              <div>
-                <CardsComponent title={"Total de empresas con obras activas"} valor={data.empresasconobrasactivas} className={"bg-white px-3 mt-5"} />
+              <div className='w-full'>
+                <CardsComponent title={"Empresas con obras activas"} valor={data.empresasconobrasactivas} className={"bg-white px-3 mt-5"} />
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center items-center mt-5 space-x-5 sm:space-x-10">
-              <div>
+            <div className="flex max-xl:flex-wrap gap-5 justify-between items-center mt-5 w-full px-5">
+              <div className='w-full'>
                 <CardsComponent title={"Recaudo fic"} valor={formatCurrency(data.sumavalorfictotalhis)} className={"bg-white px-3 mt-5"} />
               </div>
-              <div>
+              <div className='w-full'>
                 <CardsComponent title={"Recaudo por intereses"} valor={formatCurrency(data.sumavalorficintereses)} className={"bg-white px-3 mt-5"} />
               </div>
             </div>
