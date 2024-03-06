@@ -4,7 +4,7 @@ import Graficas from '../components/graficas';
 import ApexChart from '../components/grafDona';
 import Pagos from '../components/graficaregpag';
 import Graficasempresa from '../components/graficasempresas';
-import { Cards as CardsComponent } from "../components/Cards"; // Cambiando el nombre del componente importado
+import { Cards as CardsComponent } from "./Cards"; // Cambiando el nombre del componente importado
 
 
 export function Dasboard() {
