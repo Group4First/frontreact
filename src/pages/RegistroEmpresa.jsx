@@ -76,14 +76,24 @@ export function RegistroEmpresa() {
                 try {
                     const emptra = await getbussinfo(idempresa);
                     if (Object.keys(emptra).length > 0) {
+                        setNumIdentificacion(emptra.numidentificacion);
+                        setRazonsocial(emptra.razonsocial);
+                        setSelectedDocumentType(emptra.tipodocumento);
+                        setDV(emptra.dv);
                         setDireccion(emptra.direccion);
                         setMunicipio(emptra.municipio);
                         setTelefono(emptra.telefono);
-                        setFax(emptra.fax)
+                        setFax(emptra.fax);
+                        setActividadeconomica(emptra.actividadeconomica);
+                        setCIIU(emptra.ciiu);
                         setCorreo(emptra.correo)
                         setRepresentantelegal(emptra.representantelegal)
                         setCCrepresentantelegal(emptra.ccrepresentante)
                         setCajadecompensacion(emptra.cajadecompensacion)
+                        setEscrituraconstitucion(emptra.numescrituraconstitucion);
+                        setNotaria(emptra.numnotaria);
+                        setCiudad(emptra.ciudad);
+                        setFecha(emptra.fecha);
                     }
                     else {
                         activeAlert("error", "La informacion es vacia", 2000);
@@ -135,55 +145,57 @@ export function RegistroEmpresa() {
                 </div>
 
                 <section className="mt-5 ml-5 overflow-y-auto " style={{ maxHeight: "calc(100vh - 200px)" }}>
-                    {!idempresa && (
-                        <div className=" flex flex-wrap centered mt-5">
 
-                            <div>
-                                <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Razon social</label>
-                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                    <input onChange={(event) => { setRazonsocial(event.target.value); }} type="text" required="true" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
-                                </div>
-                            </div>
+                    <div className=" flex flex-wrap centered mt-5">
 
-                            <div>
-                                <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Info documentos</label>
-                                <div className="flex centered flex-wrap mr-4">
-                                    <div className={`bg-white h-12 w-[284px] border-2 border-vgray flex items-center font-semibold text-vgray2 px-3 ${window.innerWidth <= 425 ? 'rounded-t-xl border-t-2 border-l-2 border-r-2 border-b-0' : 'rounded-l-xl border-2'}`}>
-                                        <input onChange={(event) => { setNumIdentificacion(event.target.value); }} type="number" placeholder="Numero de documento" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full md:w-[284px] text-center " />
-                                    </div>
-                                    <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 border-l-0 border-r-0 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex border-l-2 rounded-bl-xl border-2' : 'block md:flex rounded-1-xl border-t-2 border-b-2'}`} style={{ backgroundColor: selectedDocumentType === 'NIT' ? '#BAEDBD' : 'white' }} onClick={() => handleDocumentClick('NIT')}>
-                                        <button className="font-semibold text-black p-2">NIT</button>
-                                    </div>
-                                    <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex rounded-br-xl border-2' : 'block md:flex rounded-r-xl border-2'}`} style={{ backgroundColor: selectedDocumentType === 'CC' ? '#BAEDBD' : 'white' }} onClick={() => handleDocumentClick('CC')}>
-                                        <button className="font-semibold text-black">Cedula</button>
-                                    </div>
-                                </div>
+
+                        <div>
+                            <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Razon social</label>
+                            <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
+                                <input onChange={(event) => { setRazonsocial(event.target.value); }} value={Razonsocial} type="text" required="true" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false} />
                             </div>
-                            <div>
-                                <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Dv</label>
-                                <div className="bg-white h-12 w-26 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 ">
-                                    <input onChange={(event) => { setDV(event.target.value); }} type="number" placeholder="DV" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-8" />
+                        </div>
+
+                        <div>
+                            <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Info documentos</label>
+                            <div className="flex centered flex-wrap mr-4">
+                                <div className={`bg-white h-12 w-[284px] border-2 border-vgray flex items-center font-semibold text-vgray2 px-3 ${window.innerWidth <= 425 ? 'rounded-t-xl border-t-2 border-l-2 border-r-2 border-b-0' : 'rounded-l-xl border-2'}`}>
+                                    <input onChange={(event) => { setNumIdentificacion(event.target.value); }} value={NumIdentificacion} type="number" placeholder="Numero de documento" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full md:w-[284px] text-center " disabled={idempresa ? true : false} />
+                                </div>
+                                <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 border-l-0 border-r-0 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex border-l-2 rounded-bl-xl border-2' : 'block md:flex rounded-1-xl border-t-2 border-b-2'}`} style={{ backgroundColor: selectedDocumentType === 'NIT' ? '#BAEDBD' : 'white' }} onClick={!idempresa ? () => handleDocumentClick('NIT') : null} >
+                                    <button className="font-semibold text-black p-2">NIT</button>
+                                </div>
+                                <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex rounded-br-xl border-2' : 'block md:flex rounded-r-xl border-2'}`} style={{ backgroundColor: selectedDocumentType === 'CC' ? '#BAEDBD' : 'white' }} onClick={!idempresa ? () => handleDocumentClick('CC') : null}>
+                                    <button className="font-semibold text-black">Cedula</button>
                                 </div>
                             </div>
                         </div>
-                    )}
-                    {!idempresa && (
-                        <div className=" flex flex-wrap centered">
-                            <div >
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Codigo</label>
-                                <div className="bg-white h-12  w-32 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4" >
-                                    <input onChange={(event) => { setCIIU(event.target.value); }} type="number" placeholder="CIIU" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-20 text-center" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Actividad economica</label>
-                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                    <input onChange={(event) => { setActividadeconomica(event.target.value); }} type="text" placeholder="Actividad economica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
-                                </div>
+                        <div>
+                            <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Dv</label>
+                            <div className="bg-white h-12 w-26 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 ">
+                                <input onChange={(event) => { setDV(event.target.value); }}value={DV} type="number" placeholder="DV" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-8"disabled={idempresa ? true : false} />
                             </div>
                         </div>
-                    )}
+                    </div>
+
+
+                    <div className=" flex flex-wrap centered">
+                        <div >
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Codigo</label>
+                            <div className="bg-white h-12  w-32 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4" >
+                                <input onChange={(event) => { setCIIU(event.target.value); }} value={CIIU} type="number" placeholder="CIIU" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-20 text-center" disabled={idempresa ? true : false}/>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Actividad economica</label>
+                            <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
+                                <input onChange={(event) => { setActividadeconomica(event.target.value); }} value={Actividadeconomica} type="text" placeholder="Actividad economica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false}/>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div className=" flex flex-wrap centered">
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Direccion</label>
@@ -238,32 +250,32 @@ export function RegistroEmpresa() {
                             </div>
                         </div>
                     </div>
-                    {!idempresa && (
-                        <div className=" flex flex-wrap centered">
-                            <div>
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero escritura</label>
-                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
-                                    <input onChange={(event) => { setEscrituraconstitucion(event.target.value); }} type="number" placeholder="Escritura constitucion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero Notaria</label>
-                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 ">
-                                    <input onChange={(event) => { setNotaria(event.target.value); }} type="number" placeholder="Notaria" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Ciudad notaria</label>
-                                <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
-                                    <input onChange={(event) => { setCiudad(event.target.value); }} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
-                                </div>
-                            </div>
-                            <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-4 mt-12">
-                                <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow mt-[10px] ml-4">Fecha</label>
-                                <input onChange={(event) => { setFecha(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+
+                    <div className=" flex flex-wrap centered">
+                        <div>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero escritura</label>
+                            <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
+                                <input onChange={(event) => { setEscrituraconstitucion(event.target.value); }} value={Escrituraconstitucion} type="number" placeholder="Escritura constitucion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false}/>
                             </div>
                         </div>
-                    )}
+                        <div>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero Notaria</label>
+                            <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 ">
+                                <input onChange={(event) => { setNotaria(event.target.value); }} value={Notaria}type="number" placeholder="Notaria" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false}/>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Ciudad notaria</label>
+                            <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
+                                <input onChange={(event) => { setCiudad(event.target.value); }} value={Ciudad} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center"disabled={idempresa ? true : false} />
+                            </div>
+                        </div>
+                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-4 mt-12">
+                            <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow mt-[10px] ml-4">Fecha</label>
+                            <input onChange={(event) => { setFecha(event.target.value); }} value={Fecha} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " disabled={idempresa ? true : false}/>
+                        </div>
+                    </div>
+
                 </section>
             </div>
         </section>
