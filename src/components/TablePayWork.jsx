@@ -1,5 +1,5 @@
-import { Download, File, FileSpreadsheet } from "lucide-react";
 import { PaginationButtons } from "./paginationButtons";
+
 
 export function TablePayWork({ type, pagos, setCurrentPage, totalPages }) {
   const formatCurrency = (value) => {
@@ -8,19 +8,7 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages }) {
 
   return (
     <>
-      <div className="w-full flex justify-center">
-        <div className="flex w-10/12 gap-2 justify-end">
-        <button className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-vgreen">
-            <FileSpreadsheet size={20} />
-            Excel
-          </button>
-          <button className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
-            <File size={20} />
-            PDF
-          </button>
-   
-        </div>
-      </div>
+      
 
       {type == 'Mensual' ? (
         <>

@@ -8,6 +8,9 @@ import { useGlobalContext } from "../context/context";
 import { FormRegisterPay } from "../components/FormRegisterPay";
 import { TablePayWork } from "../components/TablePayWork";
 import { Modal } from "../components/Modal";
+import { Download, File, FileSpreadsheet } from "lucide-react";
+import { Pdf } from "../components/Pdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export function VistaPagos() {
     const { idempresa } = useParams();
@@ -146,16 +149,16 @@ export function VistaPagos() {
                                 <input value={fechafin} onChange={(event) => { setFechafin(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
                             </div>
                             <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-vgreen  " onClick={() => {
-                                if(fechafin){
+                                if (fechafin) {
                                     setOpen(true)
-                                }else{
+                                } else {
                                     activeAlert('error', 'Ingrese una fecha', 2000);
                                 }
-                               
+
                             }}>
                                 Aceptar
                             </button>
-                            <Modal open={open} onClose={() => setOpen(false)} title={ 'Confirmar actualización' } text={ '¿Esta seguro de finalizar esta obra?' } onAcept={putFinalizar} />
+                            <Modal open={open} onClose={() => setOpen(false)} title={'Confirmar actualización'} text={'¿Esta seguro de finalizar esta obra?'} onAcept={putFinalizar} />
                             <button className="h-12 w-24 text-white font-medium text-sm rounded-lg  bg-red-500  " onClick={() => {
                                 setObraFinalizada(false)
                             }}>
@@ -168,7 +171,26 @@ export function VistaPagos() {
 
             </section>
             <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />
-            <TablePayWork type={lpagos.tipo} pagos={pagos}  setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} />
+            <div className="w-full flex justify-center">
+                <div className="flex w-10/12 gap-2 justify-end">
+                    <button className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-vgreen">
+                        <FileSpreadsheet size={20} />
+                        Excel
+                    </button>
+
+                    <PDFDownloadLink document={<Pdf idwork={idobra} />} fileName="archivo.pdf">
+                        {({ blob, url, loading, error }) =>
+                            <button document={<Pdf />} fileName="archivo.pdf" className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
+                                <File size={20} />
+                                PDF
+                            </button>
+                        }
+                    </PDFDownloadLink>
+
+
+                </div>
+            </div>
+            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} />
 
         </div >
 
