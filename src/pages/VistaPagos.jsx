@@ -31,6 +31,7 @@ export function VistaPagos() {
     const [reload, setReaload] = useState(false)
 
 
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -140,7 +141,6 @@ export function VistaPagos() {
                             <div className="flex-grow border-t border-gray-400"></div>
                             <h1 className=" text-gray-400"> Fecha de finalizacion de la obra</h1>
                             <div className="flex-grow border-t border-gray-400"></div>
-
                         </div>
                         <div className="w-full flex justify-center mt-2 gap-10 ">
 
@@ -169,15 +169,14 @@ export function VistaPagos() {
 
                 )}
 
+
+
             </section>
             <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />
-            <div className="w-full flex justify-center">
-                <div className="flex w-10/12 gap-2 justify-end">
-                    <button className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-vgreen">
-                        <FileSpreadsheet size={20} />
-                        Excel
-                    </button>
 
+            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} />
+            <div className="w-full flex justify-center mb-5">
+                <div className="flex w-10/12 gap-20 justify-end">
                     <PDFDownloadLink document={<Pdf idwork={idobra} />} fileName="archivo.pdf">
                         {({ blob, url, loading, error }) =>
                             <button document={<Pdf />} fileName="archivo.pdf" className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
@@ -186,11 +185,8 @@ export function VistaPagos() {
                             </button>
                         }
                     </PDFDownloadLink>
-
-
                 </div>
             </div>
-            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} />
 
         </div >
 

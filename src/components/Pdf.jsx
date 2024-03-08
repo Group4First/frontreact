@@ -3,7 +3,7 @@ import { getPrintWork } from "../requests/getPrintObras";
 import { useState, useEffect } from 'react';
 import React, { Fragment } from 'react';
 import Logosena from "/Logosenapng.png";
-
+ 
 
 
 export function Pdf({ idwork }) {
