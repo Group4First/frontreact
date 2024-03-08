@@ -27,7 +27,7 @@ export function Pdf({ idwork }) {
     }, []);
 
     const styles = StyleSheet.create({
-        page: { fontSize: 11, paddingTop: 20, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column' ,marginBottom: 10, marginTop:10},
+        page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30 },
 
         spaceBetween: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 
@@ -76,6 +76,12 @@ export function Pdf({ idwork }) {
             width: 50, // Ajusta el ancho según tus necesidades
             height: 50, // Ajusta la altura según tus necesidades
             marginTop: 10, // Opcional: ajusta el margen superior según tus necesidades
+        },
+
+        pagenumber: {
+            position: 'absolute',
+            bottom: 10, // Margen inferior de la página
+            left: 10, // Margen izquierdo de la página
         },
     });
 
@@ -150,7 +156,7 @@ export function Pdf({ idwork }) {
                     <Text style={styles.invoicetittle}>{info.tipo}</Text>
                 </View>
                 <View style={{ maxWidth: 200 }}>
-                    <Text style={styles.invoicedata}>Fecha de inicio</Text>
+                    <Text style={styles.invoicedata}>Fecha de fin</Text>
                     <Text style={styles.invoicetittle}>{info.fechafin ? info.fechafin : "Aun no ha finalizado"}</Text>
                     <Text style={styles.invoicedata}>Estado</Text>
                     <Text style={styles.invoicetittle}>{info.estado}</Text>
@@ -231,17 +237,17 @@ export function Pdf({ idwork }) {
             </View>
             <View style={styles.tbody}>
                 <Text>
-                    {info.valorfic}
+                    {info.valorfic ? info.valorfic.toFixed(2) : info.valorfic}
                 </Text>
             </View>
             <View style={(styles.tbody)}>
                 <Text>
-                    {info.valorintereses}
+                    {info.valorintereses ? info.valorintereses.toFixed(2) : info.valorintereses}
                 </Text>
             </View>
             <View style={styles.tbody}>
                 <Text>
-                    {info.valortotal}
+                    {info.valortotal ? info.valortotal.toFixed(2) : info.valortotal}
                 </Text>
             </View>
         </View>
@@ -249,14 +255,18 @@ export function Pdf({ idwork }) {
 
     return (
         <Document>
-            <Page size="A4" style={styles.page}>
+            <Page wrap size="A4" style={styles.page}>
                 <InvoiceTitle />
                 <Address />
                 <UserAddress />
+                
                 <TableHead />
+
                 <TableBody />
                 <TableTotal />
+
             </Page>
+
         </Document>
 
     )
