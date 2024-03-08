@@ -27,7 +27,7 @@ export function Pdf({ idwork }) {
     }, []);
 
     const styles = StyleSheet.create({
-        page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30 },
+        page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30},
 
         spaceBetween: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 
@@ -77,11 +77,13 @@ export function Pdf({ idwork }) {
             height: 50, // Ajusta la altura según tus necesidades
             marginTop: 10, // Opcional: ajusta el margen superior según tus necesidades
         },
-
-        pagenumber: {
+        pageNumber: {
             position: 'absolute',
-            bottom: 10, // Margen inferior de la página
-            left: 10, // Margen izquierdo de la página
+            bottom: 10, 
+            left: 0,
+            right: 0,
+            textAlign: 'center',
+            color: '#787878'
         },
     });
 
@@ -259,14 +261,11 @@ export function Pdf({ idwork }) {
                 <InvoiceTitle />
                 <Address />
                 <UserAddress />
-                
                 <TableHead />
-
                 <TableBody />
                 <TableTotal />
-
+                <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} de ${totalPages}`} fixed/>
             </Page>
-
         </Document>
 
     )
