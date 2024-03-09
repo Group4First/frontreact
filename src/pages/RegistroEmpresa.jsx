@@ -152,7 +152,7 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Razon social</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setRazonsocial(event.target.value); }} value={Razonsocial} type="text" required="true" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false} />
+                                <input onChange={(event) => { setRazonsocial(event.target.value); }} value={Razonsocial} type="text" required="true" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false} />
                             </div>
                         </div>
 
@@ -160,7 +160,7 @@ export function RegistroEmpresa() {
                             <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Info documentos</label>
                             <div className="flex centered flex-wrap mr-4">
                                 <div className={`bg-white h-12 w-[284px] border-2 border-vgray flex items-center font-semibold text-vgray2 px-3 ${window.innerWidth <= 425 ? 'rounded-t-xl border-t-2 border-l-2 border-r-2 border-b-0' : 'rounded-l-xl border-2'}`}>
-                                    <input onChange={(event) => { setNumIdentificacion(event.target.value); }} value={NumIdentificacion} type="number" placeholder="Numero de documento" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full md:w-[284px] text-center " disabled={idempresa ? true : false} />
+                                    <input onChange={(event) => { setNumIdentificacion(event.target.value); }} value={NumIdentificacion} type="number" placeholder="Numero de documento" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center " disabled={idempresa ? true : false} />
                                 </div>
                                 <div className={`bg-white h-12 border-vgray flex items-center text-vgray2 px-3 border-l-0 border-r-0 ${window.innerWidth <= 425 ? 'w-[142px] block md:flex border-l-2 rounded-bl-xl border-2' : 'block md:flex rounded-1-xl border-t-2 border-b-2'}`} style={{ backgroundColor: selectedDocumentType === 'NIT' ? '#BAEDBD' : 'white' }} onClick={!idempresa ? () => handleDocumentClick('NIT') : null} >
                                     <button className="font-semibold text-black p-2">NIT</button>
@@ -190,7 +190,7 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Actividad economica</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setActividadeconomica(event.target.value); }} value={Actividadeconomica} type="text" placeholder="Actividad economica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false}/>
+                                <input onChange={(event) => { setActividadeconomica(event.target.value); }} value={Actividadeconomica} type="text" placeholder="Actividad economica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
                             </div>
                         </div>
                     </div>
@@ -200,13 +200,13 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Direccion</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setDireccion(event.target.value); }} value={Direccion} type="text" placeholder="Direccion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setDireccion(event.target.value); }} value={Direccion} type="text" placeholder="Direccion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Municipio</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setMunicipio(event.target.value); }} value={Municipio} type="text" placeholder="Municipio" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setMunicipio(event.target.value); }} value={Municipio} type="text" placeholder="Municipio" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                     </div>
@@ -214,19 +214,19 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Telefono</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setTelefono(event.target.value); }} value={Telefono} type="number" placeholder="Telefono" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setTelefono(event.target.value); }} value={Telefono} type="number" placeholder="Telefono" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4 ">Fax</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setFax(event.target.value); }} value={Fax} type="text" placeholder="Fax" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setFax(event.target.value); }} value={Fax} type="text" placeholder="Fax" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4 ">Correo electronico</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3  mr-4">
-                                <input onChange={(event) => { setCorreo(event.target.value); }} value={Correo} type="text" placeholder="Correo electronico" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setCorreo(event.target.value); }} value={Correo} type="text" placeholder="Correo electronico" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                     </div>
@@ -234,19 +234,19 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Representante legal</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setRepresentantelegal(event.target.value); }} value={Representantelegal} type="text" placeholder="Representante legal" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setRepresentantelegal(event.target.value); }} value={Representantelegal} type="text" placeholder="Representante legal" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Documento Representante</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setCCrepresentantelegal(event.target.value); }} value={CCrepresentantelegal} type="number" placeholder="Cedula R.P" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setCCrepresentantelegal(event.target.value); }} value={CCrepresentantelegal} type="number" placeholder="Cedula R.P" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Caja de compensacion</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setCajadecompensacion(event.target.value); }} value={Cajadecompensacion} type="text" placeholder="Caja de compensacion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" />
+                                <input onChange={(event) => { setCajadecompensacion(event.target.value); }} value={Cajadecompensacion} type="text" placeholder="Caja de compensacion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                     </div>
@@ -255,22 +255,22 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero escritura</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
-                                <input onChange={(event) => { setEscrituraconstitucion(event.target.value); }} value={Escrituraconstitucion} type="number" placeholder="Escritura constitucion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false}/>
+                                <input onChange={(event) => { setEscrituraconstitucion(event.target.value); }} value={Escrituraconstitucion} type="number" placeholder="Escritura constitucion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero Notaria</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 ">
-                                <input onChange={(event) => { setNotaria(event.target.value); }} value={Notaria}type="number" placeholder="Notaria" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center" disabled={idempresa ? true : false}/>
+                                <input onChange={(event) => { setNotaria(event.target.value); }} value={Notaria}type="number" placeholder="Notaria" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Ciudad notaria</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
-                                <input onChange={(event) => { setCiudad(event.target.value); }} value={Ciudad} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-[284px] text-center"disabled={idempresa ? true : false} />
+                                <input onChange={(event) => { setCiudad(event.target.value); }} value={Ciudad} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center"disabled={idempresa ? true : false} />
                             </div>
                         </div>
-                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-4 mt-12">
+                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-2 mt-12">
                             <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow mt-[10px] ml-4">Fecha</label>
                             <input onChange={(event) => { setFecha(event.target.value); }} value={Fecha} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " disabled={idempresa ? true : false}/>
                         </div>

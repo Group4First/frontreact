@@ -123,7 +123,7 @@ export function RegistroUsuarios() {
                         <button className="px-4 py-2 bg-red-500 text-white font-medium text-sm rounded-lg flex items-center gap-2 mr-4" onClick={() => { navigate(`/usuarios`); }}>
                             <X className="h-4 w-4" /> Cancelar
                         </button>
-                        <button className="px-4 py-2 bg-green-500 text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={() => {
+                        <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={() => {
                             if (validateInputs()) {
                                 setOpen(true);
                             }
@@ -140,33 +140,33 @@ export function RegistroUsuarios() {
                             <div>
                                 <label className="flex flex-wrap  mt-3 centered-full justify-center text-center text-black font-semibold">Documento</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <input onChange={(event) => { setDocumento(event.target.value); }} type="text" placeholder="Documento" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" />
+                                    <input onChange={(event) => { setDocumento(event.target.value); }} type="text" placeholder="Documento" className="outline-none text-vgray2 font-semibold  w-full text-center" />
                                 </div>
                             </div>
                         )}
                         <div>
                             <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Nombre</label>
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                <input onChange={(event) => { setNombre(event.target.value); }} value={nombre} type="text" placeholder="Nombre" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" />
+                                <input onChange={(event) => { setNombre(event.target.value); }} value={nombre} type="text" placeholder="Nombre" className="outline-none text-vgray2 font-semibold  w-full text-center" />
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Apellido</label>
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                <input onChange={(event) => { setApellido(event.target.value); }} value={apellido} type="text" placeholder="Apellido" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" />
+                                <input onChange={(event) => { setApellido(event.target.value); }} value={apellido} type="text" placeholder="Apellido" className="outline-none text-vgray2 font-semibold  w-full text-center" />
                             </div>
                         </div>
                         <div className="flex flex-wrap mt-3 centered">
                             <div>
                                 <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Correo</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <input onChange={(event) => { setCorreo(event.target.value); setCorreoError(null); }} value={correo} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold  w-[320px] text-center" />
+                                    <input onChange={(event) => { setCorreo(event.target.value); setCorreoError(null); }} value={correo} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold  w-full text-center" />
                                 </div>
                             </div>
                             <div>
                                 <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Contraseña</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <input onChange={(event) => { setContraseña(event.target.value) }} type={type} placeholder="Contraseña" className="outline-none text-vgray2 font-semibold w-[320px] text-center" />
+                                    <input onChange={(event) => { setContraseña(event.target.value) }} type={type} placeholder="Contraseña" className="outline-none text-vgray2 font-semibold w-full text-center" />
                                     <button className="ml-2" onClick={() => { showHidePassword() }}>
                                         {type == 'password' ? <Eye /> : <EyeOff />}
                                     </button>
@@ -176,7 +176,7 @@ export function RegistroUsuarios() {
                             <div>
                                 <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Rol</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <select onChange={(event) => { setRol(event.target.value); }} value={rol} className="outline-none text-vgray2 font-semibold  w-[320px] text-center">
+                                    <select onChange={(event) => { setRol(event.target.value); }} value={rol} className="outline-none text-vgray2 font-semibold  w-full text-center">
                                         <option value="" disabled>Selecciona un rol</option>
                                         {Roles.map((rol, index) => (
                                             <option key={index} value={rol}>
@@ -190,7 +190,7 @@ export function RegistroUsuarios() {
                                 <div>
                                     <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Estado</label>
                                     <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                        <select onChange={(event) => { setEstado(event.target.value); }} value={estado} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
+                                        <select onChange={(event) => { setEstado(event.target.value); }} value={estado} className="outline-none text-vgray2 font-semibold ml-3 w-full text-center">
                                             <option value="" disabled>Selecciona un estado</option>
                                             {Estados.map((estado, indexnew) => (
                                                 <option key={indexnew} value={estado}>

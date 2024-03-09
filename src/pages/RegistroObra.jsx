@@ -90,7 +90,7 @@ export function RegistroObra() {
                         <div className="flex-grow border-t border-gray-400"></div>
                     </div>
 
-                    <div className="w-11/12 flex justify-end mt-10 ml-5 centered">
+                    <div className="w-11/12 flex justify-end ml-5 centered">
                         <button className="px-4 py-2 bg-vgreen text-white font-medium text-sm rounded-lg flex items-center gap-2" onClick={registrarobra}>
                             <Check className="max-h-4 max-w-4" /> Registrar
                         </button>

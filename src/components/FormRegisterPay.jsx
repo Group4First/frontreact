@@ -179,7 +179,7 @@ console.log('fechapago',fechapago);
                           }}
                           type="number"
                           placeholder="Año"
-                          className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                          className="outline-none text-vgray2 font-semibold ml-3 w-full text-center"
                           maxLength="4"
                         />
                       </div>
@@ -215,7 +215,7 @@ console.log('fechapago',fechapago);
                           type="number"
                           placeholder="Número trabajadores"
                           autoComplete="cc"
-                          className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center"
+                          className="outline-none text-vgray2 font-semibold ml-3 w-full text-center"
                         />
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
