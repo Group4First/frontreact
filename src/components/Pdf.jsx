@@ -11,7 +11,7 @@ export function Pdf({ idwork }) {
     const [info, setInfo] = useState([]);
     const [infopagos, setInfoPagos] = useState([]);
 
-    useEffect(() => {
+    
         async function imprimirpdfobras() {
             try {
                 const infoprint = await getPrintWork(idwork);
@@ -24,7 +24,7 @@ export function Pdf({ idwork }) {
             }
         }
         imprimirpdfobras();
-    }, []);
+    
 
     const styles = StyleSheet.create({
         page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30},
@@ -34,8 +34,6 @@ export function Pdf({ idwork }) {
         spaceAround: { flex: 1, flexDirection: 'row', alignItems: 'center' },
 
         titleContainer: { flexDirection: 'row', marginTop: 24 },
-
-        logo: { width: 90 },
 
         reportTitle: { fontSize: 16, textAlign: 'center' },
 
@@ -47,28 +45,22 @@ export function Pdf({ idwork }) {
 
         invoicedata: { fontSize: 11, fontWeight: 'bold', marginTop: 2, color: '#000000' },
 
-        address: { fontWeight: 400, fontSize: 10 },
-
         theader: { marginTop: 10, fontSize: 10, fontStyle: 'bold', paddingTop: 4, flex: 1, height: 40, width: 70, backgroundColor: '#DEDEDE', borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center' },
 
         text: {
             fontStyle: 'bold',
             paddingTop: 4,
             flex: 1,
-            height: '100%', // Ajusta el texto para ocupar todo el espacio vertical disponible
+            height: '100%',
             width: 60,
             borderColor: 'whitesmoke',
             textAlign: 'center',
             verticalAlign: 'sub'
         },
 
-        theader2: { flex: 2, borderRightWidth: 0, borderBottomWidth: 1 },
-
         tbody: { fontSize: 9, paddingTop: 4, flex: 1, borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center' },
 
         total: { fontSize: 9, paddingTop: 4, flex: 1.5, borderColor: 'whitesmoke', borderBottomWidth: 1 },
-
-        tbody2: { flex: 2, borderRightWidth: 1, },
 
         text2: { marginRight: 10 },
 
