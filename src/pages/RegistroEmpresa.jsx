@@ -270,7 +270,7 @@ export function RegistroEmpresa() {
                                 <input onChange={(event) => { setCiudad(event.target.value); }} value={Ciudad} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center"disabled={idempresa ? true : false} />
                             </div>
                         </div>
-                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-2 mt-12">
+                        <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-2 mt-12 mb-5">
                             <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow mt-[10px] ml-4">Fecha</label>
                             <input onChange={(event) => { setFecha(event.target.value); }} value={Fecha} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " disabled={idempresa ? true : false}/>
                         </div>
