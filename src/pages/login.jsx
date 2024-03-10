@@ -52,7 +52,7 @@ function Login() {
 			<div className="w-[400px] h-[500px] bg-white shadow-xl rounded-2xl  flex flex-col justify-center items-center relative">
 				<img src="/logoSena.svg" alt="" className="w-28 mb-8" />
 
-				<h1 className="text-3xl font-bold mb-8"> Iniciar sesion </h1>
+				<h1 className="text-3xl font-bold mb-8"> Iniciar sesión </h1>
 				<div className="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3">
 					<User strokeWidth={2.4} />
 					<input onKeyDown={enter} onChange={(event) => { setDocumento(event.target.value); }} type="number" placeholder="Documento" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-44" />
@@ -65,7 +65,7 @@ function Login() {
 					</button>
 				</div>
 				<button className="px-4 py-2 bg-vgreen text-white font-bold text-lg mt-8 rounded-xl transition-all duration-300" onClick={login}>
-					{!isLoading ? 'Iniciar sesion' : <Loading/>}
+					{!isLoading ? 'Iniciar sesión' : <Loading/>}
 				</button>
 			</div>
 		</div>

@@ -79,6 +79,7 @@ export function Dasboard() {
         {/* Gráfica principal línea */}
         <div className="w-full flex flex-wrap justify-center items-center ">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
+          <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Dinero recaudado por el FIC</h1>
             <Graficas value={selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMes" className="inline-flex items-center cursor-pointer">
@@ -110,14 +111,17 @@ export function Dasboard() {
         </div>
 
         {/* Contenedor para las gráficas de donas */}
-        <div className="w-full flex flex-wrap mt-3 centered">
+        <div className="w-full flex flex-wrap justify-center items-center">
           <div className="max-w-screen-xl mx-auto flex flex-wrapauto justify-center">
-            <div className=" bg-white rounded-lg bg-red  min-w-min p-5 max-h-full md:w-1/2 md:mr-2 mt-5 mb-5">
-              <Graficasempresa />
+            <div className="rounded-lg bg-white p-5  min-w-min justify-center  mt-5 mb-5 mr-2 ml-2">
+              <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Empresas que más han aportado al FIC</h1>
+              <div className="flex justify-center mt-5">
+                <Graficasempresa />
+              </div>
             </div>
-            <div className="rounded-lg bg-white p-5 max-h-full md:w-1/2 justify-center min-w-min mt-5 mb-5"> {/* Agrega las clases justify-center y w-full aquí */}
+            <div className="rounded-lg bg-white p-5 max-h-full md:w-1/2 justify-center min-w-min mt-5 mb-5 mr-2 ml-2">
               <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Composición de pagos FIC</h1>
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-8">
                 <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : 1} />
               </div>
               <div className="flex justify-center mt-4 space-x-4">
@@ -150,12 +154,9 @@ export function Dasboard() {
         </div>
 
 
-
-
-
-
         <div className="w-full flex flex-wrap justify-center items-center">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
+          <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Numero de pagos registrados</h1>
             <Pagos value={selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMesesUG" className="inline-flex items-center cursor-pointer">

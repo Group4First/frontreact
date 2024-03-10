@@ -68,7 +68,7 @@ export function Obras() {
                                     onClick={() => { navigate(`/empresas/${id}/obras/${obra.id}/pagos`) }}>
                                     <div className="w-full flex-col ml-10 mt-7 mb-7">
                                         <h1 className="font-semibold text-vgraydark text-lg w-10/12 text-wrap">{obra.descripcion}</h1>
-                                        <h2 className="font-medium text-vgraylight mt-10 text-nowrap">Ultimo pago: {obra.fechaultimopago == null ? 'No hay pagos' : obra.fechaultimopago}</h2>
+                                        <h2 className="font-medium text-vgraylight mt-10 text-nowrap">Último pago: {obra.fechaultimopago == null ? 'No hay pagos' : obra.fechaultimopago}</h2>
                                         <h2 className="font-medium text-vgraylight mt-6">Fecha inicio: {obra.fechainicio}</h2>
                                     </div>
                                     <div className="flex justify-around w-full mb-7 ">

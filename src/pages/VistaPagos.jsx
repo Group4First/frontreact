@@ -8,7 +8,7 @@ import { useGlobalContext } from "../context/context";
 import { FormRegisterPay } from "../components/FormRegisterPay";
 import { TablePayWork } from "../components/TablePayWork";
 import { Modal } from "../components/Modal";
-import { Download, File, FileSpreadsheet } from "lucide-react";
+import {  File } from "lucide-react";
 import { Pdf } from "../components/Pdf";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
@@ -23,14 +23,11 @@ export function VistaPagos() {
 
     const [open, setOpen] = useState(false);
 
-
     const [formattedFechaPagoMayor, setFormattedFechaPagoMayor] = useState('');
 
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(0)
     const [reload, setReaload] = useState(false)
-
-
 
     useEffect(() => {
         async function fetchData() {
@@ -80,9 +77,6 @@ export function VistaPagos() {
 
                 console.log("putFinalizarObra: ", pagosData);
             }
-
-
-
         } catch (error) {
             console.log("errorput: ", error);
             if (error.status == 401) {
@@ -94,8 +88,6 @@ export function VistaPagos() {
 
         }
     }
-
-
 
     const colorType = lpagos.tipo == 'Mensual' ? '#5A7FFF' : '#F97429'
     const colorState = lpagos.estado == 'En curso' ? '#39A900' : '#FF0000'
@@ -143,7 +135,6 @@ export function VistaPagos() {
                             <div className="flex-grow border-t border-gray-400"></div>
                         </div>
                         <div className="w-full flex justify-center mt-2 gap-10 ">
-
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4  centered-full">
                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
                                 <input value={fechafin} onChange={(event) => { setFechafin(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
@@ -154,7 +145,6 @@ export function VistaPagos() {
                                 } else {
                                     activeAlert('error', 'Ingrese una fecha', 2000);
                                 }
-
                             }}>
                                 Aceptar
                             </button>
@@ -166,10 +156,7 @@ export function VistaPagos() {
                             </button>
                         </div>
                     </div>
-
                 )}
-
-
 
             </section>
             <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />

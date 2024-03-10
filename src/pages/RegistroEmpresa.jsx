@@ -150,9 +150,9 @@ export function RegistroEmpresa() {
 
 
                         <div>
-                            <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Razon social</label>
+                            <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Razón social</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setRazonsocial(event.target.value); }} value={Razonsocial} type="text" required="true" placeholder="Razon social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false} />
+                                <input onChange={(event) => { setRazonsocial(event.target.value); }} value={Razonsocial} type="text" required="true" placeholder="Razón social" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false} />
                             </div>
                         </div>
 
@@ -181,16 +181,16 @@ export function RegistroEmpresa() {
 
                     <div className=" flex flex-wrap centered">
                         <div >
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Codigo</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Código</label>
                             <div className="bg-white h-12  w-32 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4" >
                                 <input onChange={(event) => { setCIIU(event.target.value); }} value={CIIU} type="number" placeholder="CIIU" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-20 text-center" disabled={idempresa ? true : false}/>
                             </div>
                         </div>
 
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Actividad economica</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Actividad económica</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setActividadeconomica(event.target.value); }} value={Actividadeconomica} type="text" placeholder="Actividad economica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
+                                <input onChange={(event) => { setActividadeconomica(event.target.value); }} value={Actividadeconomica} type="text" placeholder="Actividad económica" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
                             </div>
                         </div>
                     </div>
@@ -198,9 +198,9 @@ export function RegistroEmpresa() {
 
                     <div className=" flex flex-wrap centered">
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Direccion</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Dirección</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setDireccion(event.target.value); }} value={Direccion} type="text" placeholder="Direccion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
+                                <input onChange={(event) => { setDireccion(event.target.value); }} value={Direccion} type="text" placeholder="Dirección" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
@@ -212,9 +212,9 @@ export function RegistroEmpresa() {
                     </div>
                     <div className=" flex flex-wrap centered">
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Telefono</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4">Teléfono</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setTelefono(event.target.value); }} value={Telefono} type="number" placeholder="Telefono" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
+                                <input onChange={(event) => { setTelefono(event.target.value); }} value={Telefono} type="number" placeholder="Teléfono" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                         <div>
@@ -224,9 +224,9 @@ export function RegistroEmpresa() {
                             </div>
                         </div>
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4 ">Correo electronico</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-4 ">Correo electrónico</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3  mr-4">
-                                <input onChange={(event) => { setCorreo(event.target.value); }} value={Correo} type="text" placeholder="Correo electronico" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
+                                <input onChange={(event) => { setCorreo(event.target.value); }} value={Correo} type="text" placeholder="Correo electrónico" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                     </div>
@@ -244,9 +244,9 @@ export function RegistroEmpresa() {
                             </div>
                         </div>
                         <div>
-                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Caja de compensacion</label>
+                            <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Caja de compensación</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4">
-                                <input onChange={(event) => { setCajadecompensacion(event.target.value); }} value={Cajadecompensacion} type="text" placeholder="Caja de compensacion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
+                                <input onChange={(event) => { setCajadecompensacion(event.target.value); }} value={Cajadecompensacion} type="text" placeholder="Caja de compensación" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" />
                             </div>
                         </div>
                     </div>

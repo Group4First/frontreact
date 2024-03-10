@@ -41,6 +41,8 @@ export function Empresas() {
       setCurrentPage(0);
     }
   }, [searchTerm]);
+
+  
   return (
 
     <div className="w-full max-w-fu h-svh overflow-y-auto">

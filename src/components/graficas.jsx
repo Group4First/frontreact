@@ -57,8 +57,21 @@ const Graficas = ({ value }) => {
       breakpoint: 466,
       options: {
         chart: {
-          width: 300,
+          width: 320,
+          height: 320,
+        },
+      },
+    },
+    {
+      breakpoint: 1501,
+      options: {
+        chart: {
+          width: getWindowWidth() * 0.75,
           height: 300,
+        },
+        legend: {
+          position: 'bottom',
+          offsetY: 2,
         },
       },
     },

@@ -57,11 +57,11 @@ export function Calculo_fic() {
         <div className="min-h-screen flex justify-center items-center">
             <div className={` bg-white shadow-xl p-5 rounded-2xl flex flex-col justify-center items-center relative full-height" ${window.innerWidth > 425 ? 'sm:w-[600px] md:w-[700px] lg:w-[600px] xl:w-[700px] sm:h-[600px] md:h-[700px] lg:h-[600px] xl:h-[700px]' : 'min-h-screen'}`}>
 
-                <h1 className="text-3xl font-bold mb-5 text-center lg:text-3xl "> Calculo rapido fic</h1>
+                <h1 className="text-3xl font-bold mb-5 text-center lg:text-3xl "> Calculo rápido fic</h1>
                 <span className="mb-20 text-center">Calcular gastos mensuales y por empleado</span>
-                <h2 className="text-xl font-semibold text-gray-00 ">Numero de trabajadores</h2>
+                <h2 className="text-xl font-semibold text-gray-00 ">Número de trabajadores</h2>
                 <div className="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mt-2">
-                    <input type="number" placeholder="Digite un numero" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-44" onChange={(event) => {
+                    <input type="number" placeholder="Digite un número" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-44" onChange={(event) => {
                                                         const inputValue = event.target.value;
                                                         const sanitizedValue = inputValue.replace(/\D/g, ''); 
                                                         setNumEmpleados(event.target.value = sanitizedValue);

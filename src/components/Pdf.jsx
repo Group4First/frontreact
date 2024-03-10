@@ -3,31 +3,28 @@ import { getPrintWork } from "../requests/getPrintObras";
 import { useState, useEffect } from 'react';
 import React, { Fragment } from 'react';
 import Logosena from "/Logosenapng.png";
- 
-
 
 export function Pdf({ idwork }) {
 
     const [info, setInfo] = useState([]);
     const [infopagos, setInfoPagos] = useState([]);
 
-    
-        async function imprimirpdfobras() {
-            try {
-                const infoprint = await getPrintWork(idwork);
-                setInfo(infoprint);
-                setInfoPagos(infoprint.listapagos)
-                console.log("infoprint:" + infoprint);
 
-            } catch (error) {
-                console.log(error.message)
+    //quedo asi temporalmente por las request en bucle si se le quita el useEffect
+        useEffect(() => {
+            async function imprimirpdfobras() {
+                try {
+                    const infoprint = await getPrintWork(idwork);
+                    setInfo(infoprint);
+                    setInfoPagos(infoprint.listapagos);
+                } catch (error) {
+                }
             }
-        }
-        imprimirpdfobras();
+            imprimirpdfobras();
+        }, [idwork]);
     
-
     const styles = StyleSheet.create({
-        page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30},
+        page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30 },
 
         spaceBetween: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 
@@ -35,9 +32,7 @@ export function Pdf({ idwork }) {
 
         titleContainer: { flexDirection: 'row', marginTop: 24 },
 
-        reportTitle: { fontSize: 16, textAlign: 'center' },
-
-        addressTitle: { fontSize: 16, fontStyle: 'bold' },
+        reportTitle: { fontSize: 16, textAlign: 'center',fontStyle: 'bold' },
 
         invoice: { fontWeight: 'bold', fontSize: 20 },
 
@@ -47,16 +42,7 @@ export function Pdf({ idwork }) {
 
         theader: { marginTop: 10, fontSize: 10, fontStyle: 'bold', paddingTop: 4, flex: 1, height: 40, width: 70, backgroundColor: '#DEDEDE', borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center' },
 
-        text: {
-            fontStyle: 'bold',
-            paddingTop: 4,
-            flex: 1,
-            height: '100%',
-            width: 60,
-            borderColor: 'whitesmoke',
-            textAlign: 'center',
-            verticalAlign: 'sub'
-        },
+        text: { fontStyle: 'bold', paddingTop: 4, flex: 1, height: '100%', width: 60, borderColor: 'whitesmoke', textAlign: 'center', verticalAlign: 'sub'},
 
         tbody: { fontSize: 9, paddingTop: 4, flex: 1, borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center' },
 
@@ -64,22 +50,12 @@ export function Pdf({ idwork }) {
 
         text2: { marginRight: 10 },
 
-        image: {
-            width: 50, // Ajusta el ancho según tus necesidades
-            height: 50, // Ajusta la altura según tus necesidades
-            marginTop: 10, // Opcional: ajusta el margen superior según tus necesidades
-        },
-        pageNumber: {
-            position: 'absolute',
-            bottom: 10, 
-            left: 0,
-            right: 0,
-            textAlign: 'center',
-            color: '#787878'
-        },
+        image: {width: 50, height: 50,marginTop: 10,},
+
+        pageNumber: {position: 'absolute', bottom: 10,left: 0, right: 0, textAlign: 'center', color: '#787878'},
     });
 
-    const InvoiceTitle = () => (
+    const Headerpdf = () => (
         <View>
             <Image style={styles.image} src={Logosena}></Image>
 
@@ -99,15 +75,15 @@ export function Pdf({ idwork }) {
         </View>
     );
 
-    const Address = () => (
+    const Bussinfo = () => (
         <View style={styles.titleContainer}>
             <View style={styles.spaceAround}>
                 <View>
-                    <Text style={styles.reportTitle}>Informacion de empresa</Text>
+                    <Text style={styles.reportTitle}>Información de empresa</Text>
                     <Text style={styles.invoicetittle}>Tipo de documento</Text>
-                    <Text style={styles.invoicetittle}>Numero identificacion</Text>
+                    <Text style={styles.invoicetittle}>Numero identificación</Text>
                     <Text style={styles.invoicetittle}>Ciiu</Text>
-                    <Text style={styles.invoicetittle}>Actividad economica</Text>
+                    <Text style={styles.invoicetittle}>Actividad económica</Text>
                     <Text style={styles.invoicetittle}>Municipio</Text>
                     <Text style={styles.invoicetittle}>Fax</Text>
                     <Text style={styles.invoicetittle}>Correo</Text>
@@ -136,11 +112,11 @@ export function Pdf({ idwork }) {
         </View>
     );
 
-    const UserAddress = () => (
+    const Workinfo = () => (
         <View style={styles.titleContainer}>
             <View style={styles.spaceBetween}>
                 <View style={{ maxWidth: 200 }}>
-                    <Text style={styles.addressTitle}>Información de obras</Text>
+                    <Text style={styles.reportTitle}>Información de obra</Text>
                     <Text style={styles.invoicetittle}>{info.descripcion}</Text>
                 </View>
                 <View style={{ maxWidth: 200 }}>
@@ -164,28 +140,38 @@ export function Pdf({ idwork }) {
             <View style={[styles.theader]}>
                 <Text>Fecha de pago</Text>
             </View>
-            <View style={styles.theader}>
-                <Text style={styles.text}>Mes-año {'\n'} Pagado</Text>
-            </View>
+            {info.tipo == "Mensual" && (
+                <>
+                    <View style={styles.theader}>
+                        <Text style={styles.text}>Mes-año {'\n'} Pagado</Text>
+                    </View>
+                </>
+            )}
             <View style={styles.theader}>
                 <Text>Tipo de pago</Text>
             </View>
-            <View style={styles.theader}>
-                <Text style={styles.text}>N.º {'\n'}Trabajadores</Text>
-            </View>
+            {info.tipo == "Mensual" && (
+                <>
+                    <View style={styles.theader}>
+                        <Text style={styles.text}>N.º {'\n'}Trabajadores</Text>
+                    </View>
+                </>
+            )}
             <View style={styles.theader}>
                 <Text>FIC</Text>
             </View>
-            <View style={styles.theader}>
-                <Text>Intereses</Text>
-            </View>
+            {info.tipo == "Mensual" && (
+                <>
+                    <View style={styles.theader}>
+                        <Text>Intereses</Text>
+                    </View>
+                </>
+            )}
             <View style={styles.theader}>
                 <Text>Total</Text>
             </View>
         </View>
     );
-
-
 
     const TableBody = () => (
         infopagos.map((receipt) => (
@@ -194,38 +180,63 @@ export function Pdf({ idwork }) {
                     <View style={[styles.tbody]}>
                         <Text >{receipt.fechapago}</Text>
                     </View>
-                    <View style={styles.tbody}>
-                        <Text>{`${receipt.mes}-${receipt.anio}`}</Text>
-                    </View>
+                    {info.tipo == "Mensual" && (
+                        <>
+                            <View style={styles.tbody}>
+                                <Text>{`${receipt.mes}-${receipt.anio}`}</Text>
+                            </View>
+                        </>
+                    )}
                     <View style={styles.tbody}>
                         <Text>{receipt.tipopago}</Text>
                     </View>
-                    <View style={styles.tbody}>
-                        <Text>{receipt.numtrabajadores}</Text>
-                    </View>
+                    {info.tipo == "Mensual" && (
+                        <>
+                            <View style={styles.tbody}>
+                                <Text>{receipt.numtrabajadores}</Text>
+                            </View>
+                        </>
+                    )}
                     <View style={styles.tbody}>
                         <Text>{receipt.valorfic}</Text>
                     </View>
-                    <View style={styles.tbody}>
-                        <Text>{receipt.valorintereses}</Text>
-                    </View>
-                    <View style={styles.tbody}>
-                        <Text>{receipt.valortotal}</Text>
-                    </View>
+                    {info.tipo == "Mensual" ? (
+                        <>
+                            <View style={styles.tbody}>
+                                <Text>{receipt.valorintereses}</Text>
+                            </View>
+                            <View style={styles.tbody}>
+                                <Text>{receipt.valortotal}</Text>
+                            </View>
+                        </>
+                    ) : (
+                        <View style={styles.tbody}>
+                            <Text>{receipt.valorfic}</Text>
+                        </View>
+                    )}
                 </View>
             </Fragment>
         ))
     );
 
-
     const TableTotal = () => (
-        <View style={{ width: '100%', flexDirection: 'row' }}>
-            <View style={styles.total}>
-                <Text> </Text>
-            </View>
-            <View style={styles.total}>
-                <Text> </Text>
-            </View>
+        <View style={{ width: '100%', flexDirection: 'row' ,marginTop: 10}}>
+            {info.tipo == "Mensual" ? (
+                <>
+                    <View style={styles.total}>
+                        <Text> </Text>
+                    </View>
+                    <View style={styles.total}>
+                        <Text> </Text>
+                    </View>
+                </>
+            ) : (
+                <>
+                    <View style={styles.tbody}>
+                        <Text></Text>
+                    </View>
+                </>
+            )}
             <View style={styles.tbody}>
                 <Text >Total</Text>
             </View>
@@ -234,11 +245,15 @@ export function Pdf({ idwork }) {
                     {info.valorfic ? info.valorfic.toFixed(2) : info.valorfic}
                 </Text>
             </View>
-            <View style={(styles.tbody)}>
-                <Text>
-                    {info.valorintereses ? info.valorintereses.toFixed(2) : info.valorintereses}
-                </Text>
-            </View>
+            {info.tipo == "Mensual" && (
+                <>
+                    <View style={(styles.tbody)}>
+                        <Text>
+                            {info.valorintereses ? info.valorintereses.toFixed(2) : info.valorintereses}
+                        </Text>
+                    </View>
+                </>
+            )}
             <View style={styles.tbody}>
                 <Text>
                     {info.valortotal ? info.valortotal.toFixed(2) : info.valortotal}
@@ -250,13 +265,13 @@ export function Pdf({ idwork }) {
     return (
         <Document>
             <Page wrap size="A4" style={styles.page}>
-                <InvoiceTitle />
-                <Address />
-                <UserAddress />
+                <Headerpdf />
+                <Bussinfo />
+                <Workinfo />
                 <TableHead />
                 <TableBody />
                 <TableTotal />
-                <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} de ${totalPages}`} fixed/>
+                <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} de ${totalPages}`} fixed />
             </Page>
         </Document>
 

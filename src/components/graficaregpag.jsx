@@ -61,8 +61,21 @@ const Pagos = ({ value }) => {
       breakpoint: 466,
       options: {
         chart: {
-          width: 300,
+          width: 320,
+          height: 320,
+        },
+      },
+    },
+    {
+      breakpoint: 1501,
+      options: {
+        chart: {
+          width: getWindowWidth() * 0.75,
           height: 300,
+        },
+        legend: {
+          position: 'bottom',
+          offsetY: 2,
         },
       },
     },
@@ -70,7 +83,7 @@ const Pagos = ({ value }) => {
       breakpoint: 9999,
       options: {
         chart: {
-          width: getWindowWidth() * 0.7, // Utiliza getWindowWidth para obtener el ancho de la ventana
+          width: getWindowWidth() * 0.7,
           height: 600,
         },
       },
