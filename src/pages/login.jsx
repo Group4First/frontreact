@@ -72,7 +72,7 @@ function Login() {
 					</button>
 				</div>
 				<button className="px-4 py-2 bg-vgreen text-white font-bold text-lg mt-8 rounded-xl transition-all duration-300" onClick={login}>
-					{!isLoading ? 'Iniciar sesión' : <Loading color="#FFFFFFg"/>}
+					{!isLoading ? 'Iniciar sesión' : <Loading color="#FFFFFF"/>}
 				</button>
 			</div>
 		</div>
