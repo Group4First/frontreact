@@ -4,6 +4,7 @@ import { getUsuarios } from "../requests/getUsuarios";
 import { PaginationButtons } from "../components/paginationButtons";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
+import { Loading } from "../components/Loading";
 
 
 export function Usuarios() {
@@ -41,7 +42,16 @@ export function Usuarios() {
             setCurrentPage(0);
         }
     }, [searchTerm]);
-    return (
+
+
+    if (usuarios.length == 0) {
+        return <div className="w-full max-w-fu h-svh flex justify-center items-center">
+            <Loading size={50}/>
+        </div> 
+    }
+
+
+    if (usuarios.length > 0) return (
 
         <div className="w-full max-w-fu h-svh overflow-y-auto">
             <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de usuarios</h1>

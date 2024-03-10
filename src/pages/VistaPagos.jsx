@@ -1,4 +1,4 @@
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Circle, Loader2, LoaderIcon, Printer } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardPagos } from "../components/cardPagos";
@@ -17,7 +17,7 @@ export function VistaPagos() {
     const { idobra } = useParams();
     const { activeAlert } = useGlobalContext()
     const [pagos, setPagos] = useState([]);
-    const [lpagos, setLPagos] = useState([]);
+    const [lpagos, setLPagos] = useState(null);
     const [obraFinalizada, setObraFinalizada] = useState(false);
     const [fechafin, setFechafin] = useState('');
 
@@ -31,6 +31,7 @@ export function VistaPagos() {
 
     useEffect(() => {
         async function fetchData() {
+            setLPagos(null)
             try {
 
                 const pagosData = await getPagosObra(idobra, currentPage);
@@ -89,12 +90,25 @@ export function VistaPagos() {
         }
     }
 
-    const colorType = lpagos.tipo == 'Mensual' ? '#5A7FFF' : '#F97429'
-    const colorState = lpagos.estado == 'En curso' ? '#39A900' : '#FF0000'
+    const [colorType, setColorType] = useState('')
+    const [colorState, setColorState] = useState('')
 
-    return (
+    useEffect(() => {
+        if (lpagos == null) return
+        lpagos.tipo == 'Mensual' ? setColorType('#5A7FFF') : setColorType('#F97429')
+        lpagos.estado == 'En curso' ? setColorState('#39A900') : setColorState('#FF0000')
+    }, [lpagos])
 
-        <div className="w-full max-w-fu h-svh overflow-y-auto">
+    if (lpagos === null) return (
+        <div className="w-full max-w-full h-svh flex items-center justify-center">
+            <div className="animate-spin">
+                <Loader2 color="#39A900" size={50}/>
+            </div>
+        </div>
+    )
+
+    if (lpagos !== null ) return (
+        <div className="w-full max-w-full h-svh overflow-y-auto">
             <button className="flex items-center text-vgreen font-semibold px-16 mt-5 text-xl gap-4" onClick={() => { navigate(`/empresas/${idempresa}/obras`); }}>
                 <ChevronLeft size={30} />Vista de pago
             </button>
@@ -134,7 +148,7 @@ export function VistaPagos() {
                             <h1 className=" text-gray-400"> Fecha de finalizacion de la obra</h1>
                             <div className="flex-grow border-t border-gray-400"></div>
                         </div>
-                        <div className="w-full flex justify-center mt-2 gap-10 ">
+                        <div className="w-full flex justify-center mt-2 gap-10 flex-wrap ">
                             <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4  centered-full">
                                 <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
                                 <input value={fechafin} onChange={(event) => { setFechafin(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
@@ -162,13 +176,14 @@ export function VistaPagos() {
             <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />
 
             <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} />
-            <div className="w-full flex justify-center mb-5">
-                <div className="flex w-10/12 gap-20 justify-end">
+
+            <div className="w-full flex mb-5 justify-center">
+                <div className="w-11/12 flex justify-end">
                     <PDFDownloadLink document={<Pdf idwork={idobra} />} fileName="archivo.pdf">
                         {({ blob, url, loading, error }) =>
-                            <button document={<Pdf />} fileName="archivo.pdf" className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
-                                <File size={20} />
-                                PDF
+                            <button document={<Pdf />} className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
+                                <Printer size={20}/>
+                                Imprimir
                             </button>
                         }
                     </PDFDownloadLink>

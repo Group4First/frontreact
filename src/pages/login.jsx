@@ -14,6 +14,13 @@ function Login() {
 	const navigate = useNavigate()
 	const {activeAlert} = useGlobalContext()
 	const [isLoading, setIsLoading] = useState(false)
+	const [session, setSession] = useState(Cookies.get('session'))
+
+	useEffect(() => {
+		if (session) {
+			navigate('/empresas')
+		}
+	})
 
 
 	function showHidePassword() {
@@ -47,7 +54,7 @@ function Login() {
 		}
 	}
 
-	return (
+	if (!session) return (
 		<div className="w-full h-svh flex justify-center items-center">
 			<div className="w-[400px] h-[500px] bg-white shadow-xl rounded-2xl  flex flex-col justify-center items-center relative">
 				<img src="/logoSena.svg" alt="" className="w-28 mb-8" />

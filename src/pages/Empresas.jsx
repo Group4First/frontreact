@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { PaginationButtons } from "../components/paginationButtons";
 import { useGlobalContext } from "../context/context";
+import { Loading } from "../components/Loading";
 
 
 
@@ -18,6 +19,7 @@ export function Empresas() {
 
   useEffect(() => {
     async function fetchData() {
+      setEmpresas([])
       try {
         const empresasData = await getEmpresas(currentPage, searchTerm);
         setEmpresas(empresasData.listaempresas);
@@ -43,9 +45,14 @@ export function Empresas() {
   }, [searchTerm]);
 
   
-  return (
+  if (empresas.length == 0) {
+    return <div className="w-full max-w-fu h-svh flex justify-center items-center">
+      <Loading size={50}/>
+    </div> 
+  }
 
-    <div className="w-full max-w-fu h-svh overflow-y-auto">
+  if (empresas.length > 0) return (
+    <div className="w-full max-w-full h-svh overflow-y-auto">
       <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de empresas</h1>
 
       <section className=" flex justify-center">

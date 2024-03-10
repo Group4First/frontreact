@@ -97,23 +97,34 @@ function MainContentWithSidebar({ children }) {
   const [isActive, setIsActive] = useState(false)
 
   const navigate = useNavigate()
-  const session = JSON.parse(Cookies.get('session'))
   const location = useLocation()
   const {activeAlert} = useGlobalContext()
+
+  const sesion = Cookies.get('session')
 
   function incluyeRuta (ruta) {
     return location.pathname.includes(ruta)
   }
 
-
   useEffect(() => {
+    console.log("algo");
+
+    if (!sesion) {
+      activeAlert("warning", "No tiene permisos!")
+      console.log("paso");
+      navigate("/")
+      return
+    }
+    
+    const session = JSON.parse(sesion)
+
     if ( (incluyeRuta('usuarios') || incluyeRuta('dashboard')) && session.inforoles.idrol !== 1) {
       activeAlert("warning", "No tiene permisos!")
       navigate("/empresas")
     }
-  }, [location.pathname])
+  }, [])
 
-  return (
+  if (sesion != undefined) return (
     <section className='w-full max-h-svh flex overflow-hidden lg:pl-[260px] transition-all duration-300'>
       <Sidebar isActive={isActive} setIsActive={setIsActive} />
 
