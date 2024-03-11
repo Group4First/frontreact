@@ -42,13 +42,13 @@ export function Empresas() {
   }, [searchTerm]);
 
   
-  if (empresas.length == 0) {
+  if (empresas === null) {
     return <div className="w-full max-w-fu h-svh flex justify-center items-center">
       <Loading size={50}/>
     </div> 
   }
 
-  if (empresas.length > 0) return (
+  if (empresas !== null) return (
     <div className="w-full max-w-full h-svh overflow-y-auto">
       <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de empresas</h1>
 

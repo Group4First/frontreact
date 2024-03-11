@@ -40,13 +40,13 @@ export function Intereses() {
         }
     }, [searchTerm]);
 
-    if (intereses.length == 0) {
+    if (lintereses === null) {
         return <div className="w-full max-w-fu h-svh flex justify-center items-center">
             <Loading size={50}/>
         </div> 
     }
     
-    if (intereses.length > 0) return (
+    if (lintereses !== null) return (
         <div className="w-full max-w-fu h-svh overflow-y-auto">
             <h1 className="text-vgreen font-semibold px-16 mt-4 text-xl">Lista de intereses</h1>
 
