@@ -16,12 +16,11 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   const [fechapago, setFechapago] = useState('');
   const [mes, setMes] = useState('');
   const [anio, setAnio] = useState('');
-  const [tipopago, setTipoPago] = useState('');
   const [numtrabajadores, setNumtrabajadores] = useState('');
   const [valorfic, setValorfic] = useState('FIC');
   const [valorintereses, setValorintereses] = useState('Intereses');
   const [valortotal, setValortotal] = useState('Total');
-  const [porcentajeObra, setPorcentajeObra] = useState(type === 'Mano de obra' ? 0.25 : 1);
+  const [porcentajeObra, setPorcentajeObra] = useState(type === 'Mano de obra' ? 1 : 0.25);
   const [valorContrato, setValorContrato] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -33,7 +32,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   };
 
   const validateInputsMe = () => {
-    const requiredFields = [fechapago, mes, anio, tipopago, numtrabajadores];
+    const requiredFields = [fechapago, mes, anio, numtrabajadores];
 
     if (requiredFields.some(valor => !valor.trim())) {
       activeAlert('error', 'Todos los campos son requeridos', 2000);
@@ -43,7 +42,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
 
   };
   const validateInputsPr = () => {
-    const requiredFields = [fechapago, tipopago, valorfic];
+    const requiredFields = [fechapago, valorfic];
     if (requiredFields.some(valor => !valor.trim())) {
       activeAlert('error', 'Todos los campos son requeridos', 2000);
       return false;
@@ -54,7 +53,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
 
   async function registrarPagosMe() {
     try {
-      const pagosData = await postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
+      const pagosData = await postPagoMe(fechapago, mes, anio, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
       activeAlert('success', pagosData, 2000);
       setReaload(!reload)
       toggleAcordeon()
@@ -63,7 +62,6 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
       setFechapago('');
       setMes('');
       setAnio('');
-      setTipoPago('');
       setNumtrabajadores('');
       setValorfic('FIC');
       setValorintereses('Intereses');
@@ -83,11 +81,10 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   async function registrarPagosPr() {
     try {
 
-      const pagosData = await postPagoPr(fechapago, tipopago, valorfic, idobra);
+      const pagosData = await postPagoPr(fechapago, valorfic, idobra);
       activeAlert('success', pagosData, 2000);
       setReaload(!reload)
       // Limpiar los inputs después de agregar un nuevo pago
-      setTipoPago('');
       setValorfic('');
 
     } catch (error) {
@@ -136,9 +133,6 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
 
   const meses = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-  ];
-  const tpagos = [
-    "Cheque", "Efectivo"
   ];
 
   return (
@@ -189,14 +183,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                         <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
                         <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
                       </div>
-                      <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <select value={tipopago} onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                          <option defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
-                          {tpagos.map((tpago, index) => (
-                            <option key={index} value={tpago}>{tpago}</option>
-                          ))}
-                        </select>
-                      </div>
+
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                         <input
                           value={numtrabajadores}
@@ -275,14 +262,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                         <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
                         <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                       </div>
-                      <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <select onChange={(event) => { setTipoPago(event.target.value); }} className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center">
-                          <option value={tipopago} defaultValue={"Selecciona un tipo de pago"}>Selecciona un tipo de pago</option>
-                          {tpagos.map((tpago, index) => (
-                            <option key={index} value={tpago}>{tpago}</option>
-                          ))}
-                        </select>
-                      </div>
+                     
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                         <input
                           value={valorContrato}

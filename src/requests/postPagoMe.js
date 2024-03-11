@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { newRequest } from "./newRequest"
 
-export async function postPagoMe(fechapago, mes, anio, tipopago, numtrabajadores, valorfic, valorintereses, valortotal, idobra) {
+export async function postPagoMe(fechapago, mes, anio, numtrabajadores, valorfic, valorintereses, valortotal, idobra) {
 
   const idusuario = Cookies.get('session') ? JSON.parse(Cookies.get('session')).idusuario : 'idusuario'
 
