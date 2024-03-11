@@ -11,6 +11,7 @@ export function RegistroEmpresa() {
 
     const navigate = useNavigate();
     const { idempresa } = useParams();
+    const [datatra, setDatatra] = useState([]);
 
     const { activeAlert } = useGlobalContext()
     const [selectedDocumentType, setSelectedDocumentType] = useState('NIT');
@@ -42,7 +43,7 @@ export function RegistroEmpresa() {
     async function registrarempresa() {
 
         try {
-            const res = await postbussiness(NumIdentificacion, Razonsocial, selectedDocumentType, DV, Direccion, Municipio, Telefono, Fax, Actividadeconomica, CIIU, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion, Notaria, Ciudad, Fecha);
+            const res = await postbussiness(NumIdentificacion, Razonsocial, selectedDocumentType, DV, Direccion, Municipio, Telefono, Fax, Actividadeconomica, CIIU, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion? Escrituraconstitucion: null, Notaria? Notaria: null, Ciudad? Ciudad: null, Fecha? Fecha: null);
             activeAlert('success', res, 2000);
             navigate("/empresas")
         } catch (error) {
@@ -50,7 +51,7 @@ export function RegistroEmpresa() {
         }
     }
     const validateInputs = () => {
-        const requiredFields = [Razonsocial, NumIdentificacion, selectedDocumentType, DV, CIIU, Actividadeconomica, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion, Notaria, Ciudad, Fecha];
+        const requiredFields = [Razonsocial, NumIdentificacion, selectedDocumentType, DV, CIIU, Actividadeconomica, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion];
         const camposRequeridos = [Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion];
 
         if (idempresa) {
@@ -76,6 +77,7 @@ export function RegistroEmpresa() {
                 try {
                     const emptra = await getbussinfo(idempresa);
                     if (Object.keys(emptra).length > 0) {
+                        setDatatra(emptra);
                         setNumIdentificacion(emptra.numidentificacion);
                         setRazonsocial(emptra.razonsocial);
                         setSelectedDocumentType(emptra.tipodocumento);
@@ -114,7 +116,7 @@ export function RegistroEmpresa() {
     async function actualizarempresa() {
 
         try {
-            const res = await updatebuss(idempresa, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion);
+            const res = await updatebuss(idempresa, Direccion, Municipio, Telefono, Fax, Correo, Representantelegal, CCrepresentantelegal, Cajadecompensacion, Escrituraconstitucion, Notaria, Ciudad, Fecha);
             activeAlert('success', res, 2000);
             navigate("/empresas")
         } catch (error) {
@@ -253,24 +255,24 @@ export function RegistroEmpresa() {
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero escritura</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
-                                <input onChange={(event) => { setEscrituraconstitucion(event.target.value); }} value={Escrituraconstitucion} type="number" placeholder="Escritura constitucion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
+                                <input onChange={(event) => { setEscrituraconstitucion(event.target.value); }} value={Escrituraconstitucion} type="number" placeholder="Escritura constitucion" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa && datatra.numescrituraconstitucion? true : false}/>
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Numero Notaria</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4 ">
-                                <input onChange={(event) => { setNotaria(event.target.value); }} value={Notaria}type="number" placeholder="Notaria" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa ? true : false}/>
+                                <input onChange={(event) => { setNotaria(event.target.value); }} value={Notaria}type="number" placeholder="Notaria" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center" disabled={idempresa && datatra.numnotaria? true : false}/>
                             </div>
                         </div>
                         <div>
                             <label className="flex flex-wrap  justify-center text-center text-black font-semibold mt-6">Ciudad notaria</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex  text-vgray2 px-3 mr-4  ">
-                                <input onChange={(event) => { setCiudad(event.target.value); }} value={Ciudad} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center"disabled={idempresa ? true : false} />
+                                <input onChange={(event) => { setCiudad(event.target.value); }} value={Ciudad} type="text" placeholder="Ciudad" className="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-semibold ml-3 w-full text-center"disabled={idempresa && datatra.ciudad? true : false} />
                             </div>
                         </div>
                         <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex text-vgray2 px-3 mr-2 mt-12 mb-5">
                             <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow mt-[10px] ml-4">Fecha</label>
-                            <input onChange={(event) => { setFecha(event.target.value); }} value={Fecha} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " disabled={idempresa ? true : false}/>
+                            <input onChange={(event) => { setFecha(event.target.value); }} value={Fecha} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " disabled={idempresa && datatra.fecha? true : false}/>
                         </div>
                     </div>
 

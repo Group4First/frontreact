@@ -1,7 +1,7 @@
 import { newRequest } from "./newRequest"
 
 export async function updatebuss(numidentificacion,direccion,municipio,telefono,fax ,correo,representantelegal,
-    ccrepresentante,cajadecompensacion){
+    ccrepresentante,cajadecompensacion,Escrituraconstitucion, Notaria, Ciudad, Fecha){
 
   const body ={
     numidentificacion: numidentificacion,
@@ -13,6 +13,10 @@ export async function updatebuss(numidentificacion,direccion,municipio,telefono,
     representantelegal: representantelegal,
     ccrepresentante: ccrepresentante,
     cajadecompensacion: cajadecompensacion,
+    numescrituraconstitucion: Escrituraconstitucion,
+    numnotaria: Notaria,
+    ciudad: Ciudad,
+    fecha:Fecha
   }
 
   const url = new URL('https://api-wvh8.onrender.com/api/bussiness/update');
