@@ -6,8 +6,6 @@ import { PaginationButtons } from "../components/paginationButtons";
 import { useGlobalContext } from "../context/context";
 import { Loading } from "../components/Loading";
 
-
-
 export function Empresas() {
 
   const [empresas, setEmpresas] = useState([]);

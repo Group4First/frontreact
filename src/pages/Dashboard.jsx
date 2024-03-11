@@ -83,9 +83,6 @@ export function Dasboard() {
           </div>
         </div>
 
-
-
-
         {/* Gráfica principal línea */}
         <div className="w-full flex flex-wrap justify-center items-center ">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">

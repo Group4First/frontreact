@@ -147,8 +147,6 @@ export function RegistroEmpresa() {
                 <section className="mt-5 ml-5 overflow-y-auto " style={{ maxHeight: "calc(100vh - 200px)" }}>
 
                     <div className=" flex flex-wrap centered mt-5">
-
-
                         <div>
                             <label className="flex flex-wrap mt-4 justify-center text-center text-black font-semibold">Razón social</label>
                             <div className="bg-white h-12 w-[284px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4">

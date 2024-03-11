@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
 import { Loading } from "../components/Loading";
 
-
 export function Usuarios() {
 
     const [usuarios, setUsuarios] = useState([]);
@@ -14,8 +13,7 @@ export function Usuarios() {
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(0)
     const navigate = useNavigate()
-    const {activeAlert} = useGlobalContext()
-
+    const { activeAlert } = useGlobalContext()
 
     useEffect(() => {
         async function fetchData() {
@@ -45,8 +43,8 @@ export function Usuarios() {
 
     if (usuarios.length == 0) {
         return <div className="w-full max-w-fu h-svh flex justify-center items-center">
-            <Loading size={50}/>
-        </div> 
+            <Loading size={50} />
+        </div>
     }
 
 
@@ -69,7 +67,6 @@ export function Usuarios() {
                     </button>
                 </div>
             </section>
-
 
             <section className="flex flex-col items-center relative overflow-x-auto">
                 <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 mt-6"
@@ -98,22 +95,17 @@ export function Usuarios() {
                                 }}>
                                     <Eye />
                                 </button>
-                                <button onClick={() => {navigate(`/usuarios/actualizarusuario/${usuario.documento}`)}} >
+                                <button onClick={() => { navigate(`/usuarios/actualizarusuario/${usuario.documento}`) }} >
                                     <SquarePen color="#00AF00" />
                                 </button>
                             </div>
                         </div>
                     ))}
-
                 </div>
-
-
             </section >
             <div className="w-full flex justify-center mt-5">
-                <PaginationButtons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
+                <PaginationButtons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} currentPage={currentPage} />
             </div>
-
         </div >
-
     )
 }

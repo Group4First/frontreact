@@ -160,13 +160,13 @@ export function RegistroUsuarios() {
                             <div>
                                 <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Correo</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <input onChange={(event) => { setCorreo(event.target.value); setCorreoError(null); }} value={correo} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold  w-full text-center" />
+                                    <input onChange={(event) => {setCorreo(event.target.value);}} value={correo} type="text" placeholder="Correo" className="outline-none text-vgray2 font-semibold  w-full text-center" />
                                 </div>
                             </div>
                             <div>
                                 <label className="flex flex-wrap mt-3 centered-full justify-center text-center text-black font-semibold">Contraseña</label>
                                 <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                    <input onChange={(event) => { setContraseña(event.target.value) }} type={type} placeholder="Contraseña" className="outline-none text-vgray2 font-semibold w-full text-center" />
+                                    <input onChange={(event) => {setContraseña(event.target.value)}} type={type} placeholder="Contraseña" className="outline-none text-vgray2 font-semibold w-full text-center" />
                                     <button className="ml-2" onClick={() => { showHidePassword() }}>
                                         {type == 'password' ? <Eye /> : <EyeOff />}
                                     </button>

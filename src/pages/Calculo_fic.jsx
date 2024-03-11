@@ -13,7 +13,6 @@ export function Calculo_fic() {
     const {activeAlert} = useGlobalContext()
     const navigate = useNavigate()
 
-    // Llamar a getsmlv y establecer el costo por empleado al montar el componente
     useEffect(() => {
         async function fetchSalario() {
             try {
@@ -42,7 +41,6 @@ export function Calculo_fic() {
         const totalCosto = numCostoPorEmpleado * costoPorEmpleado;
         const totalxemp = totalCosto / numEmpleados;
 
-        // Actualizar el estado del resultado
         const formatoMoneda = {
             style: 'currency',
             currency: 'COP' // Puedes cambiar a la moneda que desees

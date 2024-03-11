@@ -5,7 +5,6 @@ import { useGlobalContext } from "../context/context"
 import { getbussinfo } from "../requests/getEmpresasInfo";
 import { postObras } from "../requests/postObras";
 
-
 export function RegistroObra() {
 
     const navigate = useNavigate()
@@ -18,13 +17,9 @@ export function RegistroObra() {
     const [fechainicio, setFechaInicio] = useState(""); 
     const [fechafin, setFechaFin] = useState(""); 
 
-
-
-
     const Tipos = [
         "Mensual", "A todo costo", "Mano de obra"
     ];
-
 
     const handleTipoObraChange = (event) => {
         setTipoObra(event.target.value);
@@ -70,8 +65,6 @@ export function RegistroObra() {
         }
     }
 
-
-
     return (
         <section>
             <div className="w-full max-w-full h-full ">
@@ -114,8 +107,6 @@ export function RegistroObra() {
                         </div>
                     </div>
 
-
-
                     <div className="flex flex-wrap centered">
                         <div>
                             <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Tipo de obra</label>
@@ -150,6 +141,5 @@ export function RegistroObra() {
 
             </div>
         </section >
-
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
-import { getinitialdata } from "../requests/getReportsInitialdata"; // Importa la función getinitialdata desde el archivo api
+import { getinitialdata } from "../requests/getReportsInitialdata";
 
 const Graficasempresa = () => {
   const [series, setSeries] = useState([]);
@@ -9,8 +9,8 @@ const Graficasempresa = () => {
   useEffect(() => {
     async function getReportFirst() {
       const data = await getinitialdata();
-      const empresas = Object.entries(data.infografempresasconaportes); // Obtiene una matriz de [nombreEmpresa, valorAportado]
-      const valoresAportados = empresas.map(([, valor]) => valor); // Obtiene solo los valores aportados
+      const empresas = Object.entries(data.infografempresasconaportes);
+      const valoresAportados = empresas.map(([, valor]) => valor); 
 
 
 
@@ -18,7 +18,7 @@ const Graficasempresa = () => {
       const valuesArray = ["", nombreempresa1, "", nombreempresa2, "", nombreempresa3, "", nombreempresa4, "", nombreempresa5];
 
       setSeries(valoresAportados.map(valor => Math.round(valor)));
-      setCategories(valuesArray); // Actualiza las categorías con los nombres de las empresas
+      setCategories(valuesArray);
     }
 
     getReportFirst();
@@ -118,16 +118,11 @@ const Graficasempresa = () => {
     colors: ['#04E38A', '#04E38A'],
   };
 
-
   function getWindowWidth() {
     return window.innerWidth ||
         document.documentElement.clientWidth ||
         document.body.clientWidth;
 }
-
-
-
-
   return (
     <div>
       <div className="chart-container">

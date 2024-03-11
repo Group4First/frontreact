@@ -9,8 +9,6 @@ export function Pdf({ idwork }) {
     const [info, setInfo] = useState([]);
     const [infopagos, setInfoPagos] = useState([]);
 
-
-    //quedo asi temporalmente por las request en bucle si se le quita el useEffect
     useEffect(() => {
         async function imprimirpdfobras() {
             try {

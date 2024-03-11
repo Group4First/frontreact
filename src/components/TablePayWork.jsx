@@ -9,7 +9,6 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages,currentPa
   return (
     <>
       
-
       {type == 'Mensual' ? (
         <>
 

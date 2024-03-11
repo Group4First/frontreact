@@ -3,8 +3,7 @@ import Chart from "react-apexcharts";
 import { getgraphicpays } from "../requests/getReportsGraphicPays";
 
 const Pagos = ({ value }) => {
-  const [apiData, setApiData] = useState({});
-  const [TotalAndAdditionalData, setTotalAndAdditionalData] = useState(null); // Cambiado a null
+  const [TotalAndAdditionalData, setTotalAndAdditionalData] = useState(null); 
 
   useEffect(() => {
     const fetchData = async () => {
