@@ -11,18 +11,18 @@ export function Pdf({ idwork }) {
 
 
     //quedo asi temporalmente por las request en bucle si se le quita el useEffect
-        useEffect(() => {
-            async function imprimirpdfobras() {
-                try {
-                    const infoprint = await getPrintWork(idwork);
-                    setInfo(infoprint);
-                    setInfoPagos(infoprint.listapagos);
-                } catch (error) {
-                }
+    useEffect(() => {
+        async function imprimirpdfobras() {
+            try {
+                const infoprint = await getPrintWork(idwork);
+                setInfo(infoprint);
+                setInfoPagos(infoprint.listapagos);
+            } catch (error) {
             }
-            imprimirpdfobras();
-        }, [idwork]);
-    
+        }
+        imprimirpdfobras();
+    }, [idwork]);
+
     const styles = StyleSheet.create({
         page: { fontSize: 11, paddingLeft: 40, paddingRight: 40, lineHeight: 1.5, flexDirection: 'column', padding: 30 },
 
@@ -32,7 +32,7 @@ export function Pdf({ idwork }) {
 
         titleContainer: { flexDirection: 'row', marginTop: 24 },
 
-        reportTitle: { fontSize: 16, textAlign: 'center',fontStyle: 'bold' },
+        reportTitle: { fontSize: 16, textAlign: 'center', fontStyle: 'bold' },
 
         invoice: { fontWeight: 'bold', fontSize: 20 },
 
@@ -42,7 +42,7 @@ export function Pdf({ idwork }) {
 
         theader: { marginTop: 10, fontSize: 10, fontStyle: 'bold', paddingTop: 4, flex: 1, height: 40, width: 70, backgroundColor: '#DEDEDE', borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center' },
 
-        text: { fontStyle: 'bold', paddingTop: 4, flex: 1, height: '100%', width: 60, borderColor: 'whitesmoke', textAlign: 'center', verticalAlign: 'sub'},
+        text: { fontStyle: 'bold', paddingTop: 4, flex: 1, height: '100%', width: 60, borderColor: 'whitesmoke', textAlign: 'center', verticalAlign: 'sub' },
 
         tbody: { fontSize: 9, paddingTop: 4, flex: 1, borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center' },
 
@@ -50,10 +50,18 @@ export function Pdf({ idwork }) {
 
         text2: { marginRight: 10 },
 
-        image: {width: 50, height: 50,marginTop: 10,},
+        image: { width: 50, height: 50, marginTop: 10, },
 
-        pageNumber: {position: 'absolute', bottom: 10,left: 0, right: 0, textAlign: 'center', color: '#787878'},
+        pageNumber: { position: 'absolute', bottom: 10, left: 0, right: 0, textAlign: 'center', color: '#787878' },
     });
+
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = currentDate.getMonth() + 1; // Se suma 1 porque los meses van de 0 a 11
+    var day = currentDate.getDate();
+
+    // Formatear la fecha como "YYYY-MM-DD"
+    var formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
 
     const Headerpdf = () => (
         <View>
@@ -64,7 +72,7 @@ export function Pdf({ idwork }) {
                     <Text style={styles.reportTitle}>Informe de pagos</Text>
                 </View>
                 <View>
-                    <Text style={styles.invoicedata}>{new Date().toISOString().slice(0, 10)}</Text>
+                    <Text style={styles.invoicedata}>{formattedDate}</Text>
                 </View>
             </View>
             <View style={styles.titleContainer}>
@@ -220,7 +228,7 @@ export function Pdf({ idwork }) {
     );
 
     const TableTotal = () => (
-        <View style={{ width: '100%', flexDirection: 'row' ,marginTop: 10}}>
+        <View style={{ width: '100%', flexDirection: 'row', marginTop: 10 }}>
             {info.tipo == "Mensual" ? (
                 <>
                     <View style={styles.total}>
