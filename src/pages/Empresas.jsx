@@ -25,7 +25,6 @@ export function Empresas() {
         setEmpresas(empresasData.listaempresas);
         setLempresas(empresasData);
       } catch (error) {
-        console.error('Error al obtener datos de empresas:', error);
         if (error.status == 401) {
           activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
           setTimeout(() => {
@@ -107,7 +106,7 @@ export function Empresas() {
       </section>
 
       <div className="w-full flex justify-center mt-5">
-        <PaginationButtons totalPages={lempresas.totalpaginas} setCurrentPage={setCurrentPage} />
+        <PaginationButtons totalPages={lempresas.totalpaginas} setCurrentPage={setCurrentPage} currentPage={currentPage} />
       </div>
 
     </div>

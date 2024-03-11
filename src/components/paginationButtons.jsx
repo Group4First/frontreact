@@ -2,8 +2,8 @@ import { IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
-export function PaginationButtons({ totalPages, setCurrentPage }) {
-  const [active, setActive] = useState(1);
+export function PaginationButtons({ totalPages, setCurrentPage,currentPage }) {
+  const [active, setActive] = useState(currentPage + 1); 
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",

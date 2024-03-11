@@ -24,7 +24,6 @@ export function Usuarios() {
                 setUsuarios(usuariosData.userinfo);
                 setLusuarios(usuariosData)
             } catch (error) {
-                console.error('Error al obtener datos de usuarios:', error);
                 if (error.status == 401) {
                     activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                     setTimeout(() => {
@@ -111,7 +110,7 @@ export function Usuarios() {
 
             </section >
             <div className="w-full flex justify-center mt-5">
-                <PaginationButtons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} />
+                <PaginationButtons totalPages={lusuarios.totalpaginas} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
             </div>
 
         </div >

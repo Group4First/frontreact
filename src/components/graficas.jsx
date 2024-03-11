@@ -11,7 +11,6 @@ const Graficas = ({ value }) => {
         const data = await getgraphicmoney(value);
         setApiData(data);
       } catch (error) {
-        console.error("Error al obtener los datos:", error);
       }
     };
 

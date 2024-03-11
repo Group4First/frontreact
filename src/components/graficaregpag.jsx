@@ -26,9 +26,7 @@ const Pagos = ({ value }) => {
           }));
           
         setTotalAndAdditionalData(modifiedData);
-        console.log(modifiedData);
       } catch (error) {
-        console.error("Error al obtener los datos:", error);
       }
     };
 

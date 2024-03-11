@@ -20,7 +20,6 @@ export function Calculo_fic() {
                 const data = await getsmlv(new Date().getFullYear());
                 setResultSalario(parseFloat(data));
             } catch (error) {
-                console.error('Error al obtener el salario:', error);
                 if (error.status == 401) {
                     activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                     setTimeout(() => {

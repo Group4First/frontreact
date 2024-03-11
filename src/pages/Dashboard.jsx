@@ -13,8 +13,18 @@ export function Dasboard() {
 
   useEffect(() => {
     async function getreportfirst() {
-      const datatra = await getinitialdata();
-      setData(datatra)
+      try {
+        const datatra = await getinitialdata();
+        setData(datatra)
+      } catch (error) {
+        if (error.status == 401) {
+          activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+          setTimeout(() => {
+            navigate("/")
+          }, 3000)
+        }
+      }
+
     }
     getreportfirst();
   }, []);
@@ -40,7 +50,7 @@ export function Dasboard() {
   };
 
   return (
-    <section class=" w-full max-h-svh overflow-auto">
+    <section className="w-full max-h-svh overflow-auto">
       <div className="flex flex-row flex-wrap items-start content-start p-0 gap-5  mb-10">
 
 
@@ -79,7 +89,7 @@ export function Dasboard() {
         {/* Gráfica principal línea */}
         <div className="w-full flex flex-wrap justify-center items-center ">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
-          <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Dinero recaudado por el FIC</h1>
+            <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Dinero recaudado por el FIC</h1>
             <Graficas value={selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMes" className="inline-flex items-center cursor-pointer">
@@ -156,7 +166,7 @@ export function Dasboard() {
 
         <div className="w-full flex flex-wrap justify-center items-center">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
-          <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Numero de pagos registrados</h1>
+            <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Numero de pagos registrados</h1>
             <Pagos value={selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMesesUG" className="inline-flex items-center cursor-pointer">
