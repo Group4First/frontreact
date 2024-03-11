@@ -44,7 +44,6 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   };
   const validateInputsPr = () => {
     const requiredFields = [fechapago, tipopago, valorfic];
-console.log('fechapago',fechapago);
     if (requiredFields.some(valor => !valor.trim())) {
       activeAlert('error', 'Todos los campos son requeridos', 2000);
       return false;
@@ -71,7 +70,6 @@ console.log('fechapago',fechapago);
       setValortotal('Total');
 
     } catch (error) {
-      console.log("errorpost: ", error);
 
       if (error.status == 401) {
         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
@@ -91,10 +89,8 @@ console.log('fechapago',fechapago);
       // Limpiar los inputs después de agregar un nuevo pago
       setTipoPago('');
       setValorfic('');
-      console.log("pagospr: ", pagosData);
 
     } catch (error) {
-      console.log("errorpost: ", error);
       if (error.status == 401) {
         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
         setTimeout(() => {
@@ -112,7 +108,6 @@ console.log('fechapago',fechapago);
     if (valorContrato) {
       const valorFIC = (parseFloat(valorContrato) * (porcentajeObra / 100)).toFixed(2);
       setValorfic(valorFIC)
-      console.log("valorFIC:", valorFIC);
     }
   }, [valorContrato]);
 
@@ -126,10 +121,8 @@ console.log('fechapago',fechapago);
           setValorfic(calcData.valor_fic)
           setValorintereses(calcData.interescalculado)
           setValortotal(calcData.totalconinteres)
-          console.log("calcData:", calcData);
         }
       } catch (error) {
-        console.log("errorcalcData:", error);
         if (error.status == 401) {
           activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
           setTimeout(() => {

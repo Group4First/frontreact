@@ -48,9 +48,6 @@ export function VistaPagos() {
                 // Formatear la fecha en el formato deseado (YYYY-MM-DD)
                 setFormattedFechaPagoMayor(fechaPagoMayor.toISOString().slice(0, 10));
 
-                console.log('Fecha de pago mayor:', formattedFechaPagoMayor);
-                console.log("pagosdata:", pagosData);
-                console.log("pagosdatalistapagos:", pagosData.listapagos);
             } catch (error) {
                 setPagos([])
                 if (error.status == 401) {
@@ -76,10 +73,8 @@ export function VistaPagos() {
                 setFechafin('')
                 setObraFinalizada(false);
 
-                console.log("putFinalizarObra: ", pagosData);
             }
         } catch (error) {
-            console.log("errorput: ", error);
             if (error.status == 401) {
                 activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                 setTimeout(() => {
@@ -175,7 +170,7 @@ export function VistaPagos() {
             </section>
             <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />
 
-            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} />
+            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} currentPage={currentPage}/>
 
             <div className="w-full flex mb-5 justify-center">
                 <div className="w-11/12 flex justify-end">

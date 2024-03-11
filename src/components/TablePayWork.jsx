@@ -1,7 +1,7 @@
 import { PaginationButtons } from "./paginationButtons";
 
 
-export function TablePayWork({ type, pagos, setCurrentPage, totalPages }) {
+export function TablePayWork({ type, pagos, setCurrentPage, totalPages,currentPage }) {
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
   };
@@ -45,7 +45,7 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages }) {
           </section>
 
           <div className="w-full flex justify-center mt-5">
-            <PaginationButtons totalPages={totalPages} setCurrentPage={setCurrentPage} />
+            <PaginationButtons totalPages={totalPages} setCurrentPage={setCurrentPage} currentPage={currentPage} />
           </div>
 
         </>

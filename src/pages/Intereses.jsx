@@ -22,7 +22,6 @@ export function Intereses() {
                 setIntereses(interesesData.listaintereses);
                 setLintereses(interesesData);
             } catch (error) {
-                console.error('Error al obtener datos de intereses:', error);
                 if (error.status == 401) {
                     activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                     setTimeout(() => {
@@ -93,7 +92,7 @@ export function Intereses() {
 
             </section>
             <div className="w-full flex justify-center mt-5">
-                <PaginationButtons totalPages={lintereses.totalpaginas} setCurrentPage={setCurrentPage} />
+                <PaginationButtons totalPages={lintereses.totalpaginas} setCurrentPage={setCurrentPage} currentPage={currentPage} />
             </div>
 
         </div>

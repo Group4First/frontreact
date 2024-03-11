@@ -92,7 +92,7 @@ export function PagosUsuario() {
           </section>
 
           <div className="w-full flex justify-center mt-5">
-            <PaginationButtons totalPages={lpagos.totalpaginas} setCurrentPage={setCurrentPage} />
+            <PaginationButtons totalPages={lpagos.totalpaginas} setCurrentPage={setCurrentPage} currentPage={currentPage} />
           </div>
         </>
       )}

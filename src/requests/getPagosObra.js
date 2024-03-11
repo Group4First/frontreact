@@ -8,7 +8,6 @@ export async function getPagosObra(id, currentpage) {
     url.searchParams.append('idwork', id);
     url.searchParams.append('page', currentpage );
     url.searchParams.append('size', '');
-    console.log("url:", url);
     return await newRequest({ url, method: 'GET' })
 
 }

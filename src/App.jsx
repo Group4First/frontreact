@@ -107,11 +107,9 @@ function MainContentWithSidebar({ children }) {
   }
 
   useEffect(() => {
-    console.log("algo");
 
     if (!sesion) {
       activeAlert("warning", "No tiene permisos!")
-      console.log("paso");
       navigate("/")
       return
     }
