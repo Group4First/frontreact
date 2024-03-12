@@ -51,6 +51,7 @@ export function VistaPagos() {
             } catch (error) {
                 setPagos([])
                 if (error.status == 401) {
+                    Cookies.remove('session')
                     activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                     setTimeout(() => {
                         navigate("/")

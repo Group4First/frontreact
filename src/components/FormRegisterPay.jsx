@@ -70,6 +70,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
     } catch (error) {
 
       if (error.status == 401) {
+        Cookies.remove('session')
         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
         setTimeout(() => {
           navigate("/")
@@ -89,6 +90,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
 
     } catch (error) {
       if (error.status == 401) {
+        Cookies.remove('session')
         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
         setTimeout(() => {
           navigate("/")
@@ -121,6 +123,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
         }
       } catch (error) {
         if (error.status == 401) {
+          Cookies.remove('session')
           activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
           setTimeout(() => {
             navigate("/")

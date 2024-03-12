@@ -5,6 +5,7 @@ import { getIntereses } from "../requests/getIntereses";
 import { PaginationButtons } from "../components/paginationButtons";
 import { useGlobalContext } from "../context/context";
 import { Loading } from "../components/Loading";
+import Cookies from "js-cookie";
 
 
 export function Intereses() {
@@ -23,6 +24,7 @@ export function Intereses() {
                 setLintereses(interesesData);
             } catch (error) {
                 if (error.status == 401) {
+                    Cookies.remove('session')
                     activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                     setTimeout(() => {
                         navigate("/")

@@ -102,6 +102,7 @@ export function RegistroEmpresa() {
                     }
                 } catch (error) {
                     if (error.status == 401) {
+                        Cookies.remove('session')
                         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
                         setTimeout(() => {
                             navigate("/")
