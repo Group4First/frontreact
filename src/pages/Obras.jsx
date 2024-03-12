@@ -4,6 +4,7 @@ import { getObrasEmpresa } from "../requests/getObrasEmpresa";
 import { ChevronLeft, Plus, Search } from "lucide-react";
 import { CardPagos } from "../components/cardPagos";
 import { useGlobalContext } from "../context/context";
+import Cookies from "js-cookie";
 
 export function Obras() {
     const { id } = useParams();

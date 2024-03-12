@@ -11,6 +11,7 @@ import { Modal } from "../components/Modal";
 import {  File } from "lucide-react";
 import { Pdf } from "../components/Pdf";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import Cookies from "js-cookie";
 
 export function VistaPagos() {
     const { idempresa } = useParams();

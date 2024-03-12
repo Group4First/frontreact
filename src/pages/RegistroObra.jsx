@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useGlobalContext } from "../context/context"
 import { getbussinfo } from "../requests/getEmpresasInfo";
 import { postObras } from "../requests/postObras";
+import Cookies from "js-cookie";
 
 export function RegistroObra() {
 

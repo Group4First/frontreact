@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getsmlv } from "../requests/getsmlv";
 import { useGlobalContext } from '../context/context';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export function Calculo_fic() {
     // Estado para almacenar el número de empleados

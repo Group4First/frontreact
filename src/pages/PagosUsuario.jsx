@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getPagosUsuario } from "../requests/getPagosUsuario";
 import { PaginationButtons } from "../components/paginationButtons";
 import { useGlobalContext } from "../context/context";
+import Cookies from "js-cookie";
 
 export function PagosUsuario() {
   const { id } = useParams();

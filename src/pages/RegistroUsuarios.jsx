@@ -6,6 +6,7 @@ import { postuser } from "../requests/postusuarios";
 import { updateuser } from "../requests/updateusuario";
 import { getuserinfo } from "../requests/getUsuarioInfo";
 import { Modal } from "../components/Modal";
+import Cookies from "js-cookie";
 
 export function RegistroUsuarios() {
 

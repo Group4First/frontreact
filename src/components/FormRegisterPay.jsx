@@ -5,6 +5,7 @@ import { postPagoMe } from "../requests/postPagoMe";
 import { getCalculoPagoMe } from "../requests/getCalculoPagoMe";
 import { Modal } from "./Modal";
 import { useGlobalContext } from "../context/context";
+import Cookies from "js-cookie";
 
 export function FormRegisterPay({ idobra, reload, setReaload, type, state, formattedFechaPagoMayor }) {
 

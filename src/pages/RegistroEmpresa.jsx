@@ -6,6 +6,7 @@ import { postbussiness } from "../requests/postempresas";
 import { updatebuss } from "../requests/updateEmpresas";
 import { getbussinfo } from "../requests/getEmpresasInfo";
 import { Modal } from "../components/Modal";
+import Cookies from "js-cookie";
 
 export function RegistroEmpresa() {
 

@@ -5,6 +5,7 @@ import { PaginationButtons } from "../components/paginationButtons";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
 import { Loading } from "../components/Loading";
+import Cookies from "js-cookie";
 
 export function Usuarios() {
 

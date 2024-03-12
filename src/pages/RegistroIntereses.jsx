@@ -5,6 +5,7 @@ import { useGlobalContext } from "../context/context"
 import { postinterest } from "../requests/postIntereses";
 import { getsmlv } from "../requests/getsmlv";
 import { Modal } from "../components/Modal";
+import Cookies from "js-cookie";
 
 
 export function RegistroIntereses() {

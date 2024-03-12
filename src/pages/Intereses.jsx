@@ -1,4 +1,4 @@
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { getIntereses } from "../requests/getIntereses";
@@ -13,13 +13,17 @@ export function Intereses() {
     const [intereses, setIntereses] = useState([]);
     const [lintereses, setLintereses] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
+    const [searchYear, setSearchYear] = useState('')
     const [currentPage, setCurrentPage] = useState(0)
     const { activeAlert } = useGlobalContext()
 
+    const meses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
     useEffect(() => {
         async function fetchData() {
             try {
-                const interesesData = await getIntereses(currentPage, searchTerm);
+                const interesesData = await getIntereses(currentPage, searchTerm, searchYear);
                 setIntereses(interesesData.listaintereses);
                 setLintereses(interesesData);
             } catch (error) {
@@ -34,13 +38,13 @@ export function Intereses() {
         }
 
         fetchData();
-    }, [currentPage, searchTerm]);
+    }, [currentPage, searchTerm, searchYear]);
 
     useEffect(() => {
-        if (searchTerm !== '') {
+        if (searchTerm !== '' || searchYear !== '') {
             setCurrentPage(0);
         }
-    }, [searchTerm]);
+    }, [searchTerm, searchYear]);
 
     if (lintereses === null) {
         return <div className="w-full max-w-fu h-svh flex justify-center items-center">
@@ -54,15 +58,47 @@ export function Intereses() {
 
             <section className=" flex justify-center">
                 <div className=" w-11/12  flex xl:items-end max-xl:items-center justify-between mt-10 max-xl:flex-col max-xl:gap-10 max-xl:justify-center">
-                    <div className="flex flex-wrap mt-4 max-xl:justify-center">
-                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                            <label htmlFor="Mes" className="text-vgray2 font-semibold flex-grow ml-4">Mes</label>
-                            <input onChange={(event) => { setSearchTerm(event.target.value); }} type="date" id="Mes" placeholder="Mes" className="outline-none text-black font-semibold w-[150px]" />
+                    <div className="flex flex-wrap mt-4 max-xl:justify-center gap-10">
+                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3  mt-6 ">
+                            <label htmlFor="Mes" className="text-vgray2 font-semibold flex-grow ml-4">
+                                Mes
+                            </label>
+                            <select
+                                value={searchTerm} // Usar searchTerm directamente como valor seleccionado
+                                onChange={(event) => { setSearchTerm(event.target.value); }}
+                                className="outline-none text-black font-semibold ml-3 w-[320px] text-center"
+                            >
+                                <option value="">Seleccionar mes</option>
+                                {meses.map((mes, index) => (
+                                    <option key={index} value={mes}>{mes}</option>
+                                ))}
+                            </select>
                         </div>
-                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                            <label htmlFor="Año" className="text-vgray2 font-semibold flex-grow ml-4">Año</label>
-                            <input onChange={(event) => { setSearchTerm(event.target.value); }} type="date"    id="Año" placeholder="Año" className="outline-none text-black font-semibold w-[150px]" />
+
+                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 ">
+                            <label htmlFor="Año" className="text-vgray2 font-semibold flex-grow ml-4">
+                                Año
+                            </label>
+                            <select
+                                value={searchYear} // Usar searchYear directamente como valor seleccionado
+                                onChange={(event) => { setSearchYear(event.target.value); }}
+                                id="Año"
+                                className="outline-none text-black font-semibold w-[320px] text-center"
+                            >
+                                <option value="">Seleccionar Año</option>
+                                {Array.from({ length: new Date().getFullYear() - 2017 }, (_, index) => 2018 + index).map((year) => (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+                        <div className="flex items-center mt-5 ">
+                            <button className=" h-10 w-32 gap-2 flex justify-center items-center rounded-xl text-vgreen bg-white hover:bg-gray-50 hover:text-gray-600" onClick={() => {setSearchTerm(''); setSearchYear('');  }}>
+                                <X size={20} /> Limpiar
+                            </button>
+                        </div>
+
                     </div>
 
                     <button className="px-4 py-2 xl:mb-2 bg-vgreen text-white font-medium text-sm rounded-lg flex gap-2" onClick={() => {
