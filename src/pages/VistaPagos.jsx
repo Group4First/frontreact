@@ -38,7 +38,6 @@ export function VistaPagos() {
                 const pagosData = await getPagosObra(idobra, currentPage);
                 setPagos(pagosData.listapagos);
                 setLPagos(pagosData)
-
                 // Obtener el pago mayor
                 const fechaPagoMayor = pagosData.listapagos.reduce((fechaMayor, pago) => {
                     const fechaPago = new Date(pago.fechapago);
