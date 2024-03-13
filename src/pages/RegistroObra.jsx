@@ -15,8 +15,8 @@ export function RegistroObra() {
     const [razonsocialempresa, setRazonsocial] = useState("");
     const [descripcion, setDescripcion] = useState('');
     const [tipoObra, setTipoObra] = useState("");
-    const [fechainicio, setFechaInicio] = useState(""); 
-    const [fechafin, setFechaFin] = useState(""); 
+    const [fechainicio, setFechaInicio] = useState("");
+    const [fechafin, setFechaFin] = useState("");
 
     const Tipos = [
         "Mensual", "A todo costo", "Mano de obra"
@@ -52,16 +52,16 @@ export function RegistroObra() {
     }, []);
 
     async function registrarobra() {
-        if (!descripcion.trim() || !tipoObra.trim() || !fechainicio.trim() ) {
+        if (!descripcion.trim() || !tipoObra.trim() || !fechainicio.trim()) {
             activeAlert('error', 'Todos los campos son requeridos', 2000);
             return;
         }
         try {
-            const res = await postObras(descripcion, tipoObra, fechainicio , fechafin || null, id);
+            const res = await postObras(descripcion, tipoObra, fechainicio, fechafin, id);
             activeAlert('success', res, 2000);
-            navigate(`/empresas/${id}/obras`) 
-            
-            
+            navigate(`/empresas/${id}/obras`)
+
+
         } catch (error) {
             activeAlert('error', error.message, 2000);
         }
@@ -128,16 +128,16 @@ export function RegistroObra() {
                                 <input onChange={(event) => { setFechaInicio(event.target.value); }} type="Date" placeholder="Fecha de inicio" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
                             </div>
                         </div>
-                        {tipoObra !== "Mensual" && ( // Si no es Mensual, muestra los inputs de fecha
-                            <>
-                                <div>
-                                    <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Fecha de fin</label>
-                                    <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
-                                        <input onChange={(event) => { setFechaFin(event.target.value); }}type="Date" placeholder="Fecha de fin" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
-                                    </div>
-                                </div>
-                            </>
-                        )}
+
+
+                        <div>
+                            <label className="flex flex-wrap mt-4 centered-full justify-center text-center text-black font-semibold">Fecha de fin</label>
+                            <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-1 centered-full">
+                                <input onChange={(event) => { setFechaFin(event.target.value); }} type="Date" placeholder="Fecha de fin" className="outline-none text-vgray2 font-semibold ml-3 w-[320px] text-center" min="2000" max="2099" />
+                            </div>
+                        </div>
+
+
                     </div>
                 </section>
 

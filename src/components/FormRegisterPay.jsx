@@ -55,6 +55,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   async function registrarPagosMe() {
     try {
       const pagosData = await postPagoMe(fechapago, mes, anio, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
+      
       activeAlert('success', pagosData, 2000);
       setReaload(!reload)
       toggleAcordeon()

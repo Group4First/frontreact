@@ -6,7 +6,7 @@ export async function postObras(descripcion, tipo, fechainicio, fechafin, empres
     descripcion :descripcion,
     tipo : tipo,
     fechainicio :fechainicio,
-    fechafin :fechafin,
+    fechafinaprox :fechafin,
     estado : 'En curso',
     empresaid :empresaid
   }

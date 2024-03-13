@@ -8,7 +8,7 @@ import { useGlobalContext } from "../context/context";
 import { FormRegisterPay } from "../components/FormRegisterPay";
 import { TablePayWork } from "../components/TablePayWork";
 import { Modal } from "../components/Modal";
-import {  File } from "lucide-react";
+import { File } from "lucide-react";
 import { Pdf } from "../components/Pdf";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Cookies from "js-cookie";
@@ -38,16 +38,7 @@ export function VistaPagos() {
                 const pagosData = await getPagosObra(idobra, currentPage);
                 setPagos(pagosData.listapagos);
                 setLPagos(pagosData)
-                // Obtener el pago mayor
-                const fechaPagoMayor = pagosData.listapagos.reduce((fechaMayor, pago) => {
-                    const fechaPago = new Date(pago.fechapago);
-                    fechaPago.setDate(fechaPago.getDate());
-                    return fechaPago > fechaMayor ? fechaPago : fechaMayor;
-                }, new Date(0));
-
-                // Formatear la fecha en el formato deseado (YYYY-MM-DD)
-                setFormattedFechaPagoMayor(fechaPagoMayor.toISOString().slice(0, 10));
-
+ 
             } catch (error) {
                 setPagos([])
                 if (error.status == 401) {
@@ -98,12 +89,12 @@ export function VistaPagos() {
     if (lpagos === null) return (
         <div className="w-full max-w-full h-svh flex items-center justify-center">
             <div className="animate-spin">
-                <Loader2 color="#39A900" size={50}/>
+                <Loader2 color="#39A900" size={50} />
             </div>
         </div>
     )
 
-    if (lpagos !== null ) return (
+    if (lpagos !== null) return (
         <div className="w-full max-w-full h-svh overflow-y-auto">
             <button className="flex items-center text-vgreen font-semibold px-16 mt-5 text-xl gap-4" onClick={() => { navigate(`/empresas/${idempresa}/obras`); }}>
                 <ChevronLeft size={30} />Vista de pago
@@ -115,11 +106,13 @@ export function VistaPagos() {
                 </div>
 
                 <div className="flex flex-col gap-4">
+
                     <div className="flex flex-row max-xl:flex-col max-xl:gap-5  gap-10">
                         <h1 className="text-vgraylight font-medium text-md"> Fecha inicio: {lpagos.fechainicio}</h1>
-                        <h1 className="text-vgraylight font-medium text-md"> Fecha fin:  {lpagos.fechafin}</h1>
+                        <h1 className="text-vgraylight font-medium text-md"> Fecha fin aprox: {lpagos.fechafinaprox}</h1>
+                        <h1 className="text-vgraylight font-medium text-md"> Fecha fin real:  {lpagos.fechafin == null ? 'Sin definir' : lpagos.fechafin}</h1>
                     </div>
-                    <div className=" flex max-xl:flex-col max-xl:gap-5 gap-20">
+                    <div className=" flex max-xl:flex-col max-xl:gap-5 gap-24">
                         <CardPagos color={colorType} type={'Tipo'} text={lpagos.tipo} />
                         <CardPagos color={colorState} type={'Estado'} text={lpagos.estado} />
 
@@ -171,14 +164,14 @@ export function VistaPagos() {
             </section>
             <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />
 
-            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} currentPage={currentPage}/>
+            <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} currentPage={currentPage} />
 
             <div className="w-full flex mb-5 justify-center">
                 <div className="w-11/12 flex justify-end">
                     <PDFDownloadLink document={<Pdf idwork={idobra} />} fileName="RegistrodepagosFIC.pdf">
                         {({ blob, url, loading, error }) =>
                             <button document={<Pdf />} className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
-                                <Printer size={20}/>
+                                <Printer size={20} />
                                 Imprimir
                             </button>
                         }

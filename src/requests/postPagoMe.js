@@ -9,7 +9,6 @@ export async function postPagoMe(fechapago, mes, anio, numtrabajadores, valorfic
     fechapago: fechapago,
     mes: mes,
     anio: anio,
-    tipopago: tipopago,
     numtrabajadores: numtrabajadores,
     valorfic: valorfic,
     valorintereses: valorintereses,
