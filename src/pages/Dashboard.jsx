@@ -6,6 +6,7 @@ import Pagos from '../components/graficaregpag';
 import Graficasempresa from '../components/graficasempresas';
 import { Cards as CardsComponent } from "../components/Cards"; // Cambiando el nombre del componente importado
 import Cookies from 'js-cookie';
+import { TableUserPays } from '../components/TableUserPays';
 
 
 export function Dasboard() {
@@ -194,6 +195,7 @@ export function Dasboard() {
             </div>
           </div>
         </div>
+        <TableUserPays/>
       </div>
     </section>
   );

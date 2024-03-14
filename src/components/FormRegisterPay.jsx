@@ -18,7 +18,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   const [mes, setMes] = useState('');
   const [anio, setAnio] = useState('');
   const [numtrabajadores, setNumtrabajadores] = useState('');
-  const [valorfic, setValorfic] = useState('FIC');
+  const [valorfic, setValorfic] = useState('c');
   const [valorintereses, setValorintereses] = useState('Intereses');
   const [valortotal, setValortotal] = useState('Total');
   const [porcentajeObra, setPorcentajeObra] = useState(type === 'Mano de obra' ? 1 : 0.25);
@@ -31,7 +31,9 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   const toggleAcordeon = () => {
     setShowAcordeon(!showAcordeon);
   };
-
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
+  };
   const validateInputsMe = () => {
     const requiredFields = [fechapago, mes, anio, numtrabajadores];
 
@@ -55,7 +57,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   async function registrarPagosMe() {
     try {
       const pagosData = await postPagoMe(fechapago, mes, anio, numtrabajadores, valorfic, valorintereses, valortotal, idobra);
-      
+
       activeAlert('success', pagosData, 2000);
       setReaload(!reload)
       toggleAcordeon()
@@ -117,11 +119,12 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
       try {
         // Check if all required fields are filled
         if (mes && anio && fechapago && numtrabajadores) {
-          const calcData = await getCalculoPagoMe(mes, anio, fechapago, numtrabajadores);
+          const calcData = await getCalculoPagoMe(mes, anio, fechapago, numtrabajadores, type);
           setCalc(calcData);
-          setValorfic(calcData.valor_fic)
-          setValorintereses(calcData.interescalculado)
-          setValortotal(calcData.totalconinteres)
+          console.log(calcData);
+          setValorfic(Math.round(calcData.valor_fic))
+          setValorintereses(Math.round(calcData.interescalculado))
+          setValortotal(Math.round(calcData.totalconinteres))
         }
       } catch (error) {
         if (error.status == 401) {
@@ -204,7 +207,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                         />
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <h1 className="font-semibold text-center w-full"> {valorfic} </h1>
+                        <h1 className="font-semibold text-center w-full"> {valorfic != 'FIC' && !formatCurrency(valorfic)  ? formatCurrency(valorfic): 'FIC' } </h1>
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                         <h1 className="font-semibold text-center w-full"> {valorintereses} </h1>
@@ -216,14 +219,14 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                     </div>
                     <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
                       <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => {
-                            if (validateInputsMe()) {
-                                setOpen(true);
-                            }
-                        }}>
+                        if (validateInputsMe()) {
+                          setOpen(true);
+                        }
+                      }}>
                         <Plus />
                         Añadir
                       </button>
-                      <Modal open={open} onClose={() => setOpen(false)} title={ 'Confirmar pago' } text={ '¿Esta seguro de agregar el nuevo pago?' } onAcept={registrarPagosMe} />
+                      <Modal open={open} onClose={() => setOpen(false)} title={'Confirmar pago'} text={'¿Esta seguro de agregar el nuevo pago?'} onAcept={registrarPagosMe} />
                     </div>
                   </section>
                 </>
@@ -267,7 +270,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                         <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
                         <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                       </div>
-                     
+
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                         <input
                           value={valorContrato}
@@ -299,14 +302,14 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
 
                     <div className="flex justify-end mr-10 mt-10 max-xl:justify-center">
                       <button className="px-4 py-2 bg-vgreen text-white font-medium items-center text-sm rounded-lg flex gap-2" onClick={() => {
-                            if (validateInputsPr()) {
-                                setOpen(true);
-                            }
-                        }}>
+                        if (validateInputsPr()) {
+                          setOpen(true);
+                        }
+                      }}>
                         <Check />
                         Registrar
                       </button>
-                      <Modal open={open} onClose={() => setOpen(false)} title={ 'Confirmar pago' } text={ '¿Esta seguro de agregar el nuevo pago?' } onAcept={registrarPagosPr} />
+                      <Modal open={open} onClose={() => setOpen(false)} title={'Confirmar pago'} text={'¿Esta seguro de agregar el nuevo pago?'} onAcept={registrarPagosPr} />
                     </div>
                   </section>
                 </>
