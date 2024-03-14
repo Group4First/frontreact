@@ -94,7 +94,7 @@ export function Intereses() {
                             </select>
                         </div>
                         <div className="flex items-center mt-5 ">
-                            <button className=" h-10 w-32 gap-2 flex justify-center items-center rounded-xl text-vgreen bg-white hover:bg-gray-50 hover:text-gray-600" onClick={() => {setSearchTerm(''); setSearchYear('');  }}>
+                            <button className=" h-10 w-32 gap-2 flex justify-center items-center rounded-xl text-vgreen bg-white hover:bg-gray-50 hover:text-gray-600" onClick={() => { setSearchTerm(''); setSearchYear(''); }}>
                                 <X size={20} /> Limpiar
                             </button>
                         </div>
@@ -130,8 +130,8 @@ export function Intereses() {
                             <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Desde: </span>{interes.fechainicio}</h1>
                             <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Hasta: </span>{interes.fechafin}</h1>
                             <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa legal usura: </span>{interes.tasa}%</h1>
-                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa mensual: </span>{interes.mensual}%</h1>
-                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa diaria: </span>{interes.diario}%</h1>
+                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa mensual: </span>{parseFloat(interes.mensual).toFixed(4)}%</h1>
+                            <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Tasa diaria: </span>{parseFloat(interes.diario).toFixed(4)}%</h1>
                         </div>
                     ))}
 
