@@ -19,9 +19,9 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages,currentPa
               <h1 className="text-vgraylight font-medium text-center">Mes</h1>
               <h1 className="text-vgraylight font-medium text-center" >Fecha de <br /> pago</h1>
               <h1 className="text-vgraylight font-medium text-center">Número  <br />Trabajadores</h1>
-              <h1 className="text-vgraylight font-medium text-center">FIC</h1>
-              <h1 className="text-vgraylight font-medium text-center">Intereses</h1>
-              <h1 className="text-vgraylight font-medium text-center">Total</h1>
+              <h1 className="text-vgraylight font-medium" >FIC</h1>
+              <h1 className="text-vgraylight font-medium text-center" >Intereses</h1>
+              <h1 className="text-vgraylight font-medium text-center" > Total</h1>
             </div>
             {pagos.map((pago, index) => {
               const colorInterest = pago.valorintereses === 0 ? '#848484' : '#FF0000';

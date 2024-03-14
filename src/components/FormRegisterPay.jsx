@@ -7,7 +7,7 @@ import { Modal } from "./Modal";
 import { useGlobalContext } from "../context/context";
 import Cookies from "js-cookie";
 
-export function FormRegisterPay({ idobra, reload, setReaload, type, state, formattedFechaPagoMayor }) {
+export function FormRegisterPay({ idobra, reload, setReaload, type, state }) {
 
 
   const { activeAlert } = useGlobalContext()
@@ -18,7 +18,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   const [mes, setMes] = useState('');
   const [anio, setAnio] = useState('');
   const [numtrabajadores, setNumtrabajadores] = useState('');
-  const [valorfic, setValorfic] = useState('c');
+  const [valorfic, setValorfic] = useState('');
   const [valorintereses, setValorintereses] = useState('Intereses');
   const [valortotal, setValortotal] = useState('Total');
   const [porcentajeObra, setPorcentajeObra] = useState(type === 'Mano de obra' ? 1 : 0.25);
@@ -30,12 +30,6 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
   const [showAcordeon, setShowAcordeon] = useState(false);
   const toggleAcordeon = () => {
     setShowAcordeon(!showAcordeon);
-  };
-  const formatCurrency = (value) => {
-    if (isNaN(value)) {
-      return '0'; // Devolver '0' si el valor no es un número válido
-    }
-    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
   };
 
   const validateInputsMe = () => {
@@ -76,6 +70,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
       setValortotal('Total');
 
     } catch (error) {
+      console.log(error);
 
       if (error.status == 401) {
         Cookies.remove('session')
@@ -104,8 +99,6 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
           navigate("/")
         }, 3000)
       }
-
-
     }
   }
 
@@ -193,7 +186,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                         <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                        <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " min={formattedFechaPagoMayor} />
+                        <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
                       </div>
 
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
@@ -211,13 +204,13 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                         />
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <h1 className="font-semibold text-center w-full"> {formatCurrency(valorfic)== '0' ? 'FIC': formatCurrency(valorfic)} </h1>
+                        <input value={valorfic} onChange={(event) => { setValorfic(event.target.value); setValortotal(0) ; setValorintereses(0) }} type="text" id="fecha" placeholder="FIC" className="outline-none font-semibold text-center w-full" />
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <h1 className="font-semibold text-center w-full"> {valorintereses} </h1>
+                        <input value={valorintereses} onChange={(event) => { setValorintereses(event.target.value); }} type="text" id="fecha" placeholder="FIC" className="outline-none font-semibold text-center w-full" />
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <h1 className="font-semibold text-center w-full"> {valortotal} </h1>
+                        <input value={valortotal} onChange={(event) => { setValortotal(event.target.value); }} type="text" id="fecha" placeholder="FIC" className="outline-none font-semibold text-center w-full" />
                       </div>
 
                     </div>
