@@ -32,8 +32,12 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
     setShowAcordeon(!showAcordeon);
   };
   const formatCurrency = (value) => {
+    if (isNaN(value)) {
+      return '0'; // Devolver '0' si el valor no es un número válido
+    }
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
   };
+
   const validateInputsMe = () => {
     const requiredFields = [fechapago, mes, anio, numtrabajadores];
 
@@ -207,7 +211,7 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, forma
                         />
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
-                        <h1 className="font-semibold text-center w-full"> {valorfic != 'FIC' && !formatCurrency(valorfic)  ? formatCurrency(valorfic): 'FIC' } </h1>
+                        <h1 className="font-semibold text-center w-full"> {formatCurrency(valorfic)== '0' ? 'FIC': formatCurrency(valorfic)} </h1>
                       </div>
                       <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 centered-full">
                         <h1 className="font-semibold text-center w-full"> {valorintereses} </h1>
