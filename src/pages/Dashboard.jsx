@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getinitialdata } from "../requests/getReportsInitialdata";
 import Graficas from '../components/graficas';
 import ApexChart from '../components/grafDona';
 import Pagos from '../components/graficaregpag';
@@ -7,24 +8,9 @@ import { Cards as CardsComponent } from "../components/Cards"; // Cambiando el n
 import Cookies from 'js-cookie';
 import { TableUserPays } from '../components/TableUserPays';
 
-import { getinitialdata } from "../requests/getReportsInitialdata";
-import { getgraphicmoney } from "../requests/getReportsGraphicMoney";
-import { getgraphicpays } from "../requests/getReportsGraphicPays";
-import { getReportsUserPays } from "../requests/getReportsUserPays";
-
-import { Printer } from "lucide-react";
-import { PdfDashboard } from "../components/PdfDashboard";
-
-import { PDFDownloadLink } from "@react-pdf/renderer";
-
-
-
 
 export function Dasboard() {
-  const [data, setData] = useState([]);
-  const [datagrafprincipal, setDatagrafprincipal] = useState([]);
-  const [datagrafpagos, setDatagrafpagos] = useState([]);
-  const [datatablausuarios, setDatatablausuarios] = useState([]);
+  const [data, setData] = useState({});
 
 
   useEffect(() => {
@@ -61,49 +47,6 @@ export function Dasboard() {
   const handleOptionChange3 = (event) => {
     setSelectedOption3(event.target.value);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getgraphicmoney(selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0);
-        setDatagrafprincipal(data);
-      } catch (error) {
-
-      }
-    };
-    fetchData();
-  }, [selectedOption2]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getgraphicpays(selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : 0);
-
-        setDatagrafpagos(data);
-      } catch (error) {
-
-      }
-    };
-    fetchData();
-  }, [selectedOption3]);
-
-  useEffect(() => {
-    async function fetchData() {
-        try {
-            const usersdata = await getReportsUserPays(0,0);
-            setDatatablausuarios(usersdata);
-        } catch (error) {
-            setPagos([])
-            setError(error.message)
-            if (error.status == 401) {
-                
-            }
-        }
-    }
-    fetchData();
-}, []);
-
-
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
@@ -147,7 +90,7 @@ export function Dasboard() {
         <div className="w-full flex flex-wrap justify-center items-center ">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
             <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Dinero recaudado por el FIC</h1>
-            <Graficas datatraida={datagrafprincipal} value={selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0} />
+            <Graficas value={selectedOption2 === "porMes" ? 0 : selectedOption2 === "porAño" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMes" className="inline-flex items-center cursor-pointer">
                 <input
@@ -174,6 +117,7 @@ export function Dasboard() {
               </label>
             </div>
           </div>
+
         </div>
 
         {/* Contenedor para las gráficas de donas */}
@@ -182,13 +126,13 @@ export function Dasboard() {
             <div className="rounded-lg bg-white p-5  min-w-min justify-center  mt-5 mb-5 mr-2 ml-2">
               <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Empresas que más han aportado al FIC</h1>
               <div className="flex justify-center mt-5">
-                <Graficasempresa datatra={data} />
+                <Graficasempresa />
               </div>
             </div>
             <div className="rounded-lg bg-white p-5 max-h-full md:w-1/2 justify-center min-w-min mt-5 mb-5 mr-2 ml-2">
               <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Composición de pagos FIC</h1>
               <div className="flex justify-center mt-8">
-                <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : 1} data={data} />
+                <ApexChart value={selectedOption === "porAportes" ? 0 : selectedOption === "porCantidad" ? 1 : 1} />
               </div>
               <div className="flex justify-center mt-4 space-x-4">
                 <label htmlFor="porCantidad" className="inline-flex items-center cursor-pointer">
@@ -223,7 +167,7 @@ export function Dasboard() {
         <div className="w-full flex flex-wrap justify-center items-center">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
             <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Numero de pagos registrados</h1>
-            <Pagos value={selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : 0} datatra={datagrafpagos} />
+            <Pagos value={selectedOption3 === "porMesesUG" ? 0 : selectedOption3 === "porAñosUG" ? 1 : 0} />
             <div className="flex justify-center mt-4 space-x-4">
               <label htmlFor="porMesesUG" className="inline-flex items-center cursor-pointer">
                 <input
@@ -252,16 +196,6 @@ export function Dasboard() {
           </div>
         </div>
         <TableUserPays/>
-      </div>
-      <div className="fixed bottom-5 right-5">
-        <PDFDownloadLink document={<PdfDashboard datainitialtra={data} datagraprincipaltra={datagrafprincipal} datagrafpagostra={datagrafpagos} datatablausuariostra={datatablausuarios}/>} fileName="InformaciónDashboard.pdf">
-          {({ blob, url, loading, error }) =>
-            <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full  flex flex-col justify-center items-center">
-              <Printer size={20} />
-              PDF
-            </button>
-          }
-        </PDFDownloadLink>
       </div>
     </section>
   );

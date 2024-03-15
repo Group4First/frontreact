@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getReportsUserPays } from "../requests/getReportsUserPays";
 import { PaginationButtons } from "./paginationButtons";
 
-export function TableUserPays({}) {
+export function TableUserPays() {
     const [currentPage, setCurrentPage] = useState(0);
     const [pagos, setPagos] = useState([]);
     const [lpagos, setLPagos] = useState([]);
@@ -13,7 +13,7 @@ export function TableUserPays({}) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const pagosData = await getReportsUserPays(currentPage,7);
+                const pagosData = await getReportsUserPays(currentPage);
                 setPagos(pagosData.reportinfo);
                 setLPagos(pagosData);
             } catch (error) {
@@ -28,9 +28,9 @@ export function TableUserPays({}) {
                 }
             }
         }
+
         fetchData();
     }, [currentPage]);
-    
     return (
         <section className=" w-full flex justify-center ">
             <div className="flex flex-col items-center relative overflow-x-auto mt-10 w-10/12 bg-white px-10 pt-5 rounded-lg">

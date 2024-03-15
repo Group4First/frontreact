@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from 'react-apexcharts';
 import { getinitialdata } from "../requests/getReportsInitialdata";
 
-const ApexChart = ({ value, data }) => {
+const ApexChart = ({ value }) => {
   const [series, setSeries] = useState([]);
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
     async function getreportfirst() {
-      const datatra = data;
+      const datatra = await getinitialdata();
 
       if (value == 0) {
         const { conteonummanodeobra, conteonumatodocosto, conteonummensual } = datatra.infografcomposicionfic.infografxnumero;
@@ -32,7 +32,7 @@ const ApexChart = ({ value, data }) => {
       }
     }
     getreportfirst();
-  }, [value,data]);
+  }, [value]);
 
   const options = {
     chart: {
