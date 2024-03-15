@@ -8,7 +8,6 @@ import { useGlobalContext } from "../context/context";
 import { FormRegisterPay } from "../components/FormRegisterPay";
 import { TablePayWork } from "../components/TablePayWork";
 import { Modal } from "../components/Modal";
-import { File } from "lucide-react";
 import { Pdf } from "../components/Pdf";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Cookies from "js-cookie";
@@ -162,7 +161,7 @@ export function VistaPagos() {
                 )}
 
             </section>
-            <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} />
+            <FormRegisterPay idobra={idobra} setReaload={setReaload} type={lpagos.tipo} state={lpagos.estado} formattedFechaPagoMayor={formattedFechaPagoMayor} reload={reload} fechafinaprox={lpagos.fechafinaprox}/>
 
             <TablePayWork type={lpagos.tipo} pagos={pagos} setCurrentPage={setCurrentPage} totalPages={lpagos.totalpaginas} currentPage={currentPage} />
 

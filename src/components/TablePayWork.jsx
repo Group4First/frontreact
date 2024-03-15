@@ -1,14 +1,14 @@
 import { PaginationButtons } from "./paginationButtons";
 
 
-export function TablePayWork({ type, pagos, setCurrentPage, totalPages,currentPage }) {
+export function TablePayWork({ type, pagos, setCurrentPage, totalPages, currentPage }) {
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
   };
 
   return (
     <>
-      
+
       {type == 'Mensual' ? (
         <>
 
@@ -19,7 +19,7 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages,currentPa
               <h1 className="text-vgraylight font-medium text-center">Mes</h1>
               <h1 className="text-vgraylight font-medium text-center" >Fecha de <br /> pago</h1>
               <h1 className="text-vgraylight font-medium text-center">Número  <br />Trabajadores</h1>
-              <h1 className="text-vgraylight font-medium" >FIC</h1>
+              <h1 className="text-vgraylight font-medium text-center" >FIC</h1>
               <h1 className="text-vgraylight font-medium text-center" >Intereses</h1>
               <h1 className="text-vgraylight font-medium text-center" > Total</h1>
             </div>
@@ -52,18 +52,23 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages,currentPa
 
         <>
           <section className="flex flex-col items-center relative overflow-x-auto mt-10">
-            <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 grid-cols-[1fr_1fr_1fr]">
+            <div className="max-xl:scale-0 h-14 w-11/12 bg-white rounded-xl mb-3 grid items-center px-3 grid-cols-[1fr_1fr_1fr_1fr_1fr]">
 
               <h1 className="text-vgraylight font-medium text-center" >Usuario</h1>
               <h1 className="text-vgraylight font-medium text-center" >Fecha de <br /> pago</h1>
+              <h1 className="text-vgraylight font-medium text-center">FIC</h1>
+              <h1 className="text-vgraylight font-medium text-center">Interes</h1>
               <h1 className="text-vgraylight font-medium text-center">Total</h1>
             </div>
             {pagos.map((pago, index) => {
+               const colorInterest = pago.valorintereses === 0 ? '#848484' : '#FF0000';
               return (
-                <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 mb-6 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1fr_1fr_1fr] xl:h-14 xl:w-11/12`}>
+                <div key={index} className={`text-vgraydark font-semibold bg-white rounded-xl items-center px-3 mt-5 mb-6 max-xl:max-w-[280px] max-xl:w-[280px] max-xl:p-5 max-xl:rounded-2xl max-xl:mx-4 xl:grid xl:text-center xl:grid-cols-[1fr_1fr_1fr_1fr_1fr] xl:h-14 xl:w-11/12`}>
                   <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Usuario: </span>  {pago.usuario}</h1>
                   <h1 className=""> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Fecha de pago: </span>  {pago.fechapago}</h1>
-                  <h1 className="text-vgreen"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Total: </span>{formatCurrency(pago.valorfic)}</h1>
+                  <h1 className="" >  <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Total: </span>{formatCurrency(pago.valorfic)}</h1>
+                  <h1 className="" style={{ color: colorInterest }}> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Total: </span>{formatCurrency(pago.valorintereses)}</h1>
+                  <h1 className="text-vgreen"> <span className="xl:text-[0px] xl:text-transparent xl:scale-0 text-black"> Total: </span>{formatCurrency(pago.valortotal)}</h1>
 
                 </div>
               )
