@@ -57,7 +57,7 @@ export function TablePayWork({ type, pagos, setCurrentPage, totalPages, currentP
               <h1 className="text-vgraylight font-medium text-center" >Usuario</h1>
               <h1 className="text-vgraylight font-medium text-center" >Fecha de <br /> pago</h1>
               <h1 className="text-vgraylight font-medium text-center">FIC</h1>
-              <h1 className="text-vgraylight font-medium text-center">Interes</h1>
+              <h1 className="text-vgraylight font-medium text-center">Intereses</h1>
               <h1 className="text-vgraylight font-medium text-center">Total</h1>
             </div>
             {pagos.map((pago, index) => {
