@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { getgraphicpays } from "../requests/getReportsGraphicPays";
 
-const Pagos = ({ value }) => {
+const Pagos = ({ value,datatra }) => {
   const [TotalAndAdditionalData, setTotalAndAdditionalData] = useState(null); 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getgraphicpays(value);
+        const data = datatra;
 
         const modifiedData = value === 0
           ? data.infomensualList?.map(item => ({
@@ -30,7 +30,7 @@ const Pagos = ({ value }) => {
     };
 
     fetchData();
-  }, [value]);
+  }, [datatra]);
 
   const categories = TotalAndAdditionalData ? 
     (value === 0 ? TotalAndAdditionalData.map(item => item.mes) : TotalAndAdditionalData.map(item => item.anio))

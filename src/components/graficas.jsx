@@ -2,20 +2,12 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { getgraphicmoney } from "../requests/getReportsGraphicMoney";
 
-const Graficas = ({ value }) => {
+const Graficas = ({ value , datatraida}) => {
   const [apiData, setApiData] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getgraphicmoney(value);
-        setApiData(data);
-      } catch (error) {
-      }
-    };
-
-    fetchData();
-  }, [value]);
+    setApiData(datatraida);
+  }, [datatraida]);
 
   const categories = value === 0 ? apiData.infomensualList?.map(item => item.mes) : apiData.infoanualList?.map(item => item.anio);
 

@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import { getinitialdata } from "../requests/getReportsInitialdata";
 
-const Graficasempresa = () => {
+const Graficasempresa = ({datatra}) => {
   const [series, setSeries] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    async function getReportFirst() {
-      const data = await getinitialdata();
+    const data = datatra;
+    if (datatra && datatra.infografempresasconaportes) {        
       const empresas = Object.entries(data.infografempresasconaportes);
       const valoresAportados = empresas.map(([, valor]) => valor); 
-
-
 
       const { nombreempresa1, nombreempresa2, nombreempresa3, nombreempresa4, nombreempresa5 } = data.infografempresasconaportes;
       const valuesArray = ["", nombreempresa1, "", nombreempresa2, "", nombreempresa3, "", nombreempresa4, "", nombreempresa5];
@@ -20,9 +18,7 @@ const Graficasempresa = () => {
       setSeries(valoresAportados.map(valor => Math.round(valor)));
       setCategories(valuesArray);
     }
-
-    getReportFirst();
-  }, []);
+  }, [datatra]);
 
 
   const seriestra = [
