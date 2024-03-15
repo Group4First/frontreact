@@ -170,7 +170,7 @@ export function VistaPagos() {
                 <div className="w-11/12 flex justify-end">
                     <PDFDownloadLink document={<Pdf idwork={idobra} />} fileName="RegistrodepagosFIC.pdf">
                         {({ blob, url, loading, error }) =>
-                            <button document={<Pdf />} className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
+                            <button  className="h-10 w-32 justify-center gap-2 flex items-center text-white font-medium text-sm rounded-lg bg-red-500">
                                 <Printer size={20} />
                                 Imprimir
                             </button>

@@ -124,15 +124,17 @@ export function Pdf({ idwork }) {
                 <View style={{ maxWidth: 200 }}>
                     <Text style={styles.reportTitle}>Información de obra</Text>
                     <Text style={styles.invoicetittle}>{info.descripcion}</Text>
-                </View>
-                <View style={{ maxWidth: 200 }}>
-                    <Text style={styles.invoicedata}>Fecha de inicio</Text>
-                    <Text style={styles.invoicetittle}>{info.fechainicio}</Text>
                     <Text style={styles.invoicedata}>Tipo</Text>
                     <Text style={styles.invoicetittle}>{info.tipo}</Text>
                 </View>
                 <View style={{ maxWidth: 200 }}>
-                    <Text style={styles.invoicedata}>Fecha de fin</Text>
+                    <Text style={styles.invoicedata}>Fecha de inicio</Text>
+                    <Text style={styles.invoicetittle}>{info.fechainicio}</Text>
+                    <Text style={styles.invoicedata}>Fecha fin aprox</Text>
+                    <Text style={styles.invoicetittle}>{info.fechafinaprox ==null ? 'hh' : info.fechafinaprox}</Text>
+                </View>
+                <View style={{ maxWidth: 200 }}>
+                    <Text style={styles.invoicedata}>Fecha fin real</Text>
                     <Text style={styles.invoicetittle}>{info.fechafin ? info.fechafin : "Aun no ha finalizado"}</Text>
                     <Text style={styles.invoicedata}>Estado</Text>
                     <Text style={styles.invoicetittle}>{info.estado}</Text>
@@ -153,9 +155,6 @@ export function Pdf({ idwork }) {
                     </View>
                 </>
             )}
-            <View style={styles.theader}>
-                <Text>Tipo de pago</Text>
-            </View>
             {info.tipo == "Mensual" && (
                 <>
                     <View style={styles.theader}>
@@ -166,13 +165,12 @@ export function Pdf({ idwork }) {
             <View style={styles.theader}>
                 <Text>FIC</Text>
             </View>
-            {info.tipo == "Mensual" && (
-                <>
-                    <View style={styles.theader}>
-                        <Text>Intereses</Text>
-                    </View>
-                </>
-            )}
+
+
+            <View style={styles.theader}>
+                <Text>Intereses</Text>
+            </View>
+
             <View style={styles.theader}>
                 <Text>Total</Text>
             </View>
@@ -193,9 +191,7 @@ export function Pdf({ idwork }) {
                             </View>
                         </>
                     )}
-                    <View style={styles.tbody}>
-                        <Text>{receipt.tipopago}</Text>
-                    </View>
+
                     {info.tipo == "Mensual" && (
                         <>
                             <View style={styles.tbody}>
@@ -206,20 +202,15 @@ export function Pdf({ idwork }) {
                     <View style={styles.tbody}>
                         <Text>{receipt.valorfic}</Text>
                     </View>
-                    {info.tipo == "Mensual" ? (
-                        <>
-                            <View style={styles.tbody}>
-                                <Text>{receipt.valorintereses}</Text>
-                            </View>
-                            <View style={styles.tbody}>
-                                <Text>{receipt.valortotal}</Text>
-                            </View>
-                        </>
-                    ) : (
-                        <View style={styles.tbody}>
-                            <Text>{receipt.valorfic}</Text>
-                        </View>
-                    )}
+
+                    <View style={styles.tbody}>
+                        <Text>{receipt.valorintereses}</Text>
+                    </View>
+
+                    <View style={styles.tbody}>
+                        <Text>{receipt.valortotal}</Text>
+                    </View>
+
                 </View>
             </Fragment>
         ))
@@ -229,18 +220,17 @@ export function Pdf({ idwork }) {
         <View style={{ width: '100%', flexDirection: 'row', marginTop: 10 }}>
             {info.tipo == "Mensual" ? (
                 <>
-                    <View style={styles.total}>
-                        <Text> </Text>
+                  
+                    <View style={styles.tbody}>
+                        <Text></Text>
                     </View>
-                    <View style={styles.total}>
-                        <Text> </Text>
+                    <View style={styles.tbody}>
+                        <Text></Text>
                     </View>
                 </>
             ) : (
                 <>
-                    <View style={styles.tbody}>
-                        <Text></Text>
-                    </View>
+                    
                 </>
             )}
             <View style={styles.tbody}>
@@ -251,15 +241,13 @@ export function Pdf({ idwork }) {
                     {info.valorfic ? info.valorfic.toFixed(2) : info.valorfic}
                 </Text>
             </View>
-            {info.tipo == "Mensual" && (
-                <>
+            
                     <View style={(styles.tbody)}>
                         <Text>
                             {info.valorintereses ? info.valorintereses.toFixed(2) : info.valorintereses}
                         </Text>
                     </View>
-                </>
-            )}
+           
             <View style={styles.tbody}>
                 <Text>
                     {info.valortotal ? info.valortotal.toFixed(2) : info.valortotal}
