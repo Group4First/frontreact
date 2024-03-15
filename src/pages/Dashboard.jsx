@@ -8,6 +8,10 @@ import { Cards as CardsComponent } from "../components/Cards"; // Cambiando el n
 import Cookies from 'js-cookie';
 import { TableUserPays } from '../components/TableUserPays';
 
+import { Printer } from "lucide-react";
+import { PdfDashboard } from "../components/PdfDashboard";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
 
 export function Dasboard() {
   const [data, setData] = useState({});
@@ -55,7 +59,6 @@ export function Dasboard() {
   return (
     <section className="w-full max-h-svh overflow-auto">
       <div className="flex flex-row flex-wrap items-start content-start p-0 gap-5  mb-10">
-
 
         <div className="w-full flex flex-wrap justify-center items-center">
           <h1 className="text-3xl lg:text-xl mt-6 ml-6 w-full">Vista general</h1>
@@ -163,7 +166,6 @@ export function Dasboard() {
           </div>
         </div>
 
-
         <div className="w-full flex flex-wrap justify-center items-center">
           <div className="rounded-lg bg-white mt-2 min-w-min p-5">
             <h1 className="text-xl md:text-2xl font-bold p-4 text-center">Numero de pagos registrados</h1>
@@ -196,6 +198,17 @@ export function Dasboard() {
           </div>
         </div>
         <TableUserPays/>
+      </div>
+      <div className="fixed bottom-5 right-5">
+        <PDFDownloadLink document={<PdfDashboard/>} fileName="InformaciónDashboard.pdf">
+          {({ blob, url, loading, error }) =>
+          
+            <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full  flex flex-col justify-center items-center">
+              <Printer size={20} />
+              PDF
+            </button>
+          }
+        </PDFDownloadLink>
       </div>
     </section>
   );

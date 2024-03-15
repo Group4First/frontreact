@@ -13,7 +13,7 @@ export function TableUserPays() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const pagosData = await getReportsUserPays(currentPage);
+                const pagosData = await getReportsUserPays(currentPage,7);
                 setPagos(pagosData.reportinfo);
                 setLPagos(pagosData);
             } catch (error) {
