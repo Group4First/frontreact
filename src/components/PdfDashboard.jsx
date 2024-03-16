@@ -13,21 +13,21 @@ export function PdfDashboard() {
 
     useEffect(() => {
         async function getreportfirst() {
-          try {
-            const datatra = await getinitialdata();
-            setData(datatra)
-          } catch (error) {
-            if (error.status == 401) {
-              Cookies.remove('session')
-              activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
-              setTimeout(() => {
-                navigate("/")
-              }, 3000)
+            try {
+                const datatra = await getinitialdata();
+                setData(datatra)
+            } catch (error) {
+                if (error.status == 401) {
+                    Cookies.remove('session')
+                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 3000)
+                }
             }
-          }
         }
         getreportfirst();
-      }, []);
+    }, []);
 
 
     const styles = StyleSheet.create({
@@ -35,9 +35,7 @@ export function PdfDashboard() {
 
         spaceBetween: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 
-        spaceAround: { flex: 1, flexDirection: 'row', alignItems: 'center' },
-
-        titleContainer: { flexDirection: 'row', marginTop: 24,justifyContent: 'center' },
+        titleContainer: { flexDirection: 'row', marginTop: 24, justifyContent: 'center' },
 
         reportTitle: { fontSize: 16, textAlign: 'center', fontStyle: 'bold' },
 
@@ -45,7 +43,7 @@ export function PdfDashboard() {
 
         invoicetittle: { fontSize: 11, fontWeight: 'bold', color: '#787878' },
 
-        invoicedata: { fontSize: 11, fontWeight: 'bold', color: '#000000',marginLeft: 10 },
+        invoicedata: { fontSize: 11, fontWeight: 'bold', color: '#000000', marginLeft: 10 },
 
         theader: { marginTop: 10, fontSize: 10, fontStyle: 'bold', paddingTop: 4, flex: 1, height: 40, width: 70, backgroundColor: '#DEDEDE', borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center' },
 
@@ -86,22 +84,25 @@ export function PdfDashboard() {
     );
 
     const Primaryinfo = () => (
-        <View style={styles.titleContainer}>
+        <View>
+            <View style={styles.titleContainer}>
                 <View>
                     <Text style={styles.invoicetittle}>Total empresas</Text>
-                    <Text style={styles.invoicetittle}>Total empresas con obras activas</Text>
-                </View>
-                <View style={ { marginRight: 10 }}>
-                    <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                    <Text style={styles.invoicedata}>: {data.empresasconobrasactivas}</Text>
-
-                </View>
-                <View>
                     <Text style={styles.invoicetittle}>Total obras</Text>
+                    <Text style={[styles.invoicetittle, { marginBottom: 15 }]}>Total empresas con obras activas</Text>
+
+                    <Text style={styles.invoicetittle}>Total Recaudo fic</Text>
+                    <Text style={styles.invoicetittle}>Total Recaudo intereses</Text>
                 </View>
-                <View style={ { marginRight: 10 }}>
+                <View style={{ marginRight: 10 }}>
+                    <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
                     <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
+                    <Text style={[styles.invoicedata, { marginBottom: 15 }]}>: {data.empresasconobrasactivas}</Text>
+
+                    <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
+                    <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
                 </View>
+            </View>
         </View>
     );
 
@@ -162,34 +163,34 @@ export function PdfDashboard() {
     );
 
     const TableBody = () => (
-        
-            <Fragment>
-                <View style={{ width: '100%', flexDirection: 'row' }}>
-                    <View style={[styles.tbody]}>
-                        <Text >{"Hola"}</Text>
-                    </View>
-                    <View style={styles.tbody}>
-                        <Text>{"Hola"}</Text>
-                    </View>
-                    <View style={styles.tbody}>
-                        <Text>{"Hola"}</Text>
-                    </View>
 
-                    <View style={styles.tbody}>
-                        <Text>{"Hola"}</Text>
-                    </View>
-
-                    <View style={styles.tbody}>
-                        <Text>{"Hola"}</Text>
-                    </View>
-
-                    <View style={styles.tbody}>
-                        <Text>{"Hola"}</Text>
-                    </View>
-
+        <Fragment>
+            <View style={{ width: '100%', flexDirection: 'row' }}>
+                <View style={[styles.tbody]}>
+                    <Text >{"Hola"}</Text>
                 </View>
-            </Fragment>
-      
+                <View style={styles.tbody}>
+                    <Text>{"Hola"}</Text>
+                </View>
+                <View style={styles.tbody}>
+                    <Text>{"Hola"}</Text>
+                </View>
+
+                <View style={styles.tbody}>
+                    <Text>{"Hola"}</Text>
+                </View>
+
+                <View style={styles.tbody}>
+                    <Text>{"Hola"}</Text>
+                </View>
+
+                <View style={styles.tbody}>
+                    <Text>{"Hola"}</Text>
+                </View>
+
+            </View>
+        </Fragment>
+
     );
 
     const TableTotal = () => (
@@ -229,7 +230,7 @@ export function PdfDashboard() {
         <Document>
             <Page wrap size="A4" style={styles.page}>
                 <Headerpdf />
-                <Primaryinfo/>
+                <Primaryinfo />
                 <Workinfo />
                 <TableHead />
                 <TableBody />
