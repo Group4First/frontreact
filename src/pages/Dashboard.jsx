@@ -15,6 +15,15 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export function Dasboard() {
   const [data, setData] = useState({});
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowButton(true);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
 
   useEffect(() => {
@@ -197,18 +206,19 @@ export function Dasboard() {
             </div>
           </div>
         </div>
-        <TableUserPays/>
+        <TableUserPays />
       </div>
       <div className="fixed bottom-5 right-5">
-        <PDFDownloadLink document={<PdfDashboard/>} fileName="InformaciónDashboard.pdf">
-          {({ blob, url, loading, error }) =>
-          
-            <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full  flex flex-col justify-center items-center">
-              <Printer size={20} />
-              PDF
-            </button>
-          }
-        </PDFDownloadLink>
+        {showButton && (
+          <PDFDownloadLink document={<PdfDashboard />} fileName="InformaciónDashboard.pdf">
+            {({ blob, url, loading, error }) =>
+              <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full  flex flex-col justify-center items-center">
+                <Printer size={20} />
+                PDF
+              </button>
+            }
+          </PDFDownloadLink>
+        )}
       </div>
     </section>
   );

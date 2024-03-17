@@ -1,6 +1,10 @@
 import { Page, Document, Image, View, StyleSheet, Text } from '@react-pdf/renderer';
 import { getinitialdata } from "../requests/getReportsInitialdata";
 import { getgraphicmoney } from "../requests/getReportsGraphicMoney";
+import { getgraphicpays } from "../requests/getReportsGraphicPays";
+import { getReportsUserPays } from "../requests/getReportsUserPays";
+
+
 import { useState, useEffect } from 'react';
 import React, { Fragment } from 'react';
 import Logosena from "/Logosenapng.png";
@@ -12,10 +16,16 @@ export function PdfDashboard() {
     const [datadonaaportes, setDatadonaaportes] = useState([]);
     const [datadonacantidad, setDatadonacantidad] = useState([]);
 
+    const [datagrafprincipal1, setDatagrafprincipal1] = useState([]);
+    const [datagrafprincipal2, setDatagrafprincipal2] = useState([]);
     const [datagrafprincipalmeses, setDatagrafprincipalmeses] = useState([]);
     const [datagrafprincipalaños, setDatagrafprincipalaños] = useState([]);
 
-    const [datagrafpagos, setDatagrafpagos] = useState([]);
+    const [datagrafpagos1, setDatagrafpagos1] = useState([]);
+    const [datagrafpagos2, setDatagrafpagos2] = useState([]);
+    const [datagrafpagosmeses, setDatagrafpagosmeses] = useState([]);
+    const [datagrafpagosaños, setDatagrafpagosaños] = useState([]);
+
     const [datatablausuarios, setDatatablausuarios] = useState([]);
 
     useEffect(() => {
@@ -27,8 +37,25 @@ export function PdfDashboard() {
                 setDatadonaaportes(datatra.infografcomposicionfic.infografxvalores)
                 setDatadonacantidad(datatra.infografcomposicionfic.infografxnumero)
 
-                const data = await getgraphicmoney(0);
-                setDatagrafprincipalmeses(data.infomensualList);
+                const datames = await getgraphicmoney(0);
+                setDatagrafprincipal1(datames);
+                setDatagrafprincipalmeses(datames.infomensualList);
+
+                const dataanio = await getgraphicmoney(1);
+                setDatagrafprincipal2(dataanio);
+                setDatagrafprincipalaños(dataanio.infoanualList);
+
+                const datamespays = await getgraphicpays(0);
+                setDatagrafpagos1(datamespays);
+                setDatagrafpagosmeses(datamespays.infomensualList);
+
+                const dataaniopays = await getgraphicpays(1);
+                setDatagrafpagos2(dataaniopays)
+                setDatagrafpagosaños(dataaniopays.infoanualList);
+
+                const datauserpays = await getReportsUserPays(0,0);
+                setDatatablausuarios(datauserpays.reportinfo);
+
             } catch (error) {
                 if (error.status == 401) {
                     Cookies.remove('session')
@@ -49,7 +76,7 @@ export function PdfDashboard() {
 
         spaceBetween: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 
-        spaceAround: { marginRight: 10, marginLeft: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+        spaceAround: { marginRight: 10, marginLeft: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 2 },
 
         titleContainer: { flexDirection: 'row', justifyContent: 'center' },
 
@@ -63,11 +90,7 @@ export function PdfDashboard() {
 
         theader: { marginTop: 10, fontSize: 10, fontStyle: 'bold', paddingTop: 4, flex: 1, height: 40, width: 70, backgroundColor: '#DEDEDE', borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center' },
 
-        text: { fontStyle: 'bold', paddingTop: 4, flex: 1, height: '100%', width: 60, borderColor: 'whitesmoke', textAlign: 'center', verticalAlign: 'sub' },
-
         tbody: { fontSize: 9, paddingTop: 4, flex: 1, borderColor: 'whitesmoke', borderRightWidth: 1, borderBottomWidth: 1, alignItems: 'center' },
-
-        total: { fontSize: 9, paddingTop: 4, flex: 1.5, borderColor: 'whitesmoke', borderBottomWidth: 1 },
 
         image: { width: 50, height: 50, marginTop: 10, },
 
@@ -107,7 +130,7 @@ export function PdfDashboard() {
                     <Text style={styles.invoicetittle}>Total obras</Text>
                     <Text style={[styles.invoicetittle, { marginBottom: 15 }]}>Total empresas con obras activas</Text>
 
-                    <Text style={styles.invoicetittle}>Total Recaudo fic</Text>
+                    <Text style={styles.invoicetittle}>Total Recaudo fic (con intereses)</Text>
                     <Text style={styles.invoicetittle}>Total Recaudo intereses</Text>
                 </View>
                 <View style={{ marginRight: 10 }}>
@@ -126,98 +149,95 @@ export function PdfDashboard() {
     const Recaudofic = () => (
         <View style={{ marginTop: 15 }}>
             <View>
-                <Text style={styles.reportTitle}>Informacion sobre el recaudo fic</Text>
+                <Text style={styles.reportTitle}>Información sobre el recaudo fic</Text>
             </View>
             <View style={[{ textAlign: 'center', marginTop: 10 }]}>
-                <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por meses</Text>
+                <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>{`Por meses (${datagrafprincipal1.anio})`}</Text>
             </View>
             <View style={[styles.titleContainer, { marginTop: 10 }]}>
+
                 <View style={styles.spaceAround}>
                     <View>
                         <Text>Mensual</Text>
-                        <Text style={styles.invoicetittle}>Enero</Text>
-                        <Text style={styles.invoicetittle}>Febrero</Text>
-                        <Text style={styles.invoicetittle}>Marzo</Text>
-                        <Text style={styles.invoicetittle}>Abril</Text>
-                        <Text style={styles.invoicetittle}>Mayo</Text>
-                        <Text style={styles.invoicetittle}>Junio</Text>
-                        <Text style={styles.invoicetittle}>Julio</Text>
-                        <Text style={styles.invoicetittle}>Agosto</Text>
-                        <Text style={styles.invoicetittle}>Septiembre</Text>
-                        <Text style={styles.invoicetittle}>Octubre</Text>
-                        <Text style={styles.invoicetittle}>Noviembre</Text>
-                        <Text style={styles.invoicetittle}>Diciembre</Text>
+                        {datagrafprincipalmeses.map((receipt) => (
+                            <Text style={styles.invoicetittle} key={receipt.mes}>{receipt.mes}</Text>
+                        ))}
                     </View>
                     <View style={{ marginRight: 10 }}>
                         <Text style={styles.invoicedata}>{' '}</Text>
-                        <Text style={styles.invoicedata}>: 1000000000</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
+                        {datagrafprincipalmeses.map((receipt) => (
+                            <Text style={styles.invoicedata} key={receipt.valorpagosme}>: {receipt.valorpagosme}</Text>
+                        ))}
                     </View>
                 </View>
+
                 <View style={styles.spaceAround}>
                     <View>
                         <Text>Presuntiva</Text>
-                        <Text style={styles.invoicetittle}>Enero</Text>
-                        <Text style={styles.invoicetittle}>Febrero</Text>
-                        <Text style={styles.invoicetittle}>Marzo</Text>
-                        <Text style={styles.invoicetittle}>Abril</Text>
-                        <Text style={styles.invoicetittle}>Mayo</Text>
-                        <Text style={styles.invoicetittle}>Junio</Text>
-                        <Text style={styles.invoicetittle}>Julio</Text>
-                        <Text style={styles.invoicetittle}>Agosto</Text>
-                        <Text style={styles.invoicetittle}>Septiembre</Text>
-                        <Text style={styles.invoicetittle}>Octubre</Text>
-                        <Text style={styles.invoicetittle}>Noviembre</Text>
-                        <Text style={styles.invoicetittle}>Diciembre</Text>
+                        {datagrafprincipalmeses.map((receipt) => (
+                            <Text style={styles.invoicetittle} key={receipt.mes}>{receipt.mes}</Text>
+                        ))}
+
+
                     </View>
                     <View style={{ marginRight: 10 }}>
                         <Text style={styles.invoicedata}>{' '}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
+                        {datagrafprincipalmeses.map((receipt) => (
+                            <Text style={styles.invoicedata} key={receipt.valorpagosme}>: {receipt.valorpagospr}</Text>
+                        ))}
+                    </View>
+                    <View style={{ marginRight: 10, marginLeft: 15 }}>
+                        <Text style={styles.invoicedata}>{'Total'}</Text>
+                        {datagrafprincipalmeses.map((receipt) => (
+                            <Text style={styles.invoicedata} key={receipt.valorpagosme}>  {receipt.valortotalpagos}</Text>
+                        ))}
                     </View>
                 </View>
-                
             </View>
+
+            <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total recaudo anual: ${datagrafprincipal1.totalrecaudoporaño}`}</Text>
+
             <View style={[{ textAlign: 'center', marginTop: 10 }]}>
                 <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por ultimos 5 años</Text>
             </View>
             <View style={[styles.titleContainer, { marginTop: 10 }]}>
-                <View>
-                    <Text style={styles.invoicetittle}>2024</Text>
-                    <Text style={styles.invoicetittle}>2023</Text>
-                    <Text style={styles.invoicetittle}>2022</Text>
-                    <Text style={styles.invoicetittle}>2021</Text>
-                    <Text style={styles.invoicetittle}>2020</Text>
+                <View style={styles.spaceAround}>
+                    <View>
+                        <Text style={styles.invoicedata}>{' '}</Text>
+                        {datagrafprincipalaños.map((receipt) => (
+                            <Text style={styles.invoicetittle} key={receipt.anio}>{receipt.anio}</Text>
+                        ))}
+                    </View>
                 </View>
-                <View style={{ marginRight: 10 }}>
-                    <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                    <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                    <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                    <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                    <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
+                <View style={styles.spaceAround}>
+                    <View style={{ marginRight: 10, marginLeft: 10 }}>
+                        <Text style={styles.invoicedata}>{'Mensual'}</Text>
+                        {datagrafprincipalaños.map((receipt) => (
+                            <Text style={[styles.invoicetittle, { marginLeft: 7 }]} key={receipt.anio}> {receipt.valorpagosme}</Text>
+                        ))}
+                    </View>
+                </View>
+                <View style={styles.spaceAround}>
+
+                    <View style={{ marginRight: 10, marginLeft: 10 }}>
+                        <Text style={styles.invoicedata}>{'Presuntiva'}</Text>
+                        {datagrafprincipalaños.map((receipt) => (
+                            <Text style={[styles.invoicetittle, { marginLeft: 7 }]} key={receipt.anio}> {receipt.valorpagospr}</Text>
+                        ))}
+                    </View>
+                </View>
+                <View style={styles.spaceAround}>
+                    <View style={{ marginRight: 10, marginLeft: 10 }}>
+                        <Text style={styles.invoicedata}>{'Total por año'}</Text>
+                        {datagrafprincipalaños.map((receipt) => (
+                            <Text style={[styles.invoicetittle, { marginLeft: 8 }]} key={receipt.anio}> {receipt.valortotalpagosanual}</Text>
+                        ))}
+                    </View>
                 </View>
             </View>
-        </View>
+            <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total recaudo de los últimos 5 años: ${datagrafprincipal2.valortotalhistorico}`}</Text>
+
+        </View >
     );
 
     const Topempresas = () => (
@@ -309,69 +329,92 @@ export function PdfDashboard() {
                 <Text style={styles.reportTitle}>Pagos registrados</Text>
             </View>
             <View style={[{ textAlign: 'center', marginTop: 10 }]}>
-                <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por meses</Text>
+                <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>{`Por meses (${datagrafpagos1.anio})`}</Text>
             </View>
             <View style={[styles.titleContainer, { marginTop: 10 }]}>
 
                 <View style={styles.spaceAround}>
-
                     <View>
-                        <Text style={styles.invoicetittle}>Enero</Text>
-                        <Text style={styles.invoicetittle}>Febrero</Text>
-                        <Text style={styles.invoicetittle}>Marzo</Text>
-                        <Text style={styles.invoicetittle}>Abril</Text>
-                        <Text style={styles.invoicetittle}>Mayo</Text>
-                        <Text style={styles.invoicetittle}>Junio</Text>
+                        <Text>Mensual</Text>
+                        {datagrafpagosmeses.map((receipt) => (
+                            <Text style={styles.invoicetittle} key={receipt.mes}>{receipt.mes}</Text>
+                        ))}
                     </View>
                     <View style={{ marginRight: 10 }}>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
+                        <Text style={styles.invoicedata}>{' '}</Text>
+                        {datagrafpagosmeses.map((receipt) => (
+                            <Text style={styles.invoicedata} key={receipt.valorpagosme}>: {receipt.numpagosme}</Text>
+                        ))}
                     </View>
                 </View>
+
                 <View style={styles.spaceAround}>
                     <View>
-                        <Text style={styles.invoicetittle}>Julio</Text>
-                        <Text style={styles.invoicetittle}>Agosto</Text>
-                        <Text style={styles.invoicetittle}>Septiembre</Text>
-                        <Text style={styles.invoicetittle}>Octubre</Text>
-                        <Text style={styles.invoicetittle}>Noviembre</Text>
-                        <Text style={styles.invoicetittle}>Diciembre</Text>
+                        <Text>Presuntiva</Text>
+                        {datagrafpagosmeses.map((receipt) => (
+                            <Text style={styles.invoicetittle} key={receipt.mes}>{receipt.mes}</Text>
+                        ))}
+
+
                     </View>
                     <View style={{ marginRight: 10 }}>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                        <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                        <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
+                        <Text style={styles.invoicedata}>{' '}</Text>
+                        {datagrafpagosmeses.map((receipt) => (
+                            <Text style={styles.invoicedata} key={receipt.valorpagosme}>: {receipt.numpagospr}</Text>
+                        ))}
+                    </View>
+                    <View style={{ marginRight: 10, marginLeft: 15 }}>
+                        <Text style={styles.invoicedata}>{'Total'}</Text>
+                        {datagrafpagosmeses.map((receipt) => (
+                            <Text style={styles.invoicedata} key={receipt.valorpagosme}>  {receipt.numerospagostotalxmes}</Text>
+                        ))}
                     </View>
                 </View>
             </View>
+
+            <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total de pagos registrados en el año: ${datagrafpagos1.totalporaño}`}</Text>
+
             <View style={[{ textAlign: 'center', marginTop: 10 }]}>
                 <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por ultimos 5 años</Text>
             </View>
             <View style={[styles.titleContainer, { marginTop: 10 }]}>
-                <View>
-                    <Text style={styles.invoicetittle}>2024</Text>
-                    <Text style={styles.invoicetittle}>2023</Text>
-                    <Text style={styles.invoicetittle}>2022</Text>
-                    <Text style={styles.invoicetittle}>2021</Text>
-                    <Text style={styles.invoicetittle}>2020</Text>
+                <View style={styles.spaceAround}>
+                    <View>
+                        <Text style={styles.invoicedata}>{' '}</Text>
+                        {datagrafpagosaños.map((receipt) => (
+                            <Text style={styles.invoicetittle} key={receipt.anio}>{receipt.anio}</Text>
+                        ))}
+                    </View>
                 </View>
-                <View style={{ marginRight: 10 }}>
-                    <Text style={styles.invoicedata}>: {data.totalempresas}</Text>
-                    <Text style={styles.invoicedata}>: {data.totalkobras}</Text>
-                    <Text style={styles.invoicedata}>: {data.sumavalorfictotalhis}</Text>
-                    <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
-                    <Text style={styles.invoicedata}>: {data.sumavalorficintereses}</Text>
+                <View style={styles.spaceAround}>
+                    <View style={{ marginRight: 10, marginLeft: 10 }}>
+                        <Text style={styles.invoicedata}>{'Mensual'}</Text>
+                        {datagrafpagosaños.map((receipt) => (
+                            <Text style={[styles.invoicetittle, { marginLeft: 7 }]} key={receipt.anio}> {receipt.numpagosmehis}</Text>
+                        ))}
+                    </View>
+                </View>
+                <View style={styles.spaceAround}>
+
+                    <View style={{ marginRight: 10, marginLeft: 10 }}>
+                        <Text style={styles.invoicedata}>{'Presuntiva'}</Text>
+                        {datagrafpagosaños.map((receipt) => (
+                            <Text style={[styles.invoicetittle, { marginLeft: 7 }]} key={receipt.anio}> {receipt.numpagosprhis}</Text>
+                        ))}
+                    </View>
+                </View>
+                <View style={styles.spaceAround}>
+                    <View style={{ marginRight: 10, marginLeft: 10 }}>
+                        <Text style={styles.invoicedata}>{'Total por año'}</Text>
+                        {datagrafpagosaños.map((receipt) => (
+                            <Text style={[styles.invoicetittle, { marginLeft: 8 }]} key={receipt.anio}> {receipt.numerospagostotalhis}</Text>
+                        ))}
+                    </View>
                 </View>
             </View>
-            <View>
-                <Text style={styles.reportTitle}>Usuarios en el sistema</Text>
+            <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total recaudo de los ultimos 5 años: ${datagrafpagos2.totalhistorico}`}</Text>
+            <View style={{ textAlign: 'center', marginTop: 100 }}>
+                <Text style={styles.reportTitle}>Usuarios del sistema</Text>
             </View>
         </View>
 
@@ -382,28 +425,14 @@ export function PdfDashboard() {
 
         <View style={{ width: '100%', flexDirection: 'row', marginTop: 10 }}>
             <View style={[styles.theader]}>
-                <Text>Fecha de pago</Text>
+                <Text>Usuario</Text>
             </View>
-
-
             <View style={styles.theader}>
-                <Text style={styles.text}>Mes-año {'\n'} Pagado</Text>
+                <Text >Pagos realizados</Text>
             </View>
-
-
             <View style={styles.theader}>
-                <Text style={styles.text}>N.º {'\n'}Trabajadores</Text>
+                <Text >Empresas</Text>
             </View>
-
-            <View style={styles.theader}>
-                <Text>FIC</Text>
-            </View>
-
-
-            <View style={styles.theader}>
-                <Text>Intereses</Text>
-            </View>
-
             <View style={styles.theader}>
                 <Text>Total</Text>
             </View>
@@ -411,67 +440,24 @@ export function PdfDashboard() {
     );
 
     const TableBody = () => (
-
-        <Fragment>
-            <View style={{ width: '100%', flexDirection: 'row' }}>
-                <View style={[styles.tbody]}>
-                    <Text >{"Hola"}</Text>
+        datatablausuarios.map((receipt) => (
+            <Fragment key={receipt.id}>
+                <View style={{ width: '100%', flexDirection: 'row' }}>
+                    <View style={[styles.tbody]}>
+                        <Text >{receipt.usuario}</Text>
+                    </View>
+                    <View style={styles.tbody}>
+                        <Text>{receipt.pagos}</Text>
+                    </View>
+                    <View style={styles.tbody}>
+                        <Text>{receipt.empresas}</Text>
+                    </View>
+                    <View style={styles.tbody}>
+                        <Text>{receipt.valortotal}</Text>
+                    </View>
                 </View>
-                <View style={styles.tbody}>
-                    <Text>{"Hola"}</Text>
-                </View>
-                <View style={styles.tbody}>
-                    <Text>{"Hola"}</Text>
-                </View>
-
-                <View style={styles.tbody}>
-                    <Text>{"Hola"}</Text>
-                </View>
-
-                <View style={styles.tbody}>
-                    <Text>{"Hola"}</Text>
-                </View>
-
-                <View style={styles.tbody}>
-                    <Text>{"Hola"}</Text>
-                </View>
-
-            </View>
-        </Fragment>
-
-    );
-
-    const TableTotal = () => (
-        <View style={{ width: '100%', flexDirection: 'row', marginTop: 10 }}>
-
-            <View style={styles.tbody}>
-                <Text></Text>
-            </View>
-            <View style={styles.tbody}>
-                <Text></Text>
-            </View>
-
-            <View style={styles.tbody}>
-                <Text >Total</Text>
-            </View>
-            <View style={styles.tbody}>
-                <Text>
-                    {"Hola"}
-                </Text>
-            </View>
-
-            <View style={(styles.tbody)}>
-                <Text>
-                    {"Hola"}
-                </Text>
-            </View>
-
-            <View style={styles.tbody}>
-                <Text>
-                    {"Hola"}
-                </Text>
-            </View>
-        </View>
+            </Fragment>
+        ))
     );
 
     return (
@@ -485,7 +471,6 @@ export function PdfDashboard() {
                 <Pagosregistrados />
                 <TableHead />
                 <TableBody />
-                <TableTotal />
                 <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} de ${totalPages}`} fixed />
             </Page>
         </Document>

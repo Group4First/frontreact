@@ -85,6 +85,7 @@ export function Pdf({ idwork }) {
         <View style={styles.titleContainer}>
             <View style={styles.spaceAround}>
                 <View>
+                    
                     <Text style={styles.reportTitle}>Información de empresa</Text>
                     <Text style={styles.invoicetittle}>Tipo de documento</Text>
                     <Text style={styles.invoicetittle}>Numero identificación</Text>
