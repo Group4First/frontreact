@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import React, { Fragment } from 'react';
 import Logosena from "/Logosenapng.png";
 
-export function PdfDashboard() {
+export function PdfDashboard({setloading}) {
 
     const [data, setData] = useState([]);
     const [dataempresas, setDataempresas] = useState([]);
@@ -31,6 +31,7 @@ export function PdfDashboard() {
     useEffect(() => {
         async function getreportfirst() {
             try {
+                // Realiza las solicitudes de fetch
                 const datatra = await getinitialdata();
                 setData(datatra)
                 setDataempresas(datatra.infografempresasconaportes)
@@ -57,13 +58,9 @@ export function PdfDashboard() {
                 setDatatablausuarios(datauserpays.reportinfo);
 
             } catch (error) {
-                if (error.status == 401) {
-                    Cookies.remove('session')
-                    activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
-                    setTimeout(() => {
-                        navigate("/")
-                    }, 3000)
-                }
+
+            } finally {
+                setloading(true); // Finaliza el indicador de carga una vez que se completan todas las solicitudes de fetch
             }
         }
         getreportfirst();
@@ -124,7 +121,7 @@ export function PdfDashboard() {
 
     const Primaryinfo = () => (
         <View>
-            <View style={[styles.titleContainer, { marginTop: 24 }]}>
+            <View style={[styles.titleContainer, { marginTop: 15 }]}>
                 <View>
                     <Text style={styles.invoicetittle}>Total empresas</Text>
                     <Text style={styles.invoicetittle}>Total obras</Text>
@@ -412,7 +409,7 @@ export function PdfDashboard() {
                     </View>
                 </View>
             </View>
-            <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total recaudo de los ultimos 5 años: ${datagrafpagos2.totalhistorico}`}</Text>
+            <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total pagos de los ultimos 5 años: ${datagrafpagos2.totalhistorico}`}</Text>
             <View style={{ textAlign: 'center', marginTop: 100 }}>
                 <Text style={styles.reportTitle}>Usuarios del sistema</Text>
             </View>

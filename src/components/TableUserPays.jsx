@@ -34,9 +34,9 @@ export function TableUserPays() {
     return (
         <section className=" w-full flex justify-center ">
             <div className="flex flex-col items-center relative overflow-x-auto mt-10 w-10/12 bg-white px-10 pt-5 rounded-lg">
-            <h1 className="text-xl md:text-2xl font-bold p-4 text-center mb-10">Pagos de usuarios</h1>
+            <h1 className="text-xl md:text-2xl font-bold p-4 text-center xl:mb-10">Pagos de usuarios</h1>
 
-                <div className="max-xl:scale-0 h-14 w-11/12 bg-[#F1F2F3]  rounded-xl mb-3 grid items-center px-3 grid-cols-[1fr_1fr_1fr_1fr]">
+                <div className="max-xl:scale-0 h-14 w-11/12 bg-[#F1F2F3]  rounded-xl  grid items-center px-3 grid-cols-[1fr_1fr_1fr_1fr]">
 
                     <h1 className="text-green-900 font-medium text-center" >Usuario</h1>
                     <h1 className="text-green-900 font-medium text-center" >Pagos</h1>

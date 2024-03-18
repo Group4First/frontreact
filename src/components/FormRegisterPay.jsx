@@ -287,9 +287,12 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, fecha
                         </div>
                       </div>
 
-                      <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-10 centered-full">
-                        <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
-                        <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                      <div >
+                        <label className="flex flex-wrap centered-full justify-center text-center text-black font-semibold mt-2">Fecha</label>
+                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 xl:mt-4 centered-full">
+                          <label htmlFor="fecha" className="text-vgray2 font-semibold flex-grow ml-4">Fecha</label>
+                          <input value={fechapago} onChange={(event) => { setFechapago(event.target.value); }} type="date" id="fecha" placeholder="Fecha" className="outline-none text-black font-semibold w-[150px] " />
+                        </div>
                       </div>
 
                       <div >

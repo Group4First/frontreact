@@ -16,11 +16,13 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 export function Dasboard() {
   const [data, setData] = useState({});
   const [showButton, setShowButton] = useState(false);
+  const [carga, setCarga] = useState(false);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowButton(true);
-    }, 6000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -210,13 +212,22 @@ export function Dasboard() {
       </div>
       <div className="fixed bottom-5 right-5">
         {showButton && (
-          <PDFDownloadLink document={<PdfDashboard />} fileName="InformaciónDashboard.pdf">
-            {({ blob, url, loading, error }) =>
+          <PDFDownloadLink document={<PdfDashboard setloading={setCarga}/>} fileName="InformaciónDashboard.pdf">
+            {({ blob, url, loading, error }) => (
               <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full  flex flex-col justify-center items-center">
-                <Printer size={20} />
-                PDF
+                {!carga ? ( // Si el PDF está cargando, mostramos un mensaje de carga en el botón
+                  <>
+                    <span className="mr-2"><i className="fas fa-spinner fa-spin"></i></span>
+                    <span>Cargando PDF...</span>
+                  </>
+                ) : (
+                  <>
+                    <Printer size={20} />
+                    <span>PDF</span>
+                  </>
+                )}
               </button>
-            }
+            )}
           </PDFDownloadLink>
         )}
       </div>

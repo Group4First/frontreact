@@ -31,7 +31,9 @@ export function Calculo_fic() {
 
     async function fetchcalcint() {
         try {
-            const datacal = await getCalculoPagoMe(mesapagar, añoapagar, new Date().toLocaleDateString('en-CA').toString(), Numcalculo, tipodeobra);
+            //const datacal = await getCalculoPagoMe(mesapagar, añoapagar, new Date().toLocaleDateString('en-CA').toString(), Numcalculo, tipodeobra);
+            const datacal = await getCalculoPagoMe(mesapagar, añoapagar, '2024-02-28', Numcalculo, tipodeobra);
+
             // Actualizar el estado del resultado con valores formateados como moneda
             const formatoMoneda = {
                 style: 'currency',
