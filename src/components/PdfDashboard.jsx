@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import React, { Fragment } from 'react';
 import Logosena from "/Logosenapng.png";
 
-export function PdfDashboard({setloading}) {
+export function PdfDashboard({ setloading }) {
 
     const [data, setData] = useState([]);
     const [dataempresas, setDataempresas] = useState([]);
@@ -54,7 +54,7 @@ export function PdfDashboard({setloading}) {
                 setDatagrafpagos2(dataaniopays)
                 setDatagrafpagosaños(dataaniopays.infoanualList);
 
-                const datauserpays = await getReportsUserPays(0,0);
+                const datauserpays = await getReportsUserPays(0, 0);
                 setDatatablausuarios(datauserpays.reportinfo);
 
             } catch (error) {
@@ -238,7 +238,7 @@ export function PdfDashboard({setloading}) {
     );
 
     const Topempresas = () => (
-        <View style={{ marginTop: 15 }}>
+        <View style={{ marginTop: 90 }}>
             <View>
                 <Text style={styles.reportTitle}>Empresas que mas han aportado al fic</Text>
             </View>
@@ -262,66 +262,66 @@ export function PdfDashboard({setloading}) {
     );
 
     const Composicionfic = () => (
-        <View style={{ marginTop: 15 }}>
+        <View style={{ marginTop: 25 }}>
             <View>
-                <Text style={styles.reportTitle}>Información sobre la composicion del fic</Text>
+                <Text style={styles.reportTitle}>Información sobre la composición del FIC</Text>
             </View>
-            <View style={[{ textAlign: 'center', marginTop: 10 }]}>
-                <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por Aportes</Text>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <View style={{ flex: 1, marginLeft: 60 }}>
+                    <View style={[{ textAlign: 'center', marginTop: 10 }]}>
+                        <Text style={[styles.invoiceTitle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por Aportes</Text>
+                    </View>
+                    <View style={[styles.titleContainer, { marginTop: 10 }]}>
+                        <View>
+                            <Text style={styles.invoiceTitle}>Mensual</Text>
+                            <Text style={styles.invoiceTitle}>A todo costo</Text>
+                            <Text style={styles.invoiceTitle}>Mano de obra</Text>
+                            <Text style={styles.invoiceTitle}>Intereses</Text>
+                        </View>
+                        <View style={{ marginRight: 10 }}>
+                            <Text style={styles.invoiceData}>: {datadonaaportes.valormensual}</Text>
+                            <Text style={styles.invoiceData}>: {datadonaaportes.valoratodocosto}</Text>
+                            <Text style={styles.invoiceData}>: {datadonaaportes.valormanodeobra}</Text>
+                            <Text style={styles.invoiceData}>: {datadonaaportes.valorintereses}</Text>
+                        </View>
+                        <View style={{ marginRight: 10 }}>
+                            <Text style={styles.invoiceData}>{datadonaaportes.porcentadinmensual}%</Text>
+                            <Text style={styles.invoiceData}>{datadonaaportes.porcentadinatodocosto}%</Text>
+                            <Text style={styles.invoiceData}>{datadonaaportes.porcentadinmanoobra}%</Text>
+                            <Text style={styles.invoiceData}>{datadonaaportes.porcentadinintereses}%</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ flex: 1, marginRight: 60 }}>
+                    <View style={[{ textAlign: 'center', marginTop: 10 }]}>
+                        <Text style={[styles.invoiceTitle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por Cantidad</Text>
+                    </View>
+                    <View style={[styles.titleContainer, { marginTop: 10 }]}>
+                        <View>
+                            <Text style={styles.invoiceTitle}>Mensual</Text>
+                            <Text style={styles.invoiceTitle}>A todo costo</Text>
+                            <Text style={styles.invoiceTitle}>Mano de obra</Text>
+                        </View>
+                        <View style={{ marginRight: 10 }}>
+                            <Text style={styles.invoiceData}>: {datadonacantidad.conteonummensual}</Text>
+                            <Text style={styles.invoiceData}>: {datadonacantidad.conteonumatodocosto}</Text>
+                            <Text style={styles.invoiceData}>: {datadonacantidad.conteonummanodeobra}</Text>
+                        </View>
+                        <View style={{ marginRight: 10 }}>
+                            <Text style={styles.invoiceData}>{datadonacantidad.porcentanummensual}%</Text>
+                            <Text style={styles.invoiceData}>{datadonacantidad.porcentanumatodocosto}%</Text>
+                            <Text style={styles.invoiceData}>{datadonacantidad.porcentanummanoobra}%</Text>
+                        </View>
+                    </View>
+                </View>
             </View>
-
-            <View style={[styles.titleContainer, { marginTop: 10 }]}>
-                <View>
-                    <Text style={styles.invoicetittle}></Text>
-                    <Text style={styles.invoicetittle}>Mensual</Text>
-                    <Text style={styles.invoicetittle}>A todo costo</Text>
-                    <Text style={styles.invoicetittle}>Mano de obra</Text>
-                    <Text style={styles.invoicetittle}>intereses</Text>
-                </View>
-                <View style={{ marginRight: 10 }}>
-                    <Text style={styles.invoicedata}></Text>
-                    <Text style={styles.invoicedata}>: {datadonaaportes.valormensual}</Text>
-                    <Text style={styles.invoicedata}>: {datadonaaportes.valoratodocosto}</Text>
-                    <Text style={styles.invoicedata}>: {datadonaaportes.valormanodeobra}</Text>
-                    <Text style={styles.invoicedata}>: {datadonaaportes.valorintereses}</Text>
-                </View>
-                <View style={{ marginRight: 10 }}>
-                    <Text style={styles.invoicedata}>{datadonaaportes.porcentadinmensual}%</Text>
-                    <Text style={styles.invoicedata}>{datadonaaportes.porcentadinatodocosto}%</Text>
-                    <Text style={styles.invoicedata}>{datadonaaportes.porcentadinmanoobra}%</Text>
-                    <Text style={styles.invoicedata}>{datadonaaportes.porcentadinintereses}%</Text>
-                </View>
-            </View>
-
-            <View style={[{ textAlign: 'center', marginTop: 10 }]}>
-                <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por Cantidad</Text>
-            </View>
-
-            <View style={[styles.titleContainer, { marginTop: 10 }]}>
-                <View>
-                    <Text style={styles.invoicetittle}></Text>
-                    <Text style={styles.invoicetittle}>Mensual</Text>
-                    <Text style={styles.invoicetittle}>A todo costo</Text>
-                    <Text style={styles.invoicetittle}>Mano de obra</Text>
-                </View>
-                <View style={{ marginRight: 10 }}>
-                    <Text style={styles.invoicedata}></Text>
-                    <Text style={styles.invoicedata}>: {datadonacantidad.conteonummensual}</Text>
-                    <Text style={styles.invoicedata}>: {datadonacantidad.conteonumatodocosto}</Text>
-                    <Text style={styles.invoicedata}>: {datadonacantidad.conteonummanodeobra}</Text>
-                </View>
-                <View style={{ marginRight: 10 }}>
-                    <Text style={styles.invoicedata}>{datadonacantidad.porcentanummensual}%</Text>
-                    <Text style={styles.invoicedata}>{datadonacantidad.porcentanumatodocosto}%</Text>
-                    <Text style={styles.invoicedata}>{datadonacantidad.porcentanummanoobra}%</Text>
-                </View>
-            </View>
-
         </View>
+
+
     );
 
     const Pagosregistrados = () => (
-        <View style={{ marginTop: 15 }}>
+        <View style={{ marginTop:  5}}>
             <View>
                 <Text style={styles.reportTitle}>Pagos registrados</Text>
             </View>
