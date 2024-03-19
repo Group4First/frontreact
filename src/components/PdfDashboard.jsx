@@ -344,15 +344,12 @@ export function PdfDashboard({ setloading }) {
                         ))}
                     </View>
                 </View>
-
                 <View style={styles.spaceAround}>
                     <View>
                         <Text>Presuntiva</Text>
                         {datagrafpagosmeses.map((receipt) => (
                             <Text style={styles.invoicetittle} key={receipt.mes}>{receipt.mes}</Text>
                         ))}
-
-
                     </View>
                     <View style={{ marginRight: 10 }}>
                         <Text style={styles.invoicedata}>{' '}</Text>

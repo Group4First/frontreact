@@ -70,8 +70,6 @@ export function FormRegisterPay({ idobra, reload, setReaload, type, state, fecha
       setValortotal('Total');
 
     } catch (error) {
-      console.log(error);
-
       if (error.status == 401) {
         Cookies.remove('session')
         activeAlert("warning", "Su sesion ha expirado, inicie sesion de nuevo", 6000)
