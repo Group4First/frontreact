@@ -79,7 +79,7 @@ export function PdfDashboard({ setloading }) {
 
         reportTitle: { fontSize: 16, textAlign: 'center', fontStyle: 'bold' },
 
-        invoice: { fontWeight: 'bold', fontSize: 20 },
+        invoice: { fontWeight: 'bold', fontSize: 20 ,marginTop: 20},
 
         invoicetittle: { fontSize: 11, fontWeight: 'bold', color: '#787878' },
 
@@ -144,7 +144,7 @@ export function PdfDashboard({ setloading }) {
 
 
     const Recaudofic = () => (
-        <View style={{ marginTop: 15 }}>
+        <View style={{ marginTop: 25 }}>
             <View>
                 <Text style={styles.reportTitle}>Información sobre el recaudo fic</Text>
             </View>
@@ -194,7 +194,7 @@ export function PdfDashboard({ setloading }) {
 
             <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total recaudo anual: ${datagrafprincipal1.totalrecaudoporaño}`}</Text>
 
-            <View style={[{ textAlign: 'center', marginTop: 10 }]}>
+            <View style={[{ textAlign: 'center', marginTop: 15 }]}>
                 <Text style={[styles.invoicetittle, { fontSize: 13, fontStyle: 'bold', color: '#000000' }]}>Por ultimos 5 años</Text>
             </View>
             <View style={[styles.titleContainer, { marginTop: 10 }]}>
@@ -321,7 +321,7 @@ export function PdfDashboard({ setloading }) {
     );
 
     const Pagosregistrados = () => (
-        <View style={{ marginTop:  5}}>
+        <View style={{ marginTop:  25}}>
             <View>
                 <Text style={styles.reportTitle}>Pagos registrados</Text>
             </View>
@@ -410,7 +410,7 @@ export function PdfDashboard({ setloading }) {
                 </View>
             </View>
             <Text style={{ textAlign: 'center', marginTop: 10 }}>{`Total pagos de los ultimos 5 años: ${datagrafpagos2.totalhistorico}`}</Text>
-            <View style={{ textAlign: 'center', marginTop: 100 }}>
+            <View style={{ textAlign: 'center', marginTop: 10 }}>
                 <Text style={styles.reportTitle}>Usuarios del sistema</Text>
             </View>
         </View>
