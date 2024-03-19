@@ -238,7 +238,7 @@ export function PdfDashboard({ setloading }) {
     );
 
     const Topempresas = () => (
-        <View style={{ marginTop: 90 }}>
+        <View style={{ marginTop: 65 }}>
             <View>
                 <Text style={styles.reportTitle}>Empresas que mas han aportado al fic</Text>
             </View>
