@@ -75,7 +75,7 @@ export function Intereses() {
                             </select>
                         </div>
 
-                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mr-4 mt-6 ">
+                        <div className="bg-white h-12 w-[320px] rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mt-6 ">
                             <label htmlFor="Año" className="text-vgray2 font-semibold flex-grow ml-4">
                                 Año
                             </label>
