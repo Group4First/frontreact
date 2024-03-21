@@ -24,10 +24,10 @@ const ApexChart = ({ value }) => {
         const valuesArray = [valormanodeobra, valoratodocosto, valormensual, valorintereses];
         setSeries(valuesArray);
         setLabels([
-          "porcentaje A mano de obra",
-          "porcentaje A todo costo",
-          "porcentaje Obra mensual",
-          "porcentaje Intereses de mora"
+          "Recaudo A mano de obra",
+          "Recaudo A todo costo",
+          "Recaudo Obra mensual",
+          "Recaudo Intereses de mora"
         ]);
       }
     }
@@ -64,10 +64,25 @@ const ApexChart = ({ value }) => {
       },
     },
     {
+      breakpoint: 1700,
+      options: {
+        chart: {
+          width: getWindowWidth() * 0.35,
+          height: 500,
+        },
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          offsetY: 0,
+          offsetX: -20,
+        },
+      },
+    },
+    {
       breakpoint: 9999,
       options: {
         chart: {
-          width:  getWindowWidth() * 0.336,
+          width: getWindowWidth() * 0.336,
           height: 500,
         },
         legend: {
@@ -79,12 +94,12 @@ const ApexChart = ({ value }) => {
     labels: labels,
   };
 
- 
+
   function getWindowWidth() {
     return window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
-}
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+  }
 
   return (
     <div className="flex flex-col items-center">
