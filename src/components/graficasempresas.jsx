@@ -53,7 +53,20 @@ const Graficasempresa = () => {
     },
 
     xaxis: {
-      categories: categories
+      categories: categories,
+      labels: {
+        formatter: function (val) {
+          if (val >= 1000000) {
+            // Si el valor es mayor o igual a un millón, dividir por un millón y formatear con 'M'
+            return (val / 1000000).toFixed(0) + "M";
+          } else if (val >= 1000) {
+            // Si el valor es mayor o igual a mil, dividir por mil y formatear con 'K'
+            return (val / 1000).toFixed(0) + "K";
+          } else {
+            return val.toString(); // Si es menor que 1000, simplemente devolver el valor original
+          }
+        }
+      }
     },
     legend: {
       position: "right",
